@@ -27,4 +27,7 @@ Key features of our app include:
 
 ## Sources of Complexity
 
+* Finding optimal matches using an algorithm based on proximity and availbility
+* Integrating the APIs into our app to obtain data for the algorithm
+
 
