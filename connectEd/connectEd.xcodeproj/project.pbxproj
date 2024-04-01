@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4540DC7C2BBB625600654595 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4540DC7B2BBB625600654595 /* Navigator.swift */; };
+		4540DC7F2BBB630D00654595 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4540DC7E2BBB630D00654595 /* Place.swift */; };
+		4540DC822BBB6C0200654595 /* DateFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4540DC812BBB6C0200654595 /* DateFormatters.swift */; };
+		4540DC852BBB6C7B00654595 /* EventService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4540DC842BBB6C7B00654595 /* EventService.swift */; };
+		4540DC872BBB6D1500654595 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4540DC862BBB6D1500654595 /* Calendar.swift */; };
+		4540DC8A2BBB6D3900654595 /* EventEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4540DC892BBB6D3900654595 /* EventEditView.swift */; };
+		4540DC8C2BBB6D4F00654595 /* CalendarChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4540DC8B2BBB6D4F00654595 /* CalendarChooser.swift */; };
 		97385D912BBAD57300BB8C8A /* Browse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97385D902BBAD57300BB8C8A /* Browse.swift */; };
 		97385D932BBAD58300BB8C8A /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97385D922BBAD58300BB8C8A /* Search.swift */; };
 		97385D952BBAD59200BB8C8A /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97385D942BBAD59200BB8C8A /* Favorites.swift */; };
@@ -21,6 +28,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4540DC7B2BBB625600654595 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
+		4540DC7E2BBB630D00654595 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		4540DC812BBB6C0200654595 /* DateFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatters.swift; sourceTree = "<group>"; };
+		4540DC842BBB6C7B00654595 /* EventService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventService.swift; sourceTree = "<group>"; };
+		4540DC862BBB6D1500654595 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
+		4540DC892BBB6D3900654595 /* EventEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEditView.swift; sourceTree = "<group>"; };
+		4540DC8B2BBB6D4F00654595 /* CalendarChooser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarChooser.swift; sourceTree = "<group>"; };
 		97385D902BBAD57300BB8C8A /* Browse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Browse.swift; sourceTree = "<group>"; };
 		97385D922BBAD58300BB8C8A /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		97385D942BBAD59200BB8C8A /* Favorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
@@ -46,6 +60,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4540DC7D2BBB62FC00654595 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4540DC7E2BBB630D00654595 /* Place.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4540DC802BBB6BEF00654595 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				4540DC812BBB6C0200654595 /* DateFormatters.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		4540DC832BBB6C6E00654595 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4540DC842BBB6C7B00654595 /* EventService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		4540DC882BBB6D2900654595 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				4540DC892BBB6D3900654595 /* EventEditView.swift */,
+				4540DC8B2BBB6D4F00654595 /* CalendarChooser.swift */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
 		97385D8F2BBAD50000BB8C8A /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -56,6 +103,8 @@
 				97385D982BBAD5BF00BB8C8A /* TutorDetails.swift */,
 				97385D9A2BBAD62F00BB8C8A /* Login.swift */,
 				97385D9C2BBAD96200BB8C8A /* ReviewForm.swift */,
+				4540DC7B2BBB625600654595 /* Navigator.swift */,
+				4540DC862BBB6D1500654595 /* Calendar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -79,6 +128,10 @@
 		977FA7A82BB1144A006CF4C2 /* connectEd */ = {
 			isa = PBXGroup;
 			children = (
+				4540DC882BBB6D2900654595 /* UIKit */,
+				4540DC832BBB6C6E00654595 /* Services */,
+				4540DC802BBB6BEF00654595 /* Utilities */,
+				4540DC7D2BBB62FC00654595 /* Models */,
 				97385D8F2BBAD50000BB8C8A /* Views */,
 				977FA7A92BB1144A006CF4C2 /* connectEdApp.swift */,
 				977FA7AB2BB1144A006CF4C2 /* TabContainer.swift */,
@@ -166,7 +219,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4540DC822BBB6C0200654595 /* DateFormatters.swift in Sources */,
 				977FA7AC2BB1144A006CF4C2 /* TabContainer.swift in Sources */,
+				4540DC7C2BBB625600654595 /* Navigator.swift in Sources */,
+				4540DC8A2BBB6D3900654595 /* EventEditView.swift in Sources */,
 				97385D972BBAD5A500BB8C8A /* Profile.swift in Sources */,
 				97385D992BBAD5BF00BB8C8A /* TutorDetails.swift in Sources */,
 				97385D9D2BBAD96200BB8C8A /* ReviewForm.swift in Sources */,
@@ -174,7 +230,11 @@
 				97385D912BBAD57300BB8C8A /* Browse.swift in Sources */,
 				97385D952BBAD59200BB8C8A /* Favorites.swift in Sources */,
 				977FA7AA2BB1144A006CF4C2 /* connectEdApp.swift in Sources */,
+				4540DC7F2BBB630D00654595 /* Place.swift in Sources */,
+				4540DC852BBB6C7B00654595 /* EventService.swift in Sources */,
+				4540DC8C2BBB6D4F00654595 /* CalendarChooser.swift in Sources */,
 				97385D9B2BBAD62F00BB8C8A /* Login.swift in Sources */,
+				4540DC872BBB6D1500654595 /* Calendar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

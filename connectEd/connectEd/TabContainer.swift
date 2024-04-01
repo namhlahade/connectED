@@ -34,6 +34,12 @@ struct TabContainer: View {
             .tabItem {
                 Label("Profile", systemImage: "person.fill")
             }
+            NavigationStack {
+                TutorDetails()
+            }
+            .tabItem {
+                Label("Tutor Details", systemImage: "person.fill")
+            }
         }
         
     }
