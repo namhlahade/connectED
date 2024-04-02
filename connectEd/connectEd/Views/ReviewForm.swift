@@ -1,9 +1,8 @@
-
 import SwiftUI
 
 struct ReviewForm: View {
     @State private var course: String = ""
-    @State private var rating: Int = 2
+    @State private var rating: Int = 0
     @State private var clarityRating: Double = 0
     @State private var understandingRating: Double = 0
     @State private var additionalComments: String = ""
@@ -12,16 +11,22 @@ struct ReviewForm: View {
     
     var body: some View {
         Form {
-            Section(header: Text("Tutor")){
-                Text("TUTOR_NAME")
+            Section(header: Text("Tutor")) {
+                HStack {
+                    Spacer()
+                    Text("TUTOR_NAME")
+                    Spacer()
+                }
             }
             
             Section(header: Text("Course Being Tutored")) {
                 TextField("Course", text: $course)
+                    .multilineTextAlignment(.center)
             }
             
             Section(header: Text("Overall Rating")) {
                 HStack {
+                    Spacer()
                     ForEach(1...5, id: \.self) { index in
                         Button(action: {
                             self.rating = index
@@ -30,6 +35,7 @@ struct ReviewForm: View {
                                 .foregroundColor(self.getStarColor(for: index))
                                 .font(.system(size: 25))
                         }.buttonStyle(.plain)
+                        Spacer()
                     }
                 }
             }
@@ -51,6 +57,7 @@ struct ReviewForm: View {
             }) {
                 Text("Submit Review")
             }
+            .frame(maxWidth: .infinity)
         }
         .navigationBarTitle("Leave a Review")
     }
@@ -79,7 +86,9 @@ struct RatingSlider: View {
     var body: some View {
         VStack {
             HStack {
+                Spacer()
                 Slider(value: $value, in: 0...Double(scale.count - 1), step: 1)
+                Spacer()
             }
             HStack(spacing: 0) {
                 ForEach(scale, id: \.self) { label in
@@ -94,6 +103,8 @@ struct RatingSlider: View {
     }
 }
 
-#Preview {
-    ReviewForm()
+struct ReviewForm_Previews: PreviewProvider {
+    static var previews: some View {
+        ReviewForm()
+    }
 }
