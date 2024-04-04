@@ -13,7 +13,6 @@ xcuserdata
 
 # Build products
 build/
-cs207-env/
 *.o
 *.LinkFileList
 *.hmap
@@ -24,5 +23,3 @@ cs207-env/
 *~
 *.dat
 *.dep
-
-* text=auto
