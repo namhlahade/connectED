@@ -1,18 +1,18 @@
-//
-//  Favorites.swift
-//  connectEd
-//
-//  Created by Neel Runton on 4/1/24.
-//
-
 import SwiftUI
+import SwiftData
 
 struct Favorites: View {
+    var tutors: [Tutor] = []
     var body: some View {
-        Text("Favorites page. Not much to do here, just working with SwiftData to store favorites.")
+        NavigationStack{
+            List(tutors) {
+                tutor in
+                FavoritesRow(tutor: tutor)
+            }
+        }
     }
 }
 
 #Preview {
-    Favorites()
+    Favorites(tutors: [Tutor(name: "James", courses: [""], status: Status.online), Tutor(name: "Bob", courses: [""], status: Status.offline)])
 }

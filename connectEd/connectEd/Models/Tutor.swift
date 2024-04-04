@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-@Model
+//@Model
 class Tutor: Identifiable {
     var name: String
     var email: String?
@@ -31,7 +31,8 @@ class Tutor: Identifiable {
 }
 
 // Used to show if a tutor is online or offline
-enum Status {
+enum Status: String, Codable, Identifiable {
+    var id: Self { self }
     case online
     case offline
 }
