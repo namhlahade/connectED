@@ -50,10 +50,16 @@ struct Profile: View {
                 Spacer()
                 Spacer()
                 
-                
                 Text("My Reviews").font(.title2)
                 Spacer()
-                // TODO add list of reviews here when Review datastructure is available
+                if (user.reviews == nil) {
+                    Text("You currently have no reviews")
+                }
+                else {
+                    List(user.reviews!) { review in
+                        ReviewRow(review: review)
+                    }
+                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding()
