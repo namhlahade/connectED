@@ -9,12 +9,7 @@ import SwiftUI
 
 struct Profile: View {
     
-    var profileUrl: URL?
-    var rating: Double
-    @State var name: String
-    @State var email: String
-    var courses: [String]
-    var price: Double
+    @State var user: Tutor
     
     @State private var isPresentingEditForm: Bool = false
     
@@ -22,30 +17,38 @@ struct Profile: View {
         
         ScrollView {
             
-            AsyncImage(url: profileUrl, content: { image in
+            AsyncImage(url: user.image, content: { image in
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
             }, placeholder: {
-                if profileUrl != nil {
+                if user.image != nil {
                     ProgressView()
                 } else {
                     Image(systemName: "person.circle")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
                 }
             })
-            .frame(maxWidth: 250, maxHeight: 250)
+            .frame(maxWidth: 200, maxHeight: 200)
             .padding()
             
             HStack (alignment: .center) {
                 Text("My rating:")
-                Text(String(format: "%.1f/5", rating)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                Text(user.rating == nil ? "--/5" : String(format: "%.1f/5", user.rating!)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
             }
             
             VStack (alignment: .leading) {
                 
-                ProfileSection(title: "Account Information", sectionLabels: ["Name", "Email"], sectionData: [name, email])
+                ProfileSection(title: "Account Information", sectionLabels: ["Name", "Email"], sectionData: [user.name, user.email])
                 
-                ProfileSection(title: "Tutoring Information", sectionLabels: ["Courses", "Price per hour"], sectionData: [courses.sorted().joined(separator: ", "), String(format: "$%.2f", price)])
+                Spacer()
+                Spacer()
+                
+                ProfileSection(title: "Tutoring Information", sectionLabels: ["Courses", "Price per hour"], sectionData: [(user.courses ?? ["None"]).sorted().joined(separator: ", "), user.price == nil ? "$--" : String(format: "$%.2f", user.price!)])
+                
+                Spacer()
+                Spacer()
                 
                 
                 Text("My Reviews").font(.title2)
@@ -65,7 +68,7 @@ struct Profile: View {
         }
         .sheet(isPresented: $isPresentingEditForm) {
             NavigationStack {
-                ProfileForm(name: $name, email: $email) // TODO get data working on this. look at MovieTracker project MovieDetail.swift and MovieForm.swift for help
+                ProfileForm(name: $user.name, email: $user.email) // TODO get data working on this. look at MovieTracker project MovieDetail.swift and MovieForm.swift for help
                     .toolbar {
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button("Cancel") { isPresentingEditForm.toggle() }
@@ -90,22 +93,25 @@ struct ProfileSection: View {
     var sectionData: [String]
     
     var body: some View {
-        Text(title).font(.title2)
-        Spacer()
-        
-        ForEach(sectionLabels.indices) { i in
-            Text(sectionLabels[i]).fontWeight(.bold)
-            Text(sectionData[i])
+        VStack (alignment: .leading) {
+            
+            Text(title).font(.title2)
+            
+            Spacer()
+            
+            ForEach(sectionLabels.indices) { i in
+                Text(sectionLabels[i]).font(.title3).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                Text(sectionData[i])
+                Spacer()
+            }
+            
         }
-        
-        Spacer()
-        Spacer()
     }
 }
 
 
 #Preview {
     NavigationStack {
-        Profile(profileUrl: URL(string: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), rating: 3.6, name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE 110", "ECE 230", "ECE280", "ECE 270", "ECE 532", "ECE 539", "ECE 575", "ECE 572", "ECE 350", "ECE 331"], price: 23.00)
+        Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], image: URL(string: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), status: .online, rating: 3.61, price: 23.99))
     }
 }

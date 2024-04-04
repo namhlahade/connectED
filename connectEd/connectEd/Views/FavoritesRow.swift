@@ -29,5 +29,5 @@ struct FavoritesRow: View {
 }
 
 #Preview {
-    FavoritesRow(tutor: Tutor(name: "James", courses: [""], status: Status.online))
+    FavoritesRow(tutor: Tutor(name: "James", email: "james@duke.edu", courses: [""], status: Status.online))
 }

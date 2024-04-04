@@ -29,7 +29,7 @@ struct TabContainer: View {
                 Label("Favorites", systemImage: "star.fill")
             }
             NavigationStack {
-                Profile(profileUrl: URL(string: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), rating: 3.6, name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], price: 23.00)
+                Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", status: .online))
             }
             .tabItem {
                 Label("Profile", systemImage: "person.fill")
