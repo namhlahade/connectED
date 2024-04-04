@@ -13,6 +13,7 @@ xcuserdata
 
 # Build products
 build/
+cs207-env/
 *.o
 *.LinkFileList
 *.hmap
