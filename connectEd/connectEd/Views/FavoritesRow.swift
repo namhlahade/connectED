@@ -4,7 +4,7 @@ struct FavoritesRow: View {
     let tutor: Tutor
     var body: some View {
         HStack {
-            AsyncImage(url: tutor.image)
+            AsyncImage(url: URL(string: tutor.image ?? ""))
             { image in
                 image
                     .resizable()
