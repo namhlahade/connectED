@@ -79,6 +79,8 @@ struct ProfileForm: View {
                     .pickerStyle(.menu)
                     
                     TextField("Class code", value: $data.price, formatter: NumberFormatter(), prompt: Text("Class code"))
+                    
+                    // TODO have to figure out a way to make this viable for a variable number of courses
                 }
                 
                 
