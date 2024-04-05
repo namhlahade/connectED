@@ -18,5 +18,5 @@ struct ReviewRow: View {
 }
 
 #Preview {
-    ReviewRow(review: Review(author: "Nick Steinly", date: Date.now, rating: 4, description: "Sample description for the review."))
+    ReviewRow(review: Review(author: "Nick Steinly", date: Date.now, rating: 4, body: "Sample description for the review."))
 }
