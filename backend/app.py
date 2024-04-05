@@ -1,27 +1,50 @@
 from flask import Flask, jsonify
-import sqlite3
+from flask_sqlalchemy import SQLAlchemy
 import os
 
 app = Flask(__name__)
-app.debug = True
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace("://", "ql://", 1)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+class User(db.Model):
+    uid = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.Text, nullable=False)
+    email = db.Column(db.Text, unique=True, nullable=False)
+    bio = db.Column(db.Text)
+    rating = db.Column(db.Float)
+    isOnline = db.Column(db.Boolean)
+    image = db.Column(db.Text)
+
+class Class(db.Model):
+    cid = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    className = db.Column(db.Text, unique=True, nullable=False)
+
+class Review(db.Model):
+    uid = db.Column(db.Integer, db.ForeignKey('user.uid'), primary_key=True)
+    review = db.Column(db.Text, primary_key=True)
+
+class TutorClass(db.Model):
+    uid = db.Column(db.Integer, db.ForeignKey('user.uid'), primary_key=True)
+    cid = db.Column(db.Integer, db.ForeignKey('class.cid'), primary_key=True)
+    price = db.Column(db.Float, nullable=False)
+
+
+@app.before_first_request
+def create_tables():
+    db.create_all()
 
 @app.route('/testing', methods=['GET'])
 def testing():
     returnAnswer = "Things are working"
-    print(returnAnswer)
-    return jsonify({}), 200
-
-def get_db():
-    db_path = os.path.join(os.path.dirname(__file__), 'database.db')
-    db = sqlite3.connect(db_path)
-    return db
+    return jsonify({"message": returnAnswer}), 200
 
 @app.route('/getTutors', methods=['GET'])
 def getTutors():
-    db = get_db()
-    query = db.execute("select * from users")
-    everything = query.fetchall()
-    return jsonify(everything), 200
+    tutors = User.query.all()
+    # Format and return the query results...
+    return jsonify(tutors), 200
 
 if __name__ == '__main__':
     app.run()
