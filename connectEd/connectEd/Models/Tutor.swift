@@ -8,8 +8,6 @@
 import Foundation
 import SwiftData
 
-
-//TODO: Add initial Preview Data for Tutor
 @Model
 class Tutor: Identifiable {
     var id = UUID()
@@ -73,7 +71,7 @@ extension Tutor {
     static func create(from formData: FormData, context: ModelContext) {
         let tutor = Tutor(name: formData.name, email: formData.email, status: formData.status)
         Tutor.update(tutor, from: formData)
-        //context.insert(tutor)
+        context.insert(tutor)
     }
     
     static func update(_ tutor: Tutor, from formData: FormData) {
@@ -97,3 +95,11 @@ extension Tutor {
     case chem
   }
 }
+
+extension Tutor {
+    static let previewData: [Tutor] = [
+        Tutor(name: "James", email: "james@duke.edu", courses: [""], status: Status.online),
+        Tutor(name: "Namh", email: "namh@duke.edu", courses: [""], status: Status.offline)
+    ]
+}
+        

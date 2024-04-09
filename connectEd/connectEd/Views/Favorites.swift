@@ -11,13 +11,13 @@ struct Favorites: View {
                 FavoritesRow(tutor: tutor)
             }
             .navigationTitle("Favorites")
-//            .onAppear {
-//                if tutors.isEmpty {
-//                    for tutor in Tutor.previewData {
-//                        modelContext.insert(tutor)
-//                    }
-//                }
-//            }
+            .onAppear {
+                if tutors.isEmpty {
+                    for tutor in Tutor.previewData {
+                        modelContext.insert(tutor)
+                    }
+                }
+            }
         }
     }
 }
