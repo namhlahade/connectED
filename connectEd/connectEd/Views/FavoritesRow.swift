@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct FavoritesRow: View {
-    let tutor: Tutor
+    @Bindable var tutor: Tutor
     var body: some View {
         HStack {
             AsyncImage(url: URL(string: tutor.image ?? ""))
@@ -29,5 +29,8 @@ struct FavoritesRow: View {
 }
 
 #Preview {
-    FavoritesRow(tutor: Tutor(name: "James", email: "james@duke.edu", courses: [""], status: Status.online))
+    let preview = PreviewContainer([Tutor.self])
+//    let tutor = Tutor.previewData[0]
+    let tutor = Tutor(name: "James", email: "james@duke.edu", courses: [""], status: Status.online)
+    return FavoritesRow(tutor: tutor).modelContainer(preview.container)
 }

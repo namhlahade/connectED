@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5B097E782BBE7DE40074CFB4 /* Tutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B097E772BBE7DE40074CFB4 /* Tutor.swift */; };
 		5B097E7A2BBE7F7D0074CFB4 /* FavoritesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B097E792BBE7F7D0074CFB4 /* FavoritesRow.swift */; };
+		5B097E7C2BC4E20C0074CFB4 /* PreviewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B097E7B2BC4E20C0074CFB4 /* PreviewContainer.swift */; };
 		97385D912BBAD57300BB8C8A /* Browse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97385D902BBAD57300BB8C8A /* Browse.swift */; };
 		97385D932BBAD58300BB8C8A /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97385D922BBAD58300BB8C8A /* Search.swift */; };
 		97385D952BBAD59200BB8C8A /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97385D942BBAD59200BB8C8A /* Favorites.swift */; };
@@ -29,6 +30,7 @@
 /* Begin PBXFileReference section */
 		5B097E772BBE7DE40074CFB4 /* Tutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutor.swift; sourceTree = "<group>"; };
 		5B097E792BBE7F7D0074CFB4 /* FavoritesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesRow.swift; sourceTree = "<group>"; };
+		5B097E7B2BC4E20C0074CFB4 /* PreviewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContainer.swift; sourceTree = "<group>"; };
 		97385D902BBAD57300BB8C8A /* Browse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Browse.swift; sourceTree = "<group>"; };
 		97385D922BBAD58300BB8C8A /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		97385D942BBAD59200BB8C8A /* Favorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 			children = (
 				5B097E772BBE7DE40074CFB4 /* Tutor.swift */,
 				9744D5822BBEDE0D00758135 /* Review.swift */,
+				5B097E7B2BC4E20C0074CFB4 /* PreviewContainer.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -206,6 +209,7 @@
 				9744D5852BBEE2C000758135 /* ReviewRow.swift in Sources */,
 				97385D992BBAD5BF00BB8C8A /* TutorDetails.swift in Sources */,
 				97C6B35B2BBE9D55002C8317 /* ProfileForm.swift in Sources */,
+				5B097E7C2BC4E20C0074CFB4 /* PreviewContainer.swift in Sources */,
 				97385D9D2BBAD96200BB8C8A /* ReviewForm.swift in Sources */,
 				97385D932BBAD58300BB8C8A /* Search.swift in Sources */,
 				97385D912BBAD57300BB8C8A /* Browse.swift in Sources */,

@@ -2,17 +2,30 @@ import SwiftUI
 import SwiftData
 
 struct Favorites: View {
-    var tutors: [Tutor] = []
+    @Query private var tutors: [Tutor]
+    @Environment(\.modelContext) private var modelContext
     var body: some View {
         NavigationStack{
             List(tutors) {
                 tutor in
                 FavoritesRow(tutor: tutor)
             }
+            .navigationTitle("Favorites")
+//            .onAppear {
+//                if tutors.isEmpty {
+//                    for tutor in Tutor.previewData {
+//                        modelContext.insert(tutor)
+//                    }
+//                }
+//            }
         }
     }
 }
 
 #Preview {
-    Favorites(tutors: [Tutor(name: "James", email: "james@duke.edu", courses: [""], status: Status.online), Tutor(name: "Bob", email: "bob@duke.edu", courses: [""], status: Status.offline)])
+    let preview = PreviewContainer([Tutor.self])
+    return NavigationStack {
+        Favorites()
+    }
+    .modelContainer(preview.container)
 }

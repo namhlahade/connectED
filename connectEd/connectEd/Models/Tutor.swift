@@ -7,11 +7,10 @@
 
 import Foundation
 import SwiftData
-import SwiftUI
 
 
-//@Model
-@Observable
+//TODO: Add initial Preview Data for Tutor
+@Model
 class Tutor: Identifiable {
     var id = UUID()
     var name: String

@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-
+@Model
 class Review: Identifiable {
     var author: String
     var date: Date
