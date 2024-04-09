@@ -10,18 +10,23 @@ struct FavoritesRow: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
             }
-            placeholder: {
-                if tutor.image != nil {
-                    ProgressView()
-                } else {
-                    Image(systemName: "person.fill")
-                }
+        placeholder: {
+            if tutor.image != nil {
+                ProgressView()
+            } else {
+                Image(systemName: "person.fill")
             }
+        }
             VStack (alignment: .leading) {
                 Text(tutor.name).bold().font(.title)
-                Text("Bio")
-                Text("Courses: ")
-                Text(tutor.status.rawValue)
+                Text(tutor.bio ?? "No Bio Info").foregroundStyle(Color.gray)
+                Text("Courses: ").bold()
+                HStack {
+                    Image(systemName: "circle.fill").foregroundStyle(tutor.status == .online ? Color.green : Color.red)
+                    Text(tutor.status.rawValue.capitalized)
+                }
+                
+                
             }
         }
         

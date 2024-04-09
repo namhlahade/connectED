@@ -21,6 +21,9 @@ class Tutor: Identifiable {
     var price: Double?
     var reviews: [Review]?
     
+// TODO: Determine whether to mark a tutor as favorited by the student through here or somewhere else
+//    var isFavorite: Bool
+    
     init(id: UUID = UUID(), name: String, email: String, bio: String? = nil, courses: [String]? = nil, image: String? = nil, status: Status, rating: Double? = nil, price: Double? = nil, reviews: [Review]? = nil) {
         self.id = id
         self.name = name
@@ -98,7 +101,7 @@ extension Tutor {
 
 extension Tutor {
     static let previewData: [Tutor] = [
-        Tutor(name: "James", email: "james@duke.edu", courses: [""], status: Status.online),
+        Tutor(name: "James", email: "james@duke.edu", bio: "Random student", courses: [""], status: Status.online),
         Tutor(name: "Namh", email: "namh@duke.edu", courses: [""], status: Status.offline)
     ]
 }

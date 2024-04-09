@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct Favorites: View {
+    //TODO: Filter the query by 
     @Query private var tutors: [Tutor]
     @Environment(\.modelContext) private var modelContext
     var body: some View {
