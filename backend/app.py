@@ -220,8 +220,6 @@ def addReview():
         return jsonify({'error': 'Tutor not found'}), 404
     
     reviewRow = Review.query.filter_by(uid=tutorId, review=reviewContent)
-    if reviewRow:
-        return jsonify({'message': ''})
 
     newReview = Review(uid=tutorId, review=reviewContent)
     db.session.add(newReview)
