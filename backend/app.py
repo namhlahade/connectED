@@ -75,7 +75,7 @@ class Availability(db.Model):
 
     tutor = db.relationship('User', backref='availabilities', lazy=True)
 
-@app.route('/testing', methods=['POST'])
+@app.route('/testing', methods=['GET'])
 def testinf():
     return jsonify({'message': 'API itself is working'}), 200
 
