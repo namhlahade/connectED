@@ -5,7 +5,7 @@ import os
 
 app = Flask(__name__)
 
-ENV = 'dev'
+ENV = 'prod'
 
 if ENV == 'dev':
     app.debug = True
@@ -102,6 +102,10 @@ def addTutor():
     if 'image' in data:
         image = data.get('image')
 
+    existing_tutor = User.query.filter_by(email=email).first()
+    if existing_tutor:
+        return jsonify({"error": "Email already exists"}), 400
+
     tutor = User(name=name, email=email, bio=bio, rating=rating, isOnline=isOnline, image=image)
     db.session.add(tutor)
     db.session.commit()
@@ -130,6 +134,10 @@ def addClass():
     data = request.get_json()
     className = data.get('className')
 
+    existing_tutor = Class.query.filter_by(className=className).first()
+    if existing_tutor:
+        return jsonify({"error": "Class already exists"}), 400
+
     newClass = Class(className=className)
     db.session.add(newClass)
     db.session.commit()
@@ -154,12 +162,17 @@ def addTutorClass():
     if not user or not class_:
         return jsonify({'error': 'Tutor or Class not found'}), 404
 
+    existing_tutor_class = TutorClass.query.filter_by(uid=tutorId, cid=classId).first()
+    if existing_tutor_class:
+        return jsonify({'error': 'Tutor class already exists'}), 400
+
     new_tutor_class = TutorClass(uid=tutorId, cid=classId, price=price)
 
     db.session.add(new_tutor_class)
     db.session.commit()
 
     return jsonify({'message': 'Tutor class added successfully'}), 201
+
 
 @app.route('/getTutorClasses', methods=['POST'])
 def getTutorClasses():
