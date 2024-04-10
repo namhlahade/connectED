@@ -28,6 +28,8 @@ class User(db.Model):
     rating = db.Column(db.Float)
     isOnline = db.Column(db.Boolean)
     image = db.Column(db.Text)
+    reviews_about_user = db.relationship('Review', backref='reviewed_user', lazy=True) # Look back at this
+
 
     def __init__(self, name, email, bio=None, rating=None, isOnline=False, image=None):
         self.name = name
@@ -47,8 +49,9 @@ class Class(db.Model):
 
 class Review(db.Model):
     __tablename__ = 'reviews'
-    uid = db.Column(db.Integer, db.ForeignKey('users.uid'), primary_key=True)
-    review = db.Column(db.Text, primary_key=True)
+    rID = db.Column(db.Integer, primary_key=True)
+    uid = db.Column(db.Integer, db.ForeignKey('users.uid'))
+    review = db.Column(db.Text)
 
     def __init__(self, uid, review):
         self.uid = uid
@@ -215,6 +218,10 @@ def addReview():
     tutor = User.query.get(tutorId)
     if not tutor:
         return jsonify({'error': 'Tutor not found'}), 404
+    
+    reviewRow = Review.query.filter_by(uid=tutorId, review=reviewContent)
+    if reviewRow:
+        return jsonify({'message': ''})
 
     newReview = Review(uid=tutorId, review=reviewContent)
     db.session.add(newReview)
