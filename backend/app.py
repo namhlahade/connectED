@@ -5,7 +5,7 @@ import os
 
 app = Flask(__name__)
 
-ENV = 'prod'
+ENV = 'dev'
 
 if ENV == 'dev':
     app.debug = True
@@ -75,6 +75,9 @@ class Availability(db.Model):
 
     tutor = db.relationship('User', backref='availabilities', lazy=True)
 
+@app.route('/testing', methods=['POST'])
+def testinf():
+    return jsonify({'message': 'API itself is working'}), 200
 
 
 @app.route('/addTutor', methods=['POST'])
