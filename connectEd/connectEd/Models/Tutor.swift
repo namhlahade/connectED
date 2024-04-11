@@ -20,11 +20,9 @@ class Tutor: Identifiable {
     var rating: Double?
     var price: Double?
     var reviews: [Review]?
+    var isFavorite: Bool
     
-// TODO: Determine whether to mark a tutor as favorited by the student through here or somewhere else
-//    var isFavorite: Bool
-    
-    init(id: UUID = UUID(), name: String, email: String, bio: String? = nil, courses: [String]? = nil, image: String? = nil, status: Status, rating: Double? = nil, price: Double? = nil, reviews: [Review]? = nil) {
+    init(id: UUID = UUID(), name: String, email: String, bio: String? = nil, courses: [String]? = nil, image: String? = nil, status: Status, rating: Double? = nil, price: Double? = nil, reviews: [Review]? = nil, isFavorite: Bool = false) {
         self.id = id
         self.name = name
         self.email = email
@@ -35,6 +33,7 @@ class Tutor: Identifiable {
         self.rating = rating
         self.price = price
         self.reviews = reviews
+        self.isFavorite = isFavorite
     }
     
 }
@@ -101,8 +100,8 @@ extension Tutor {
 
 extension Tutor {
     static let previewData: [Tutor] = [
-        Tutor(name: "James", email: "james@duke.edu", bio: "Random student", courses: [""], status: Status.online),
-        Tutor(name: "Namh", email: "namh@duke.edu", courses: [""], status: Status.offline)
+        Tutor(name: "James", email: "james@duke.edu", bio: "Random student", courses: [""], status: Status.online, isFavorite: true),
+        Tutor(name: "Namh", email: "namh@duke.edu", courses: [""], status: Status.offline, isFavorite: false)
     ]
 }
         
