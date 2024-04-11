@@ -2,8 +2,8 @@ import SwiftUI
 import SwiftData
 
 struct Favorites: View {
-    //TODO: Ability to add and delete tutor from the favorites list?
-    @Query (filter: #Predicate<Tutor> {$0.isFavorite}) private var tutors: [Tutor]
+    //TODO: Filter the query by 
+    @Query private var tutors: [Tutor]
     @Environment(\.modelContext) private var modelContext
     var body: some View {
         NavigationStack{
