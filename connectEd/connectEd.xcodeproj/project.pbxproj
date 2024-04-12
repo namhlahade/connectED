@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4549BFEF2BC9EF7500C35577 /* EventService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFEE2BC9EF7500C35577 /* EventService.swift */; };
+		4549BFF22BC9EF9200C35577 /* CalendarChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFF12BC9EF9200C35577 /* CalendarChooser.swift */; };
+		4549BFF42BC9EFA600C35577 /* EventEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFF32BC9EFA600C35577 /* EventEditView.swift */; };
+		4549BFF62BC9EFD500C35577 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFF52BC9EFD500C35577 /* Place.swift */; };
+		4549BFF82BC9EFF700C35577 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFF72BC9EFF700C35577 /* Navigator.swift */; };
+		4549BFFA2BC9F00C00C35577 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFF92BC9F00C00C35577 /* Calendar.swift */; };
+		4549BFFC2BC9F0A200C35577 /* DateFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFFB2BC9F0A200C35577 /* DateFormatters.swift */; };
 		5B097E782BBE7DE40074CFB4 /* Tutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B097E772BBE7DE40074CFB4 /* Tutor.swift */; };
 		5B097E7A2BBE7F7D0074CFB4 /* FavoritesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B097E792BBE7F7D0074CFB4 /* FavoritesRow.swift */; };
 		5B097E7C2BC4E20C0074CFB4 /* PreviewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B097E7B2BC4E20C0074CFB4 /* PreviewContainer.swift */; };
@@ -28,6 +35,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4549BFEE2BC9EF7500C35577 /* EventService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventService.swift; sourceTree = "<group>"; };
+		4549BFF12BC9EF9200C35577 /* CalendarChooser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarChooser.swift; sourceTree = "<group>"; };
+		4549BFF32BC9EFA600C35577 /* EventEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEditView.swift; sourceTree = "<group>"; };
+		4549BFF52BC9EFD500C35577 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		4549BFF72BC9EFF700C35577 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
+		4549BFF92BC9F00C00C35577 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
+		4549BFFB2BC9F0A200C35577 /* DateFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatters.swift; sourceTree = "<group>"; };
 		5B097E772BBE7DE40074CFB4 /* Tutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutor.swift; sourceTree = "<group>"; };
 		5B097E792BBE7F7D0074CFB4 /* FavoritesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesRow.swift; sourceTree = "<group>"; };
 		5B097E7B2BC4E20C0074CFB4 /* PreviewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContainer.swift; sourceTree = "<group>"; };
@@ -60,12 +74,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4549BFE82BC9EF1600C35577 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				4549BFFB2BC9F0A200C35577 /* DateFormatters.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		4549BFED2BC9EF6500C35577 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4549BFEE2BC9EF7500C35577 /* EventService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		4549BFF02BC9EF8500C35577 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				4549BFF12BC9EF9200C35577 /* CalendarChooser.swift */,
+				4549BFF32BC9EFA600C35577 /* EventEditView.swift */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
 		5B097E762BBE7DDA0074CFB4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				5B097E772BBE7DE40074CFB4 /* Tutor.swift */,
 				9744D5822BBEDE0D00758135 /* Review.swift */,
 				5B097E7B2BC4E20C0074CFB4 /* PreviewContainer.swift */,
+				4549BFF52BC9EFD500C35577 /* Place.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -83,6 +123,8 @@
 				97C6B35A2BBE9D55002C8317 /* ProfileForm.swift */,
 				5B097E792BBE7F7D0074CFB4 /* FavoritesRow.swift */,
 				9744D5842BBEE2C000758135 /* ReviewRow.swift */,
+				4549BFF72BC9EFF700C35577 /* Navigator.swift */,
+				4549BFF92BC9F00C00C35577 /* Calendar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -106,6 +148,9 @@
 		977FA7A82BB1144A006CF4C2 /* connectEd */ = {
 			isa = PBXGroup;
 			children = (
+				4549BFF02BC9EF8500C35577 /* UIKit */,
+				4549BFED2BC9EF6500C35577 /* Services */,
+				4549BFE82BC9EF1600C35577 /* Utilities */,
 				97C6B35C2BBE9D5E002C8317 /* Widgets */,
 				5B097E762BBE7DDA0074CFB4 /* Models */,
 				97385D8F2BBAD50000BB8C8A /* Views */,
@@ -208,11 +253,18 @@
 				97385D972BBAD5A500BB8C8A /* Profile.swift in Sources */,
 				9744D5852BBEE2C000758135 /* ReviewRow.swift in Sources */,
 				97385D992BBAD5BF00BB8C8A /* TutorDetails.swift in Sources */,
+				4549BFF82BC9EFF700C35577 /* Navigator.swift in Sources */,
+				4549BFEF2BC9EF7500C35577 /* EventService.swift in Sources */,
+				4549BFFC2BC9F0A200C35577 /* DateFormatters.swift in Sources */,
 				97C6B35B2BBE9D55002C8317 /* ProfileForm.swift in Sources */,
 				5B097E7C2BC4E20C0074CFB4 /* PreviewContainer.swift in Sources */,
+				4549BFF22BC9EF9200C35577 /* CalendarChooser.swift in Sources */,
 				97385D9D2BBAD96200BB8C8A /* ReviewForm.swift in Sources */,
+				4549BFFA2BC9F00C00C35577 /* Calendar.swift in Sources */,
 				97385D932BBAD58300BB8C8A /* Search.swift in Sources */,
+				4549BFF62BC9EFD500C35577 /* Place.swift in Sources */,
 				97385D912BBAD57300BB8C8A /* Browse.swift in Sources */,
+				4549BFF42BC9EFA600C35577 /* EventEditView.swift in Sources */,
 				97C6B35E2BBE9D6C002C8317 /* TextFieldWithLabel.swift in Sources */,
 				9744D5832BBEDE0D00758135 /* Review.swift in Sources */,
 				97385D952BBAD59200BB8C8A /* Favorites.swift in Sources */,
@@ -361,13 +413,13 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.duke.njs40;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.duke.ndr19.connectEd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -393,13 +445,13 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.duke.njs40;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.duke.ndr19.connectEd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
