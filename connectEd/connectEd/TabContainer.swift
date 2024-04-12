@@ -28,12 +28,12 @@ struct TabContainer: View {
             .tabItem {
                 Label("Favorites", systemImage: "star.fill")
             }
-//            NavigationStack {
-//                Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", status: .online))
-//            }
-//            .tabItem {
-//                Label("Profile", systemImage: "person.fill")
-//            }
+            NavigationStack {
+                Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", status: .online))
+            }
+            .tabItem {
+                Label("Profile", systemImage: "person.fill")
+            }
         }
         
     }

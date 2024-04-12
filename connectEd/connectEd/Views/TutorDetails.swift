@@ -20,13 +20,13 @@ struct TutorDetails: View {
             Section(header: Text("Tutor")) {
                 Text(tutor.name)
             }
-//            Section(header: Text("Course to Cover")) {
-//                Picker("Course", selection: $selectedCourse) {
-//                    ForEach(tutor.courses ?? ["None"], id: \.self){ course in
+            Section(header: Text("Course to Cover")) {
+                Picker("Course", selection: $selectedCourse) {
+                    ForEach(tutor.courses ?? ["None"], id: \.self){ course in
 //                        Text(course).tag(course)
-//                    }
-//                }
-//            }
+                    }
+                }
+            }
             
             Section(header: Text("Session Duration")) {
                 Calendar()
