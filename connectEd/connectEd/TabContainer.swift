@@ -29,7 +29,7 @@ struct TabContainer: View {
                 Label("Favorites", systemImage: "star.fill")
             }
             NavigationStack {
-                Profile()
+                Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", status: .online))
             }
             .tabItem {
                 Label("Profile", systemImage: "person.fill")

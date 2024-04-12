@@ -13,6 +13,9 @@ xcuserdata
 
 # Build products
 build/
+cs207-env/
+proj-env/
+myenv/
 *.o
 *.LinkFileList
 *.hmap
@@ -23,3 +26,6 @@ build/
 *~
 *.dat
 *.dep
+
+# Others
+__pycache__
