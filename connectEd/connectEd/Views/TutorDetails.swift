@@ -5,8 +5,10 @@ import EventKit
 import CoreLocation
 
 struct TutorDetails: View {
+    @Bindable var tutor: Tutor
     let eventService = EventService()
-    @State private var conceptsToCover = ""
+    
+    @State private var selectedCourse = ""
     @State private var sessionDuration = 1
     @State private var price = 0.0
     @State private var selectedLocation: CLLocationCoordinate2D?
@@ -15,9 +17,16 @@ struct TutorDetails: View {
     
     var body: some View {
         Form {
-            Section(header: Text("Concepts to Cover")) {
-                TextField("Concepts", text: $conceptsToCover)
+            Section(header: Text("Tutor")) {
+                Text(tutor.name)
             }
+//            Section(header: Text("Course to Cover")) {
+//                Picker("Course", selection: $selectedCourse) {
+//                    ForEach(tutor.courses ?? ["None"], id: \.self){ course in
+//                        Text(course).tag(course)
+//                    }
+//                }
+//            }
             
             Section(header: Text("Session Duration")) {
                 Calendar()
@@ -38,10 +47,10 @@ struct TutorDetails: View {
             }) {
                 Text("Submit")
             }
-            .disabled(conceptsToCover.isEmpty) /*|| selectedLocation == nil)*/
+            .disabled(selectedCourse.isEmpty) /*|| selectedLocation == nil)*/
         }
         .navigationBarTitle("Tutor Details")
-       
+        
     }
     
     private func submit() {
@@ -49,14 +58,14 @@ struct TutorDetails: View {
     }
     
     func dateDisplay(for event: EKEvent) -> String {
-      DateFormatters.mediumDate(event.startDate)
+        DateFormatters.mediumDate(event.startDate)
     }
-
+    
     func timeDisplay(for event: EKEvent) -> String {
-      DateFormatters.timeRange(event.startDate, event.endDate)
+        DateFormatters.timeRange(event.startDate, event.endDate)
     }
 }
 
 #Preview {
-    TutorDetails()
+    TutorDetails(tutor: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE 500", "EGR 300"], status: .online))
 }

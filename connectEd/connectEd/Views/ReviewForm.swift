@@ -8,6 +8,7 @@ struct ReviewForm: View {
     @State private var additionalComments: String = ""
     
     let ratingScale = ["Poor", "Fair", "Average", "Good", "Excellent"]
+    let starColor = HexStringToColor(hex: "#3498eb").color
     
     var body: some View {
         Form {
@@ -32,7 +33,7 @@ struct ReviewForm: View {
                             self.rating = index
                         }) {
                             Image(systemName: self.getStarImageName(for: index))
-                                .foregroundColor(self.getStarColor(for: index))
+                                .foregroundColor(self.starColor)
                                 .font(.system(size: 25))
                         }.buttonStyle(.plain)
                         Spacer()
@@ -41,11 +42,11 @@ struct ReviewForm: View {
             }
             
             Section(header: Text("Clarity")) {
-                RatingSlider(value: $clarityRating, scale: ratingScale)
+                RatingSlider(value: $clarityRating, scale: ratingScale, color: starColor) // Pass star color to RatingSlider
             }
             
-            Section(header: Text("Understanding of Content")) {
-                RatingSlider(value: $understandingRating, scale: ratingScale)
+            Section(header: Text("Preparation")) {
+                RatingSlider(value: $understandingRating, scale: ratingScale, color: starColor) // Pass star color to RatingSlider
             }
             
             Section(header: Text("Additional Comments")) {
@@ -69,25 +70,19 @@ struct ReviewForm: View {
             return "star"
         }
     }
-
-    private func getStarColor(for index: Int) -> Color {
-        if index <= self.rating {
-            return .yellow
-        } else {
-            return .gray
-        }
-    }
 }
 
 struct RatingSlider: View {
     @Binding var value: Double
     let scale: [String]
+    let color: Color // Receive star color
     
     var body: some View {
         VStack {
             HStack {
                 Spacer()
                 Slider(value: $value, in: 0...Double(scale.count - 1), step: 1)
+                    .accentColor(color) // Set accent color for slider
                 Spacer()
             }
             HStack(spacing: 0) {
