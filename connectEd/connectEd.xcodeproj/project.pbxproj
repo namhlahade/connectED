@@ -23,6 +23,7 @@
 		977FA7AC2BB1144A006CF4C2 /* TabContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977FA7AB2BB1144A006CF4C2 /* TabContainer.swift */; };
 		977FA7AE2BB1144C006CF4C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 977FA7AD2BB1144C006CF4C2 /* Assets.xcassets */; };
 		977FA7B12BB1144C006CF4C2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 977FA7B02BB1144C006CF4C2 /* Preview Assets.xcassets */; };
+		978A1B222BC90F8900292D19 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978A1B212BC90F8900292D19 /* Course.swift */; };
 		97C6B35B2BBE9D55002C8317 /* ProfileForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C6B35A2BBE9D55002C8317 /* ProfileForm.swift */; };
 		97C6B35E2BBE9D6C002C8317 /* TextFieldWithLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C6B35D2BBE9D6C002C8317 /* TextFieldWithLabel.swift */; };
 /* End PBXBuildFile section */
@@ -45,6 +46,7 @@
 		977FA7AB2BB1144A006CF4C2 /* TabContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabContainer.swift; sourceTree = "<group>"; };
 		977FA7AD2BB1144C006CF4C2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		977FA7B02BB1144C006CF4C2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		978A1B212BC90F8900292D19 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		97C6B35A2BBE9D55002C8317 /* ProfileForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileForm.swift; sourceTree = "<group>"; };
 		97C6B35D2BBE9D6C002C8317 /* TextFieldWithLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -66,6 +68,7 @@
 				5B097E772BBE7DE40074CFB4 /* Tutor.swift */,
 				9744D5822BBEDE0D00758135 /* Review.swift */,
 				5B097E7B2BC4E20C0074CFB4 /* PreviewContainer.swift */,
+				978A1B212BC90F8900292D19 /* Course.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -208,6 +211,7 @@
 				97385D972BBAD5A500BB8C8A /* Profile.swift in Sources */,
 				9744D5852BBEE2C000758135 /* ReviewRow.swift in Sources */,
 				97385D992BBAD5BF00BB8C8A /* TutorDetails.swift in Sources */,
+				978A1B222BC90F8900292D19 /* Course.swift in Sources */,
 				97C6B35B2BBE9D55002C8317 /* ProfileForm.swift in Sources */,
 				5B097E7C2BC4E20C0074CFB4 /* PreviewContainer.swift in Sources */,
 				97385D9D2BBAD96200BB8C8A /* ReviewForm.swift in Sources */,

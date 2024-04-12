@@ -23,13 +23,13 @@ struct TabContainer: View {
                 Label("Search", systemImage: "magnifyingglass")
             }
             NavigationStack {
-                Favorites()
+                //Favorites()
             }
             .tabItem {
                 Label("Favorites", systemImage: "star.fill")
             }
             NavigationStack {
-                Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", status: .online))
+                Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false))
             }
             .tabItem {
                 Label("Profile", systemImage: "person.fill")
