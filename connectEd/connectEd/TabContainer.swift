@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct TabContainer: View {
+    let tutors: [Tutor]
     var body: some View {
         TabView {
             NavigationStack {
-                Browse()
+                Browse(tutors: tutors)
             }
             .tabItem {
                 Label("Browse", systemImage: "house.fill")
@@ -40,5 +41,5 @@ struct TabContainer: View {
 }
 
 #Preview {
-    TabContainer()
+    TabContainer(tutors: Tutor.previewData)
 }

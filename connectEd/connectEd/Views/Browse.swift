@@ -8,11 +8,21 @@
 import SwiftUI
 
 struct Browse: View {
+    let tutors: [Tutor]
     var body: some View {
-        Text("Browse page here. Whoever does this should also handle the backend request that returns all user listings (IMPORTANT: they will be in charge of creating whatever database structure we use on the backend in python).")
+        NavigationStack{
+            List(tutors) {
+                tutor in
+                FavoritesRow(tutor: tutor)
+            }
+            .navigationTitle("Your Saviors")
+            .onAppear {
+            }
+        }
+
     }
 }
 
 #Preview {
-    Browse()
+    Browse(tutors: Tutor.previewData)
 }
