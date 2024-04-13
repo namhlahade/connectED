@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-@Model
+@Observable
 class Tutor: Identifiable {
     var id = UUID()
     var name: String
@@ -73,7 +73,7 @@ extension Tutor {
     static func create(from formData: FormData, context: ModelContext) {
         let tutor = Tutor(name: formData.name, email: formData.email, courses: formData.courses, status: formData.status, isFavorite: false)
         Tutor.update(tutor, from: formData)
-        context.insert(tutor)
+        //context.insert(tutor)
     }
     
     static func update(_ tutor: Tutor, from formData: FormData) {

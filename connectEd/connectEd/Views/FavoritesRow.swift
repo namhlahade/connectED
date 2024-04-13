@@ -34,7 +34,7 @@ struct FavoritesRow: View {
 }
 
 #Preview {
-    let preview = PreviewContainer([Tutor.self])
+    //let preview = PreviewContainer([Tutor.self])
     let tutor = Tutor.previewData[0]
-    return FavoritesRow(tutor: tutor).modelContainer(preview.container)
+    return FavoritesRow(tutor: tutor)//.modelContainer(preview.container)
 }

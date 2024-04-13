@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 
-@Model
+@Observable
 class Course: Identifiable {
     var id = UUID()
     var subject: Tutor.Subject

@@ -3,10 +3,10 @@ import SwiftData
 
 struct Favorites: View {
     //TODO: Ability to add and delete tutor from the favorites list?
-    @Query (filter: #Predicate<Tutor> {$0.isFavorite}) private var tutors: [Tutor]
-    @Environment(\.modelContext) private var modelContext
+    /*@Query (filter: #Predicate<Tutor> {$0.isFavorite}) private var tutors: [Tutor]
+    @Environment(\.modelContext) private var modelContext*/
     var body: some View {
-        NavigationStack{
+        /*NavigationStack{
             List(tutors) {
                 tutor in
                 FavoritesRow(tutor: tutor)
@@ -19,14 +19,15 @@ struct Favorites: View {
                     }
                 }
             }
-        }
+        }*/
+        Text("no more swiftdata so no favorites")
     }
 }
 
 #Preview {
-    let preview = PreviewContainer([Tutor.self])
+    //let preview = PreviewContainer([Tutor.self])
     return NavigationStack {
         Favorites()
     }
-    .modelContainer(preview.container)
+    //.modelContainer(preview.container)
 }
