@@ -16,9 +16,8 @@ struct ProfileForm: View {
     @Binding var data: Tutor.FormData
     
     
-    @State private var dates: [[Date]] = [[dateGetter(time: "00:00"), dateGetter(time: "00:00")], [dateGetter(time: "00:00"), dateGetter(time: "00:00")], [dateGetter(time: "00:00"), dateGetter(time: "00:00")], [dateGetter(time: "00:00"), dateGetter(time: "00:00")], [dateGetter(time: "00:00"), dateGetter(time: "00:00")], [dateGetter(time: "00:00"), dateGetter(time: "00:00")], [dateGetter(time: "00:00"), dateGetter(time: "00:00")]]
-    
-    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    //@State private var times: [[Date]] = []
+    //@State private var days: [Days] = []
     
     var body: some View {
         
@@ -107,18 +106,43 @@ struct ProfileForm: View {
                     .font(.caption)
                 
                 // TODO: get this working with form data
-                ForEach(Array(days.enumerated()), id: \.offset) { index, element in
-                    
+                ForEach(Array($data.availability_times.enumerated()), id: \.offset) { index, element in
                     HStack {
+                        VStack (alignment: .leading) {
+                            Picker("", selection: $data.availability_days[index]) {
+                                ForEach(Tutor.Days.allCases) { day in
+                                    Text(day.rawValue.capitalized(with: nil))
+                                }
+                            }
+                            .pickerStyle(.menu)
+                            .labelsHidden()
+                            
+                            HStack {
+                                
+                                DatePicker("", selection: $data.availability_times[index][0], displayedComponents: [.hourAndMinute]).labelsHidden()
+                                
+                                Text("-")
+                                
+                                DatePicker("", selection: $data.availability_times[index][1], displayedComponents: [.hourAndMinute]).labelsHidden()
+                                
+                            }
+                        }
                         
-                        DatePicker(days[index], selection: $dates[index][0], displayedComponents: [.hourAndMinute])
+                        Spacer()
                         
-                        Text("-")
+                        Button("", systemImage: "x.circle") {
+                            data.availability_times.remove(at: index)
+                            data.availability_days.remove(at: index)
+                        }.buttonStyle(BorderlessButtonStyle())
                         
-                        DatePicker("", selection: $dates[index][1], displayedComponents: [.hourAndMinute]).labelsHidden()
                     }
                     
                 }
+                
+                Button("Add availability", systemImage: "plus.circle") {
+                    data.availability_times.append([dateGetter("00:00"), dateGetter("00:00")])
+                    data.availability_days.append(.sunday)
+                }.buttonStyle(BorderlessButtonStyle())
                 
                 
             }
@@ -135,7 +159,7 @@ struct ProfileForm: View {
     }
 }
 
-func dateGetter(time: String) -> Date {
+func dateGetter(_ time: String) -> Date {
     let formatter = DateFormatter()
     formatter.dateFormat = "HH:mm"
     return formatter.date(from: time)!
@@ -146,6 +170,6 @@ func dateGetter(time: String) -> Date {
      return ProfileForm(data: data)*/
     NavigationStack {
         //Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], image: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), status: .online, rating: 3.61, price: 23.99))
-        Profile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false, availability: [:]))
+        Profile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false, availability_days: [], availability_times: []))
     }
 }

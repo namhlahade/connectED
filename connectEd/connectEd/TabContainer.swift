@@ -30,7 +30,7 @@ struct TabContainer: View {
                 Label("Favorites", systemImage: "star.fill")
             }
             NavigationStack {
-                Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false))
+                Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false, availability_days: [], availability_times: []))
             }
             .tabItem {
                 Label("Profile", systemImage: "person.fill")

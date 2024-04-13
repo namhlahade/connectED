@@ -67,5 +67,5 @@ struct TutorDetails: View {
 }
 
 #Preview {
-    TutorDetails(tutor: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [Course(subject: .ece, code: "500")], status: .online, isFavorite: false))
+    TutorDetails(tutor: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false, availability_days: [], availability_times: []))
 }
