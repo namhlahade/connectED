@@ -17,6 +17,22 @@ struct Message: Hashable {
 extension Message {
     static let previewData: [Message] = [
         Message(messageContent: "This is User generated message", isCurrentUser: true),
-        Message(messageContent: "This is AI generated message", isCurrentUser: false)
+        Message(messageContent: "This is AI generated message", isCurrentUser: false),
+        Message(messageContent: "This is User generated message", isCurrentUser: true),
+        Message(messageContent: "This is AI generated message", isCurrentUser: false),
+        Message(messageContent: "This is User generated message", isCurrentUser: true),
+        Message(messageContent: "This is AI generated message", isCurrentUser: false),
+        Message(messageContent: "This is User generated message", isCurrentUser: true),
+        Message(messageContent: "This is AI generated message", isCurrentUser: false),
+        Message(messageContent: "This is User generated message", isCurrentUser: true),
+        Message(messageContent: "This is AI generated message", isCurrentUser: false),
+        Message(messageContent: "This is User generated message", isCurrentUser: true),
+        Message(messageContent: "This is AI generated message", isCurrentUser: false),
+        Message(messageContent: "This is User generated message", isCurrentUser: true),
+        Message(messageContent: "This is AI generated message", isCurrentUser: false),
+        Message(messageContent: "This is User generated message", isCurrentUser: true),
+        Message(messageContent: "This is AI generated message", isCurrentUser: false),
+        Message(messageContent: "This is User generated message", isCurrentUser: true),
+        Message(messageContent: "This is AI generated message", isCurrentUser: false),
     ]
 }
