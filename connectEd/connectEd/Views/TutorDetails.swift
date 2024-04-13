@@ -6,8 +6,6 @@ import CoreLocation
 
 struct TutorDetails: View {
     @Bindable var tutor: Tutor
-    let eventService = EventService()
-    
     @State private var selectedCourse = ""
     @State private var sessionDuration = 1
     @State private var price = 0.0
@@ -16,41 +14,35 @@ struct TutorDetails: View {
     @State private var visibleRegion: MKCoordinateRegion = .duke
     
     var body: some View {
-        Form {
-            Section(header: Text("Tutor")) {
-                Text(tutor.name)
-            }
-            /*Section(header: Text("Course to Cover")) {
-                Picker("Course", selection: $selectedCourse) {
-                    ForEach(tutor.courses, id: \.self){ course in
-//                        Text(course).tag(course)
-                    }
+            Form {
+                Section(header: Text("Tutor")) {
+                    Text(tutor.name)
                 }
-            }*/
-            
-            Section(header: Text("Session Duration")) {
-                Calendar()
-            }
-            
-            Section(header: Text("Price")) {
-                Slider(value: $price, in: 0...100, step: 1) {
-                    Text("Price: $\(price, specifier: "%.2f")")
+                /*Section(header: Text("Course to Cover")) {
+                 Picker("Course", selection: $selectedCourse) {
+                 ForEach(tutor.courses, id: \.self){ course in
+                 //                        Text(course).tag(course)
+                 }
+                 }
+                 }*/
+                
+                Section(header: Text("Session Duration")) {
+                    Calendar()
                 }
+                
+                
+                Section(header: Text("Meeting Location")) {
+                    Navigator()
+                }
+                
+                Button(action: {
+                    self.submit()
+                }) {
+                    Text("Submit")
+                }
+                .disabled(selectedCourse.isEmpty) /*|| selectedLocation == nil)*/
             }
-            
-            Section(header: Text("Meeting Location")) {
-                Navigator()
-            }
-            
-            Button(action: {
-                self.submit()
-            }) {
-                Text("Submit")
-            }
-            .disabled(selectedCourse.isEmpty) /*|| selectedLocation == nil)*/
-        }
-        .navigationBarTitle("Tutor Details")
-        
+            .navigationBarTitle("Tutor Details")
     }
     
     private func submit() {

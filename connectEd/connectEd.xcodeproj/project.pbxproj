@@ -39,6 +39,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		453FADB92BCA1C9C00A63F7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		4549BFEE2BC9EF7500C35577 /* EventService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventService.swift; sourceTree = "<group>"; };
 		4549BFF12BC9EF9200C35577 /* CalendarChooser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarChooser.swift; sourceTree = "<group>"; };
 		4549BFF32BC9EFA600C35577 /* EventEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEditView.swift; sourceTree = "<group>"; };
@@ -160,6 +161,7 @@
 		977FA7A82BB1144A006CF4C2 /* connectEd */ = {
 			isa = PBXGroup;
 			children = (
+				453FADB92BCA1C9C00A63F7B /* Info.plist */,
 				4549BFF02BC9EF8500C35577 /* UIKit */,
 				4549BFED2BC9EF6500C35577 /* Services */,
 				4549BFE82BC9EF1600C35577 /* Utilities */,
@@ -424,6 +426,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = connectEd/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -456,6 +459,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = connectEd/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
