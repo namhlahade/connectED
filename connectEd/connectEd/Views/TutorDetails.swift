@@ -22,7 +22,7 @@ struct TutorDetails: View {
             }
             Section(header: Text("Course to Cover")) {
                 Picker("Course", selection: $selectedCourse) {
-                    ForEach(tutor.courses ?? ["None"], id: \.self){ course in
+                    ForEach(tutor.courses, id: \.self){ course in
 //                        Text(course).tag(course)
                     }
                 }
@@ -67,5 +67,5 @@ struct TutorDetails: View {
 }
 
 #Preview {
-    TutorDetails(tutor: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE 500", "EGR 300"], status: .online))
+    TutorDetails(tutor: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [Course(subject: .ece, code: "500")], status: .online, isFavorite: false))
 }

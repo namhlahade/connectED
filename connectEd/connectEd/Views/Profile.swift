@@ -52,7 +52,7 @@ struct Profile: View {
                 Spacer()
                 
                 // TODO add dates functionality
-                ProfileSection(title: "Tutoring Information", sectionLabels: ["Courses", "Availability", "Price per hour"], sectionData: [(user.courses ?? ["None"]).sorted().joined(separator: ", "), "Availability here", user.price == nil ? "$0.00" : String(format: "$%.2f", user.price!)])
+                ProfileSection(title: "Tutoring Information", sectionLabels: ["Courses", "Availability", "Price per hour"], sectionData: [getCourselist(courses: user.courses), "Availability here", user.price == nil ? "$0.00" : String(format: "$%.2f", user.price!)])
                 
                 Spacer()
                 Spacer()
@@ -106,6 +106,17 @@ struct Profile: View {
     }
 }
 
+func getCourselist(courses: [Course]) -> String {
+    if courses.count == 0 {
+        return "No courses entered"
+    }
+    var courseList: String = ""
+    for i in courses {
+        courseList.append("\(i.subject.rawValue.uppercased()) \(i.code), ")
+    }
+    return String(courseList.prefix(courseList.count - 2))
+}
+
 struct ProfileSection: View {
     
     var title: String
@@ -133,6 +144,6 @@ struct ProfileSection: View {
 #Preview {
     NavigationStack {
         //Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], image: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), status: .online, rating: 3.61, price: 23.99))
-        Profile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", status: .online))
+        Profile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [Course(subject: .ece, code: "110")], status: .online, isFavorite: false))
     }
 }

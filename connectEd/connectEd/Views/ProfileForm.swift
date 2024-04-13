@@ -70,19 +70,28 @@ struct ProfileForm: View {
                     .bold()
                     .font(.caption)
                 
-                HStack {
-                    Picker("", selection: $data.courses) {
-                        ForEach(Tutor.Subject.allCases) { subject in
+                ForEach(Array($data.courses.enumerated()), id: \.offset) { index, element in
+                    HStack {
+                        
+                        Picker("", selection: $data.courses[index].subject) {
+                            ForEach(Tutor.Subject.allCases) { subject in
                                 Text(subject.rawValue.uppercased())
+                            }
                         }
+                        .pickerStyle(.menu)
+                        
+                        TextField("Class code", text: $data.courses[index].code, prompt: Text("Class code"))
+                        
+                        Button("", systemImage: "x.circle") {
+                            data.courses.remove(at: index)
+                        }.buttonStyle(BorderlessButtonStyle())
+                        
                     }
-                    .pickerStyle(.menu)
-                    
-                    TextField("Class code", value: $data.price, formatter: NumberFormatter(), prompt: Text("Class code"))
-                    
-                    // TODO have to figure out a way to make this viable for a variable number of courses
                 }
                 
+                Button("Add course", systemImage: "plus.circle") {
+                    data.courses.append(Course(subject: .ece, code: "101"))
+                }.buttonStyle(BorderlessButtonStyle())
                 
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -91,6 +100,7 @@ struct ProfileForm: View {
                 Text("Availability")
                     .bold()
                     .font(.caption)
+                
                 HStack {
                     Text("Sunday")
                     // TODO add times here
@@ -122,18 +132,23 @@ struct ProfileForm: View {
             }
             
             // TODO fix price so only number keyboard is available
-            //TextFieldWithLabel(label: "Price per hour", text: $data.price, prompt: "Enter your hourly rate")
             VStack(alignment: .leading) {
                 Text("Price per hour")
                     .modifier(FormLabel())
-                TextField("Price per hour", value: $data.price, formatter: NumberFormatter(), prompt: Text("Enter your hourly rate"))
-                    .padding(.bottom, 20)
+                HStack {
+                    Text("$")
+                    TextField("Price per hour", value: $data.price, formatter: NumberFormatter(), prompt: Text("Enter your hourly rate"))
+                }.padding(.bottom, 20)
             }
         }
     }
 }
 
 #Preview {
-    let data = Binding.constant(Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", status: .online).dataForForm)
-    return ProfileForm(data: data)
+    /*let data = Binding.constant(Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false).dataForForm)
+     return ProfileForm(data: data)*/
+    NavigationStack {
+        //Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], image: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), status: .online, rating: 3.61, price: 23.99))
+        Profile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false))
+    }
 }

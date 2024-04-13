@@ -14,7 +14,7 @@ class Tutor: Identifiable {
     var name: String
     var email: String
     var bio: String?
-    var courses: [String]?
+    var courses: [Course]
     var image: String?
     var status: Status
     var rating: Double?
@@ -22,7 +22,7 @@ class Tutor: Identifiable {
     var reviews: [Review]?
     var isFavorite: Bool
     
-    init(id: UUID = UUID(), name: String, email: String, bio: String? = nil, courses: [String]? = nil, image: String? = nil, status: Status, rating: Double? = nil, price: Double? = nil, reviews: [Review]? = nil, isFavorite: Bool = false) {
+    init(id: UUID = UUID(), name: String, email: String, bio: String? = nil, courses: [Course], image: String? = nil, status: Status, rating: Double? = nil, price: Double? = nil, reviews: [Review]? = nil, isFavorite: Bool) {
         self.id = id
         self.name = name
         self.email = email
@@ -51,7 +51,7 @@ extension Tutor {
         var name: String = ""
         var email: String = ""
         var bio: String = ""
-        var courses: [String] = []
+        var courses: [Course] = []
         var image: String = ""
         var status: Status = .online
         var price: Double = 0.0
@@ -63,7 +63,7 @@ extension Tutor {
             name: name,
             email: email,
             bio: bio ?? "",
-            courses: courses ?? [],
+            courses: courses,
             image: image ?? "",
             status: status,
             price: price ?? 0.0
@@ -71,7 +71,7 @@ extension Tutor {
     }
     
     static func create(from formData: FormData, context: ModelContext) {
-        let tutor = Tutor(name: formData.name, email: formData.email, status: formData.status)
+        let tutor = Tutor(name: formData.name, email: formData.email, courses: formData.courses, status: formData.status, isFavorite: false)
         Tutor.update(tutor, from: formData)
         context.insert(tutor)
     }
@@ -80,7 +80,7 @@ extension Tutor {
         tutor.name = formData.name
         tutor.email = formData.email
         tutor.bio = formData.bio.isEmpty ? nil : formData.bio
-        tutor.courses = formData.courses.isEmpty ? nil : formData.courses
+        tutor.courses = formData.courses
         tutor.image = formData.image.isEmpty ? nil : formData.image
         tutor.status = formData.status
         tutor.price = formData.price
@@ -88,20 +88,20 @@ extension Tutor {
 }
 
 extension Tutor {
-  enum Subject: String, Codable, CaseIterable, Identifiable {
-    var id: Self { self }
-    case ece
-    case cs
-    case egr
-    case phys
-    case chem
-  }
+    enum Subject: String, Codable, CaseIterable, Identifiable {
+        var id: Self { self }
+        case ece
+        case cs
+        case egr
+        case phys
+        case chem
+    }
 }
 
 extension Tutor {
     static let previewData: [Tutor] = [
-        Tutor(name: "James", email: "james@duke.edu", bio: "Random student", courses: [""], status: Status.online, isFavorite: true),
-        Tutor(name: "Namh", email: "namh@duke.edu", courses: [""], status: Status.offline, isFavorite: false)
+        Tutor(name: "James", email: "james@duke.edu", bio: "Random student", courses: [], status: Status.online, isFavorite: true),
+        Tutor(name: "Namh", email: "namh@duke.edu", courses: [], status: Status.offline, isFavorite: false)
     ]
 }
-        
+

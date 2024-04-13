@@ -25,6 +25,7 @@
 		97385D992BBAD5BF00BB8C8A /* TutorDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97385D982BBAD5BF00BB8C8A /* TutorDetails.swift */; };
 		97385D9B2BBAD62F00BB8C8A /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97385D9A2BBAD62F00BB8C8A /* Login.swift */; };
 		97385D9D2BBAD96200BB8C8A /* ReviewForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97385D9C2BBAD96200BB8C8A /* ReviewForm.swift */; };
+		97402E8B2BCA049700571E2E /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97402E8A2BCA049700571E2E /* Course.swift */; };
 		9744D5832BBEDE0D00758135 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9744D5822BBEDE0D00758135 /* Review.swift */; };
 		9744D5852BBEE2C000758135 /* ReviewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9744D5842BBEE2C000758135 /* ReviewRow.swift */; };
 		977FA7AA2BB1144A006CF4C2 /* connectEdApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977FA7A92BB1144A006CF4C2 /* connectEdApp.swift */; };
@@ -54,6 +55,7 @@
 		97385D982BBAD5BF00BB8C8A /* TutorDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorDetails.swift; sourceTree = "<group>"; };
 		97385D9A2BBAD62F00BB8C8A /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		97385D9C2BBAD96200BB8C8A /* ReviewForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewForm.swift; sourceTree = "<group>"; };
+		97402E8A2BCA049700571E2E /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		9744D5822BBEDE0D00758135 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		9744D5842BBEE2C000758135 /* ReviewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRow.swift; sourceTree = "<group>"; };
 		977FA7A62BB1144A006CF4C2 /* connectEd.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = connectEd.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,6 +111,7 @@
 				9744D5822BBEDE0D00758135 /* Review.swift */,
 				5B097E7B2BC4E20C0074CFB4 /* PreviewContainer.swift */,
 				4549BFF52BC9EFD500C35577 /* Place.swift */,
+				97402E8A2BCA049700571E2E /* Course.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 				9744D5832BBEDE0D00758135 /* Review.swift in Sources */,
 				97385D952BBAD59200BB8C8A /* Favorites.swift in Sources */,
 				977FA7AA2BB1144A006CF4C2 /* connectEdApp.swift in Sources */,
+				97402E8B2BCA049700571E2E /* Course.swift in Sources */,
 				5B097E7A2BBE7F7D0074CFB4 /* FavoritesRow.swift in Sources */,
 				97385D9B2BBAD62F00BB8C8A /* Login.swift in Sources */,
 			);
