@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-struct Profile: View {
+struct Profile_Test: View {
     
     @Bindable var user: Tutor
     
@@ -18,61 +18,56 @@ struct Profile: View {
     
     var body: some View {
         
-        ScrollView {
+        Form {
             
             // TODO: change this to a SwiftUI saved image
-            AsyncImage(url: URL(string: user.image ?? ""), content: { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-            }, placeholder: {
-                if user.image != nil {
-                    ProgressView()
-                } else {
-                    Image(systemName: "person.circle")
+            VStack (alignment: .center) {
+                AsyncImage(url: URL(string: user.image ?? ""), content: { image in
+                    image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
+                }, placeholder: {
+                    if user.image != nil {
+                        ProgressView()
+                    } else {
+                        Image(systemName: "person.circle")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    }
+                })
+                .frame(maxWidth: 200, maxHeight: 200)
+                .padding()
+                
+                HStack (alignment: .center) {
+                    Text("My rating:")
+                    Text(user.rating == nil ? "--/5" : String(format: "%.1f/5", user.rating!)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                 }
-            })
-            .frame(maxWidth: 200, maxHeight: 200)
+            }
+            .frame(maxWidth: .infinity, alignment: .center)
             .padding()
             
-            HStack (alignment: .center) {
-                Text("My rating:")
-                Text(user.rating == nil ? "--/5" : String(format: "%.1f/5", user.rating!)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-            }
             
-            Spacer()
-            Spacer()
             
-            VStack(alignment: .leading) {
-                
-                ProfileSection(title: "Account Information", sectionLabels: ["Name", "Email", "About me"], sectionData: [user.name, user.email, user.bio ?? "No bio entered"])
-                
-                Spacer()                
-                Spacer()
-                
-                // TODO: add dates functionality
-                ProfileSection(title: "Tutoring Information", sectionLabels: ["Courses", "Availability", "Price per hour"], sectionData: [getCourselist(courses: user.courses), "Availability here", user.price == nil ? "$0.00" : String(format: "$%.2f", user.price!)])
-                
-                Spacer()
-                Spacer()
-                
-                Text("My Reviews").font(.title2)
-                Spacer()
+            ProfileSection_Test(title: "Account Information", sectionLabels: ["Name", "Email", "About me"], sectionData: [user.name, user.email, user.bio ?? "No bio entered"])
+            
+            
+            // TODO: add dates functionality
+            ProfileSection_Test(title: "Tutoring Information", sectionLabels: ["Courses", "Availability", "Price per hour"], sectionData: [getCourselist_test(courses: user.courses), "Availability here", user.price == nil ? "$0.00" : String(format: "$%.2f", user.price!)])
+            
+            
+            Section(header: Text("My Reviews")) {
                 if (user.reviews == nil) {
                     Text("You currently have no reviews")
                 }
                 else {
                     List(user.reviews!) { review in
-                        // TODO: do review display stuff
+                        // TODO: do review row
                         ReviewRow(review: review)
                     }
                 }
-                
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding()
+            
+            
         }
         .navigationTitle("Profile")
         .toolbar {
@@ -108,7 +103,7 @@ struct Profile: View {
     }
 }
 
-func getCourselist(courses: [Course]) -> String {
+func getCourselist_test(courses: [Course]) -> String {
     if courses.count == 0 {
         return "No courses entered"
     }
@@ -119,25 +114,20 @@ func getCourselist(courses: [Course]) -> String {
     return String(courseList.prefix(courseList.count - 2))
 }
 
-struct ProfileSection: View {
+struct ProfileSection_Test: View {
     
     var title: String
     var sectionLabels: [String]
     var sectionData: [String]
     
     var body: some View {
-        VStack(alignment: .leading) {
-            
-            Text(title).font(.title2)
-            
-            Spacer()
-            
+        Section(header: Text(title)) {
             ForEach(sectionLabels.indices) { i in
-                Text(sectionLabels[i]).font(.title3).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                Text(sectionData[i])
-                Spacer()
+                VStack(alignment: .leading) {
+                    Text(sectionLabels[i]).font(.title3).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    Text(sectionData[i])
+                }
             }
-            
         }
     }
 }
@@ -145,6 +135,6 @@ struct ProfileSection: View {
 
 #Preview {
     NavigationStack {
-        Profile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [Course(subject: .ece, code: "110")], status: .online, isFavorite: false))
+        Profile_Test(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [Course(subject: .ece, code: "110")], status: .online, isFavorite: false))
     }
 }

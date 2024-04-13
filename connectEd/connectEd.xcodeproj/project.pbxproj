@@ -36,6 +36,7 @@
 		977FA7B12BB1144C006CF4C2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 977FA7B02BB1144C006CF4C2 /* Preview Assets.xcassets */; };
 		97C6B35B2BBE9D55002C8317 /* ProfileForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C6B35A2BBE9D55002C8317 /* ProfileForm.swift */; };
 		97C6B35E2BBE9D6C002C8317 /* TextFieldWithLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C6B35D2BBE9D6C002C8317 /* TextFieldWithLabel.swift */; };
+		97EDD35C2BCA5329002518B0 /* Profile_Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EDD35B2BCA5329002518B0 /* Profile_Test.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +70,7 @@
 		977FA7B02BB1144C006CF4C2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		97C6B35A2BBE9D55002C8317 /* ProfileForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileForm.swift; sourceTree = "<group>"; };
 		97C6B35D2BBE9D6C002C8317 /* TextFieldWithLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithLabel.swift; sourceTree = "<group>"; };
+		97EDD35B2BCA5329002518B0 /* Profile_Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile_Test.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,12 +130,12 @@
 				97385D922BBAD58300BB8C8A /* Search.swift */,
 				97385D942BBAD59200BB8C8A /* Favorites.swift */,
 				97385D962BBAD5A500BB8C8A /* Profile.swift */,
+				97EDD35B2BCA5329002518B0 /* Profile_Test.swift */,
 				97385D982BBAD5BF00BB8C8A /* TutorDetails.swift */,
 				97385D9A2BBAD62F00BB8C8A /* Login.swift */,
 				97385D9C2BBAD96200BB8C8A /* ReviewForm.swift */,
 				97C6B35A2BBE9D55002C8317 /* ProfileForm.swift */,
 				5B097E792BBE7F7D0074CFB4 /* FavoritesRow.swift */,
-				4549BFF92BC9F00C00C35577 /* Calendar.swift */,
 				9744D5842BBEE2C000758135 /* ReviewRow.swift */,
 				4549BFF72BC9EFF700C35577 /* Navigator.swift */,
 				4549BFF92BC9F00C00C35577 /* Calendar.swift */,
@@ -266,6 +268,7 @@
 				4549BFFE2BC9F25E00C35577 /* HexStringToColor.swift in Sources */,
 				97385D972BBAD5A500BB8C8A /* Profile.swift in Sources */,
 				9744D5852BBEE2C000758135 /* ReviewRow.swift in Sources */,
+				97EDD35C2BCA5329002518B0 /* Profile_Test.swift in Sources */,
 				97385D992BBAD5BF00BB8C8A /* TutorDetails.swift in Sources */,
 				4549BFF82BC9EFF700C35577 /* Navigator.swift in Sources */,
 				4549BFEF2BC9EF7500C35577 /* EventService.swift in Sources */,

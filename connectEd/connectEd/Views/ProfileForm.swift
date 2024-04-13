@@ -24,7 +24,7 @@ struct ProfileForm: View {
         
         Form {
             
-            // TODO have to get images actually changeable from library
+            // TODO: have to get images actually changeable from library
             VStack (alignment: .leading) {
                 AsyncImage(url: URL(string: data.image), content: { image in
                     image
