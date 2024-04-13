@@ -133,6 +133,7 @@
 				97385D9C2BBAD96200BB8C8A /* ReviewForm.swift */,
 				97C6B35A2BBE9D55002C8317 /* ProfileForm.swift */,
 				5B097E792BBE7F7D0074CFB4 /* FavoritesRow.swift */,
+				4549BFF92BC9F00C00C35577 /* Calendar.swift */,
 				9744D5842BBEE2C000758135 /* ReviewRow.swift */,
 				4549BFF72BC9EFF700C35577 /* Navigator.swift */,
 				4549BFF92BC9F00C00C35577 /* Calendar.swift */,

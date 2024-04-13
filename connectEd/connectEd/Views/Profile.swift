@@ -15,6 +15,7 @@ struct Profile: View {
     @State private var isPresentingEditForm: Bool = false
     @State private var editTutorFormData: Tutor.FormData = Tutor.FormData()
     
+    
     var body: some View {
         
         ScrollView {
@@ -48,7 +49,7 @@ struct Profile: View {
                 
                 ProfileSection(title: "Account Information", sectionLabels: ["Name", "Email", "About me"], sectionData: [user.name, user.email, user.bio ?? "No bio entered"])
                 
-                Spacer()
+                Spacer()                
                 Spacer()
                 
                 // TODO add dates functionality
@@ -143,7 +144,6 @@ struct ProfileSection: View {
 
 #Preview {
     NavigationStack {
-        //Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], image: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), status: .online, rating: 3.61, price: 23.99))
         Profile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [Course(subject: .ece, code: "110")], status: .online, isFavorite: false))
     }
 }

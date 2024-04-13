@@ -16,6 +16,10 @@ struct ProfileForm: View {
     @Binding var data: Tutor.FormData
     
     
+    @State private var dates: [[Date]] = [[dateGetter(time: "00:00"), dateGetter(time: "00:00")], [dateGetter(time: "00:00"), dateGetter(time: "00:00")], [dateGetter(time: "00:00"), dateGetter(time: "00:00")], [dateGetter(time: "00:00"), dateGetter(time: "00:00")], [dateGetter(time: "00:00"), dateGetter(time: "00:00")], [dateGetter(time: "00:00"), dateGetter(time: "00:00")], [dateGetter(time: "00:00"), dateGetter(time: "00:00")]]
+    
+    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    
     var body: some View {
         
         Form {
@@ -79,6 +83,7 @@ struct ProfileForm: View {
                             }
                         }
                         .pickerStyle(.menu)
+                        .labelsHidden()
                         
                         TextField("Class code", text: $data.courses[index].code, prompt: Text("Class code"))
                         
@@ -101,47 +106,39 @@ struct ProfileForm: View {
                     .bold()
                     .font(.caption)
                 
-                HStack {
-                    Text("Sunday")
-                    // TODO add times here
+                // TODO: get this working with form data
+                ForEach(Array(days.enumerated()), id: \.offset) { index, element in
+                    
+                    HStack {
+                        
+                        DatePicker(days[index], selection: $dates[index][0], displayedComponents: [.hourAndMinute])
+                        
+                        Text("-")
+                        
+                        DatePicker("", selection: $dates[index][1], displayedComponents: [.hourAndMinute]).labelsHidden()
+                    }
+                    
                 }
-                HStack {
-                    Text("Monday")
-                    // TODO add times here
-                }
-                HStack {
-                    Text("Tuesday")
-                    // TODO add times here
-                }
-                HStack {
-                    Text("Wednesday")
-                    // TODO add times here
-                }
-                HStack {
-                    Text("Thursday")
-                    // TODO add times here
-                }
-                HStack {
-                    Text("Friday")
-                    // TODO add times here
-                }
-                HStack {
-                    Text("Saturday")
-                    // TODO add times here
-                }
+                
+                
             }
             
-            // TODO fix price so only number keyboard is available
             VStack(alignment: .leading) {
                 Text("Price per hour")
                     .modifier(FormLabel())
                 HStack {
                     Text("$")
-                    TextField("Price per hour", value: $data.price, formatter: NumberFormatter(), prompt: Text("Enter your hourly rate"))
+                    TextField("Price per hour", value: $data.price, formatter: NumberFormatter(), prompt: Text("Enter your hourly rate")).keyboardType(.decimalPad)
                 }.padding(.bottom, 20)
             }
         }
     }
+}
+
+func dateGetter(time: String) -> Date {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "HH:mm"
+    return formatter.date(from: time)!
 }
 
 #Preview {
@@ -149,6 +146,6 @@ struct ProfileForm: View {
      return ProfileForm(data: data)*/
     NavigationStack {
         //Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], image: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), status: .online, rating: 3.61, price: 23.99))
-        Profile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false))
+        Profile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false, availability: [:]))
     }
 }

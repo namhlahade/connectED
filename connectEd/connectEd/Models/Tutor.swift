@@ -21,8 +21,9 @@ class Tutor: Identifiable {
     var price: Double?
     var reviews: [Review]?
     var isFavorite: Bool
+    var availability: [String: [Date]]
     
-    init(id: UUID = UUID(), name: String, email: String, bio: String? = nil, courses: [Course], image: String? = nil, status: Status, rating: Double? = nil, price: Double? = nil, reviews: [Review]? = nil, isFavorite: Bool) {
+    init(id: UUID = UUID(), name: String, email: String, bio: String? = nil, courses: [Course], image: String? = nil, status: Status, rating: Double? = nil, price: Double? = nil, reviews: [Review]? = nil, isFavorite: Bool, availability: [String : [Date]] = [:]) {
         self.id = id
         self.name = name
         self.email = email
@@ -34,6 +35,21 @@ class Tutor: Identifiable {
         self.price = price
         self.reviews = reviews
         self.isFavorite = isFavorite
+        self.availability = availability
+        if availability == [:] {
+            let days: [String] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
+            /*
+             formatter.dateFormat = "yyyy/MM/dd HH:mm
+             let someDateTime = formatter.date(from: "2016/10/08 22:31")
+             */
+            for day in days {
+                self.availability = [day: [formatter.date(from: "00:00")!, formatter.date(from: "00:00")!]]
+            }
+        }
+        
+        
     }
     
 }
@@ -55,6 +71,7 @@ extension Tutor {
         var image: String = ""
         var status: Status = .online
         var price: Double = 0.0
+        var availability: [String: [Date]] = ["Sunday": [], "Monday": [], "Tuesday": [], "Wednesday": [], "Thursday": [], "Friday": [], "Saturday": []]
     }
     
     var dataForForm: FormData {
@@ -66,7 +83,8 @@ extension Tutor {
             courses: courses,
             image: image ?? "",
             status: status,
-            price: price ?? 0.0
+            price: price ?? 0.0,
+            availability: [:]
         )
     }
     
@@ -84,6 +102,7 @@ extension Tutor {
         tutor.image = formData.image.isEmpty ? nil : formData.image
         tutor.status = formData.status
         tutor.price = formData.price
+        tutor.availability = formData.availability
     }
 }
 
@@ -100,8 +119,8 @@ extension Tutor {
 
 extension Tutor {
     static let previewData: [Tutor] = [
-        Tutor(name: "James", email: "james@duke.edu", bio: "Random student", courses: [], status: Status.online, isFavorite: true),
-        Tutor(name: "Namh", email: "namh@duke.edu", courses: [], status: Status.offline, isFavorite: false)
+        Tutor(name: "James", email: "james@duke.edu", bio: "Random student", courses: [], status: Status.online, isFavorite: true, availability: [:]),
+        Tutor(name: "Namh", email: "namh@duke.edu", courses: [], status: Status.offline, isFavorite: false, availability: [:])
     ]
 }
 
