@@ -12,7 +12,7 @@ if ENV == 'dev':
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:dukegoogle2024@localhost/connectED'
 else:
     app.debug = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://epsmdhaqmmiiwj:49ef018e5dcf73c387de1e4e0dab3ddf8ddce12074abb04f6cb7d4e2e27347c2@ec2-35-169-9-79.compute-1.amazonaws.com:5432/db31e15dlnktps'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://oxcsghlgduyvpl:98cfbd2078ee63e677026a4aa36670adc224b683cb156abf05198e6c177bf057@ec2-52-21-233-246.compute-1.amazonaws.com:5432/dclulukevhour9'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -28,12 +28,14 @@ class User(db.Model):
     rating = db.Column(db.Float)
     isOnline = db.Column(db.Boolean)
     image = db.Column(db.Text)
+    price = db.Column(db.Float, nullable=False)
     reviews_about_user = db.relationship('Review', backref='reviewed_user', lazy=True) # Look back at this
 
 
-    def __init__(self, name, email, bio=None, rating=None, isOnline=False, image=None):
+    def __init__(self, name, email, price, bio=None, rating=None, isOnline=False, image=None):
         self.name = name
         self.email = email
+        self.price = price
         self.bio = bio
         self.rating = rating
         self.isOnline = isOnline
@@ -61,7 +63,6 @@ class TutorClass(db.Model):
     __tablename__ = 'tutor_classes'
     uid = db.Column(db.Integer, db.ForeignKey('users.uid'), primary_key=True)
     cid = db.Column(db.Integer, db.ForeignKey('classes.cid'), primary_key=True)
-    price = db.Column(db.Float, nullable=False)
 
     def __init__(self, uid, cid, price):
         self.uid = uid
@@ -218,8 +219,6 @@ def addReview():
     tutor = User.query.get(tutorId)
     if not tutor:
         return jsonify({'error': 'Tutor not found'}), 404
-    
-    reviewRow = Review.query.filter_by(uid=tutorId, review=reviewContent)
 
     newReview = Review(uid=tutorId, review=reviewContent)
     db.session.add(newReview)
@@ -302,6 +301,8 @@ def viewAvailability():
     } for availability in availabilities]
 
     return jsonify(availability_data), 200
+
+# edit availability
 
 if __name__ == '__main__':
     app.run()

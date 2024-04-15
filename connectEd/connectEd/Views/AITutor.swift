@@ -40,12 +40,23 @@ struct MessageView: View {
 
 struct AITutor: View {
     let messages: [Message]
+    @State var prompt: String = ""
     var body: some View {
-        Text("Can't find your tutor? Ask Cipher")
-        ForEach(messages, id: \.self) { message in
-            MessageView(currentMessage: message)
-             
+        VStack{
+            Text("Can't find your tutor? Ask Cipher")
+            Spacer()
+            ScrollView{
+                ForEach(messages, id: \.self) { message in
+                    MessageView(currentMessage: message)
+                }
+            }
+            Spacer()
+            TextField(
+                "Input Prompt",
+                text: $prompt
+            ).padding()
         }
+
     }
 }
 
