@@ -12,7 +12,7 @@ if ENV == 'dev':
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:dukegoogle2024@localhost/connectED'
 else:
     app.debug = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://oxcsghlgduyvpl:98cfbd2078ee63e677026a4aa36670adc224b683cb156abf05198e6c177bf057@ec2-52-21-233-246.compute-1.amazonaws.com:5432/dclulukevhour9'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://foslwlwkzycouo:165fcf956a947fbff3d6e0ab81a37104d223b45845a9702089143b7705f4122d@ec2-44-213-151-75.compute-1.amazonaws.com:5432/d6gpk6kq03j10h'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -26,10 +26,10 @@ class User(db.Model):
     email = db.Column(db.Text, unique=True, nullable=False)
     bio = db.Column(db.Text)
     rating = db.Column(db.Float)
-    isOnline = db.Column(db.Boolean)
     image = db.Column(db.Text)
     price = db.Column(db.Float, nullable=False)
     reviews_about_user = db.relationship('Review', backref='reviewed_user', lazy=True) # Look back at this
+    tutor_classes = db.relationship('TutorClass', backref='tutor', lazy=True)
 
 
     def __init__(self, name, email, price, bio=None, rating=None, isOnline=False, image=None):
@@ -40,14 +40,6 @@ class User(db.Model):
         self.rating = rating
         self.isOnline = isOnline
         self.image = image
-
-class Class(db.Model):
-    __tablename__ = 'classes'
-    cid = db.Column(db.Integer, primary_key=True)
-    className = db.Column(db.Text, unique=True, nullable=False)
-
-    def __init__(self, className):
-        self.className = className
 
 class Review(db.Model):
     __tablename__ = 'reviews'
@@ -62,12 +54,11 @@ class Review(db.Model):
 class TutorClass(db.Model):
     __tablename__ = 'tutor_classes'
     uid = db.Column(db.Integer, db.ForeignKey('users.uid'), primary_key=True)
-    cid = db.Column(db.Integer, db.ForeignKey('classes.cid'), primary_key=True)
+    cid = db.Column(db.Text, primary_key=True)
 
     def __init__(self, uid, cid, price):
         self.uid = uid
         self.cid = cid
-        self.price = price
 
 class Availability(db.Model):
     __tablename__ = 'availabilities'
@@ -85,6 +76,24 @@ def testing():
 
 # Get all tutors -> Classes that the tutor teaches, availability, and profile information of tutor of tutor
 
+@app.route("/getTutorAndClass", methods=['POST'])
+def getTutorAndClass():
+    tutors = User.query.all()
+    tutors_data = []
+    for tutor in tutors:
+        tutor_info = {
+            'uid': tutor.uid,
+            'name': tutor.name,
+            'email': tutor.email,
+            'bio': tutor.bio,
+            'rating': tutor.rating,
+            'image': tutor.image,
+            'price': tutor.price,
+            'classes': [{'cid': tc.cid} for tc in tutor.tutor_classes]
+        }
+        tutors_data.append(tutor_info)
+
+    return jsonify(tutors_data)
 
 @app.route('/addTutor', methods=['POST'])
 def addTutor():
@@ -138,26 +147,6 @@ def getTutors():
         users_data.append(user_data)
     
     return {"users": users_data}
-
-@app.route('/addClass', methods=['POST'])
-def addClass():
-    data = request.get_json()
-    className = data.get('className')
-
-    existing_tutor = Class.query.filter_by(className=className).first()
-    if existing_tutor:
-        return jsonify({"error": "Class already exists"}), 400
-
-    newClass = Class(className=className)
-    db.session.add(newClass)
-    db.session.commit()
-    return jsonify({"message": "Class added successfully"}), 201 
-
-@app.route('/getClasses', methods=['GET'])
-def getClasses():
-    classes = Class.query.all()
-    classes_list = [{'cid': c.cid, 'className': c.className} for c in classes]
-    return jsonify(classes_list)
 
 @app.route('/addTutorClass', methods=['POST'])
 def addTutorClass():
