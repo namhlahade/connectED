@@ -78,22 +78,26 @@ def testing():
 
 @app.route("/getTutorAndClass", methods=['POST'])
 def getTutorAndClass():
-    tutors = User.query.all()
-    tutors_data = []
-    for tutor in tutors:
-        tutor_info = {
-            'uid': tutor.uid,
-            'name': tutor.name,
-            'email': tutor.email,
-            'bio': tutor.bio,
-            'rating': tutor.rating,
-            'image': tutor.image,
-            'price': tutor.price,
-            'classes': [{'cid': tc.cid} for tc in tutor.tutor_classes]
-        }
-        tutors_data.append(tutor_info)
+    try:
+        tutors = User.query.all()
+        tutors_data = []
+        for tutor in tutors:
+            tutor_info = {
+                'uid': tutor.uid,
+                'name': tutor.name,
+                'email': tutor.email,
+                'bio': tutor.bio,
+                'rating': tutor.rating,
+                'image': tutor.image,
+                'price': tutor.price,
+                'classes': [{'cid': tc.cid} for tc in tutor.tutor_classes]
+            }
+            tutors_data.append(tutor_info)
 
-    return jsonify(tutors_data)
+        return jsonify(tutors_data)
+    except Exception as e:
+        db.session.rollback()
+        return str(e), 500
 
 @app.route('/addTutor', methods=['POST'])
 def addTutor():
