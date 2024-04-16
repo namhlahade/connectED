@@ -122,7 +122,8 @@ extension Tutor {
 extension Tutor {
     static let previewData: [Tutor] = [
         Tutor(name: "James", email: "james@duke.edu", bio: "Random student", courses: [], status: Status.online, isFavorite: true, availability_days: [], availability_times: []),
-        Tutor(name: "Namh", email: "namh@duke.edu", courses: [], status: Status.offline, isFavorite: false, availability_days: [], availability_times: [])
+        Tutor(name: "Namh", email: "namh@duke.edu", courses: [], status: Status.offline, isFavorite: false, availability_days: [], availability_times: []),
+        Tutor(name: "Neel", email: "neel@duke.edu", courses: [], status: Status.offline, isFavorite: true, availability_days: [], availability_times: [])
     ]
 }
 
