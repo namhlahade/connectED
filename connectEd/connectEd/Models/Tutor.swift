@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 
+// Make Tutor Object Codable
 @Observable
 class Tutor: Identifiable {
     var id = UUID()

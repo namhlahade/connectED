@@ -80,8 +80,10 @@ class Availability(db.Model):
     tutor = db.relationship('User', backref='availabilities', lazy=True)
 
 @app.route('/testing', methods=['GET'])
-def testinf():
+def testing():
     return jsonify({'message': 'API itself is working'}), 200
+
+# Get all tutors -> Classes that the tutor teaches, availability, and profile information of tutor of tutor
 
 
 @app.route('/addTutor', methods=['POST'])
@@ -106,11 +108,15 @@ def addTutor():
     if 'image' in data:
         image = data.get('image')
 
+    price = None
+    if 'price' in data:
+        price = data.get('price')
+
     existing_tutor = User.query.filter_by(email=email).first()
     if existing_tutor:
         return jsonify({"error": "Email already exists"}), 400
 
-    tutor = User(name=name, email=email, bio=bio, rating=rating, isOnline=isOnline, image=image)
+    tutor = User(name=name, email=email, bio=bio, rating=rating, isOnline=isOnline, image=image, price=price)
     db.session.add(tutor)
     db.session.commit()
     return jsonify({"message": "User added successfully"}), 201
