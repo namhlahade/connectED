@@ -35,6 +35,12 @@ struct TabContainer: View {
             .tabItem {
                 Label("Profile", systemImage: "person.fill")
             }
+            NavigationStack {
+                AITutor()
+            }
+            .tabItem {
+                Label("Cipher", systemImage: "brain.head.profile")
+            }
         }
         
     }

@@ -15,6 +15,9 @@
 		4549BFFA2BC9F00C00C35577 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFF92BC9F00C00C35577 /* Calendar.swift */; };
 		4549BFFC2BC9F0A200C35577 /* DateFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFFB2BC9F0A200C35577 /* DateFormatters.swift */; };
 		4549BFFE2BC9F25E00C35577 /* HexStringToColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFFD2BC9F25E00C35577 /* HexStringToColor.swift */; };
+		4C2804222BCDDAEC00312524 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 4C2804212BCDDAEC00312524 /* OpenAI */; };
+		4C28042A2BCDE84B00312524 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2804292BCDE84B00312524 /* APIClient.swift */; };
+		4C28042C2BCDE86700312524 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C28042B2BCDE86700312524 /* APIError.swift */; };
 		4CE71C5B2BCA14BA003043AE /* AITutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE71C5A2BCA14BA003043AE /* AITutor.swift */; };
 		4CE71C5D2BCA1739003043AE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE71C5C2BCA1739003043AE /* Message.swift */; };
 		5B097E782BBE7DE40074CFB4 /* Tutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B097E772BBE7DE40074CFB4 /* Tutor.swift */; };
@@ -48,6 +51,8 @@
 		4549BFF92BC9F00C00C35577 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
 		4549BFFB2BC9F0A200C35577 /* DateFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatters.swift; sourceTree = "<group>"; };
 		4549BFFD2BC9F25E00C35577 /* HexStringToColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexStringToColor.swift; sourceTree = "<group>"; };
+		4C2804292BCDE84B00312524 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		4C28042B2BCDE86700312524 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		4CE71C5A2BCA14BA003043AE /* AITutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AITutor.swift; sourceTree = "<group>"; };
 		4CE71C5C2BCA1739003043AE /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		5B097E772BBE7DE40074CFB4 /* Tutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutor.swift; sourceTree = "<group>"; };
@@ -77,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C2804222BCDDAEC00312524 /* OpenAI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,6 +113,23 @@
 				4549BFF32BC9EFA600C35577 /* EventEditView.swift */,
 			);
 			path = UIKit;
+			sourceTree = "<group>";
+		};
+		4C2804232BCDDEFA00312524 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				4C2804282BCDE83000312524 /* API Client */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		4C2804282BCDE83000312524 /* API Client */ = {
+			isa = PBXGroup;
+			children = (
+				4C2804292BCDE84B00312524 /* APIClient.swift */,
+				4C28042B2BCDE86700312524 /* APIError.swift */,
+			);
+			path = "API Client";
 			sourceTree = "<group>";
 		};
 		5B097E762BBE7DDA0074CFB4 /* Models */ = {
@@ -161,6 +184,7 @@
 		977FA7A82BB1144A006CF4C2 /* connectEd */ = {
 			isa = PBXGroup;
 			children = (
+				4C2804232BCDDEFA00312524 /* API */,
 				453FADB92BCA1C9C00A63F7B /* Info.plist */,
 				4549BFF02BC9EF8500C35577 /* UIKit */,
 				4549BFED2BC9EF6500C35577 /* Services */,
@@ -208,6 +232,9 @@
 			dependencies = (
 			);
 			name = connectEd;
+			packageProductDependencies = (
+				4C2804212BCDDAEC00312524 /* OpenAI */,
+			);
 			productName = connectEd;
 			productReference = 977FA7A62BB1144A006CF4C2 /* connectEd.app */;
 			productType = "com.apple.product-type.application";
@@ -236,6 +263,9 @@
 				Base,
 			);
 			mainGroup = 977FA79D2BB1144A006CF4C2;
+			packageReferences = (
+				4C2804202BCDDAEC00312524 /* XCRemoteSwiftPackageReference "OpenAI" */,
+			);
 			productRefGroup = 977FA7A72BB1144A006CF4C2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -272,6 +302,7 @@
 				4549BFEF2BC9EF7500C35577 /* EventService.swift in Sources */,
 				4549BFFC2BC9F0A200C35577 /* DateFormatters.swift in Sources */,
 				97C6B35B2BBE9D55002C8317 /* ProfileForm.swift in Sources */,
+				4C28042C2BCDE86700312524 /* APIError.swift in Sources */,
 				5B097E7C2BC4E20C0074CFB4 /* PreviewContainer.swift in Sources */,
 				4549BFF22BC9EF9200C35577 /* CalendarChooser.swift in Sources */,
 				4CE71C5B2BCA14BA003043AE /* AITutor.swift in Sources */,
@@ -283,6 +314,7 @@
 				4549BFF42BC9EFA600C35577 /* EventEditView.swift in Sources */,
 				97C6B35E2BBE9D6C002C8317 /* TextFieldWithLabel.swift in Sources */,
 				9744D5832BBEDE0D00758135 /* Review.swift in Sources */,
+				4C28042A2BCDE84B00312524 /* APIClient.swift in Sources */,
 				4CE71C5D2BCA1739003043AE /* Message.swift in Sources */,
 				97385D952BBAD59200BB8C8A /* Favorites.swift in Sources */,
 				977FA7AA2BB1144A006CF4C2 /* connectEdApp.swift in Sources */,
@@ -501,6 +533,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4C2804202BCDDAEC00312524 /* XCRemoteSwiftPackageReference "OpenAI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MacPaw/OpenAI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.7;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4C2804212BCDDAEC00312524 /* OpenAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4C2804202BCDDAEC00312524 /* XCRemoteSwiftPackageReference "OpenAI" */;
+			productName = OpenAI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 977FA79E2BB1144A006CF4C2 /* Project object */;
 }
