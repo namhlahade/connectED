@@ -2,8 +2,8 @@ import SwiftUI
 import SwiftData
 
 struct Favorites: View {
-//    @Query (filter: #Predicate<Tutor> {$0.isFavorite}) private var tutors: [Tutor]
-//    @Environment(\.modelContext) private var modelContext
+    //    @Query (filter: #Predicate<Tutor> {$0.isFavorite}) private var tutors: [Tutor]
+    //    @Environment(\.modelContext) private var modelContext
     
     var tutors: [Tutor]
     @State var addFavorites = false
@@ -14,31 +14,35 @@ struct Favorites: View {
                 ForEach (tutors.filter {$0.isFavorite}) {
                     tutor in TutorRow(tutor: tutor)
                 }
-
+                
                 .onDelete(perform: removeFavorite)
                 .navigationTitle("Favorites")
-
-//                .onAppear {
-//                    if tutors.isEmpty {
-//                        for tutor in Tutor.previewData {
-//                            modelContext.insert(tutor)
-//                        }
-//                    }
-//                    
-//                }
+                
+                //                .onAppear {
+                //                    if tutors.isEmpty {
+                //                        for tutor in Tutor.previewData {
+                //                            modelContext.insert(tutor)
+                //                        }
+                //                    }
+                //
+                //                }
                 
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(destination: AddFavoritesScreen(tutors: tutors.filter {$0.isFavorite == false})) {
                         Text("Add")
+                    }
                 }
+                ToolbarItem(placement: .topBarLeading) {
+                    EditButton()
+                }
+                
             }
-        }
-
+            
             
         }
-
+        
     }
     func removeFavorite(at offsets: IndexSet) {
         for offset in offsets {
@@ -56,7 +60,7 @@ struct AddFavoritesScreen: View {
                 TutorRow(tutor: tutor)
                 Spacer()
                 Button("Add") {
-                    tutor.isFavorite = true
+                    tutor.isFavorite.toggle()
                 }
                 Image(systemName: tutor.isFavorite ?  "checkmark.circle.fill": "circle")
                     .foregroundStyle(tutor.isFavorite ? Color.green: Color.black)
@@ -67,9 +71,9 @@ struct AddFavoritesScreen: View {
 }
 
 #Preview {
-//    let preview = PreviewContainer([Tutor.self])
+    //    let preview = PreviewContainer([Tutor.self])
     return NavigationStack {
         Favorites(tutors: Tutor.previewData)
     }
-//    .modelContainer(preview.container)
+    //    .modelContainer(preview.container)
 }
