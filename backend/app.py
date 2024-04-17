@@ -76,7 +76,7 @@ def testing():
 
 # Get all tutors -> Classes that the tutor teaches, availability, and profile information of tutor of tutor
 
-@app.route("/getTutorAndClass", methods=['POST'])
+@app.route("/getTutorAndClass", methods=['GET'])
 def getTutorAndClass():
     try:
         tutors = User.query.all()
@@ -90,7 +90,7 @@ def getTutorAndClass():
                 'rating': tutor.rating,
                 'image': tutor.image,
                 'price': tutor.price,
-                'classes': [{'className': tc.className} for tc in tutor.tutor_classes]
+                'classes': [tc.className for tc in tutor.tutor_classes]
             }
             tutors_data.append(tutor_info)
 
