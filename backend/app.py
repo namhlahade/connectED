@@ -54,11 +54,11 @@ class Review(db.Model):
 class TutorClass(db.Model):
     __tablename__ = 'tutor_classes'
     uid = db.Column(db.Integer, db.ForeignKey('users.uid'), primary_key=True)
-    cid = db.Column(db.Text, primary_key=True)
+    className = db.Column(db.Text, primary_key=True)
 
-    def __init__(self, uid, cid, price):
+    def __init__(self, uid, className):
         self.uid = uid
-        self.cid = cid
+        self.className = className
 
 class Availability(db.Model):
     __tablename__ = 'availabilities'
@@ -90,7 +90,7 @@ def getTutorAndClass():
                 'rating': tutor.rating,
                 'image': tutor.image,
                 'price': tutor.price,
-                'classes': [{'cid': tc.cid} for tc in tutor.tutor_classes]
+                'classes': [{'className': tc.className} for tc in tutor.tutor_classes]
             }
             tutors_data.append(tutor_info)
 
@@ -124,57 +124,70 @@ def addTutor():
     price = None
     if 'price' in data:
         price = data.get('price')
+    
+    try:
+        existing_tutor = User.query.filter_by(email=email).first()
+        if existing_tutor:
+            return jsonify({"error": "Email already exists"}), 400
 
-    existing_tutor = User.query.filter_by(email=email).first()
-    if existing_tutor:
-        return jsonify({"error": "Email already exists"}), 400
-
-    tutor = User(name=name, email=email, bio=bio, rating=rating, isOnline=isOnline, image=image, price=price)
-    db.session.add(tutor)
-    db.session.commit()
-    return jsonify({"message": "User added successfully"}), 201
+        tutor = User(name=name, email=email, bio=bio, rating=rating, isOnline=isOnline, image=image, price=price)
+        db.session.add(tutor)
+        db.session.commit()
+        return jsonify({"message": "User added successfully"}), 201
+    
+    except Exception as e:
+        db.session.rollback()
+        return str(e), 500
 
 @app.route('/getTutors', methods=['GET'])
 def getTutors():
-    users = User.query.all()
-    users_data = []
-    for user in users:
-        user_data = {
-            'uid': user.uid,
-            'name': user.name,
-            'email': user.email,
-            'bio': user.bio,
-            'rating': user.rating,
-            'isOnline': user.isOnline,
-            'image': user.image,
-        }
-        users_data.append(user_data)
+    try:
+        users = User.query.all()
+        users_data = []
+        for user in users:
+            user_data = {
+                'uid': user.uid,
+                'name': user.name,
+                'email': user.email,
+                'bio': user.bio,
+                'rating': user.rating,
+                'isOnline': user.isOnline,
+                'image': user.image,
+            }
+            users_data.append(user_data)
+        
+        return {"users": users_data}
     
-    return {"users": users_data}
+    except Exception as e:
+        db.session.rollback()
+        return str(e), 500
 
 @app.route('/addTutorClass', methods=['POST'])
 def addTutorClass():
     data = request.get_json()
     tutorId = data.get('tutorId')
-    classId = data.get('classId')
+    newClass = data.get('class')
     price = data.get('price')
+    try:
+        user = User.query.filter_by(uid=tutorId).first()
 
-    user = User.query.filter_by(uid=tutorId).first()
-    class_ = Class.query.filter_by(cid=classId).first()
+        if not user:
+            return jsonify({'error': 'Tutor or Class not found'}), 404
 
-    if not user or not class_:
-        return jsonify({'error': 'Tutor or Class not found'}), 404
+        existing_tutor_class = TutorClass.query.filter_by(uid=tutorId, className=newClass).first()
+        if existing_tutor_class:
+            return jsonify({'error': 'Tutor class already exists'}), 400
 
-    existing_tutor_class = TutorClass.query.filter_by(uid=tutorId, cid=classId).first()
-    if existing_tutor_class:
-        return jsonify({'error': 'Tutor class already exists'}), 400
+        new_tutor_class = TutorClass(uid=tutorId, className=newClass, price=price)
 
-    new_tutor_class = TutorClass(uid=tutorId, cid=classId, price=price)
+        db.session.add(new_tutor_class)
+        db.session.commit()
 
-    db.session.add(new_tutor_class)
-    db.session.commit()
-
-    return jsonify({'message': 'Tutor class added successfully'}), 201
+        return jsonify({'message': 'Tutor class added successfully'}), 201
+    
+    except Exception as e:
+            db.session.rollback()
+            return str(e), 500
 
 
 @app.route('/getTutorClasses', methods=['POST'])
@@ -186,9 +199,7 @@ def getTutorClasses():
     if not tutor:
         return jsonify({'error': 'Tutor not found'}), 404
     tutor_classes = TutorClass.query.filter_by(uid=tutorId).all()
-    class_ids = [tc.cid for tc in tutor_classes]
-    classes = Class.query.filter(Class.cid.in_(class_ids)).all()
-    class_names = [cls.className for cls in classes]
+    class_names = [cls.className for cls in tutor_classes]
 
     return jsonify({'classes': class_names}), 200
 
@@ -196,12 +207,12 @@ def getTutorClasses():
 def deleteTutorClass():
     data = request.get_json()
     tutorId = data.get('tutorId')
-    classId = data.get('classId')
+    className = data.get('className')
 
-    if not tutorId or not classId:
-        return jsonify({'error': 'Missing tutorId or classId'}), 400
+    if not tutorId:
+        return jsonify({'error': 'Missing tutorId'}), 400
 
-    tutorClass = TutorClass.query.filter_by(uid=tutorId, cid=classId).first()
+    tutorClass = TutorClass.query.filter_by(uid=tutorId, className=className).first()
     if tutorClass:
         db.session.delete(tutorClass)
         db.session.commit()
