@@ -2,12 +2,10 @@ import SwiftUI
 import SwiftData
 
 struct Favorites: View {
-    //TODO: Ability to add tutor to the favorites list (will need to add favorites form)
 //    @Query (filter: #Predicate<Tutor> {$0.isFavorite}) private var tutors: [Tutor]
 //    @Environment(\.modelContext) private var modelContext
     
-    // Temporary line until SwiftData works again
-    var tutors = Tutor.previewData
+    var tutors: [Tutor]
     @State var addFavorites = false
     
     var body: some View {
@@ -34,9 +32,6 @@ struct Favorites: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(destination: AddFavoritesScreen(tutors: tutors.filter {$0.isFavorite == false})) {
                         Text("Add")
-//                    Button("Add") {
-//                        addFavorites.toggle()
-//                    }
                 }
             }
         }
@@ -52,12 +47,19 @@ struct Favorites: View {
     }
 }
 
+
 struct AddFavoritesScreen: View {
     @State var tutors: [Tutor]
     var body: some View {
         List(tutors) { tutor in
-            NavigationLink(destination: TutorDetails(tutor: tutor)){
+            HStack {
                 TutorRow(tutor: tutor)
+                Spacer()
+                Button("Add") {
+                    tutor.isFavorite = true
+                }
+                Image(systemName: tutor.isFavorite ?  "checkmark.circle.fill": "circle")
+                    .foregroundStyle(tutor.isFavorite ? Color.green: Color.black)
             }
             .navigationTitle("Add to Favorites")
         }
@@ -67,7 +69,7 @@ struct AddFavoritesScreen: View {
 #Preview {
 //    let preview = PreviewContainer([Tutor.self])
     return NavigationStack {
-        Favorites()
+        Favorites(tutors: Tutor.previewData)
     }
 //    .modelContainer(preview.container)
 }
