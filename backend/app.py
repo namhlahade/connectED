@@ -94,7 +94,7 @@ def getTutorAndClass():
             }
             tutors_data.append(tutor_info)
 
-        return jsonify(tutors_data)
+        return jsonify({"allTutors": tutors_data})
     except Exception as e:
         db.session.rollback()
         return str(e), 500
@@ -308,7 +308,7 @@ def viewAvailability():
         'availabilityId': availability.id
     } for availability in availabilities]
 
-    return jsonify(availability_data), 200
+    return jsonify({"tutorAvailability": availability_data}), 200
 
 # edit availability
 
