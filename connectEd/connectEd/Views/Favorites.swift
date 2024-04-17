@@ -8,15 +8,18 @@ struct Favorites: View {
     var tutors: [Tutor]
     @State var addFavorites = false
     
+    var favoriteTutors: [Tutor] {
+        tutors.filter {$0.isFavorite}
+    }
+    
     var body: some View {
         NavigationStack{
             List {
-                ForEach (tutors.filter {$0.isFavorite}) {
+                ForEach (favoriteTutors) {
                     tutor in TutorRow(tutor: tutor)
                 }
                 
                 .onDelete(perform: removeFavorite)
-                .navigationTitle("Favorites")
                 
                 //                .onAppear {
                 //                    if tutors.isEmpty {
@@ -42,11 +45,12 @@ struct Favorites: View {
             
             
         }
+        .navigationTitle("Favorites")
         
     }
     func removeFavorite(at offsets: IndexSet) {
         for offset in offsets {
-            tutors[offset].isFavorite = false
+            favoriteTutors[offset].isFavorite = false
         }
     }
 }
