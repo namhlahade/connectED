@@ -151,7 +151,6 @@ def getTutors():
                 'email': user.email,
                 'bio': user.bio,
                 'rating': user.rating,
-                'isOnline': user.isOnline,
                 'image': user.image,
             }
             users_data.append(user_data)
