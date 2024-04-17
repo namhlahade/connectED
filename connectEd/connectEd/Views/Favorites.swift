@@ -2,9 +2,6 @@ import SwiftUI
 import SwiftData
 
 struct Favorites: View {
-    //    @Query (filter: #Predicate<Tutor> {$0.isFavorite}) private var tutors: [Tutor]
-    //    @Environment(\.modelContext) private var modelContext
-    
     var tutors: [Tutor]
     @State var addFavorites = false
     
@@ -20,16 +17,6 @@ struct Favorites: View {
                 }
                 
                 .onDelete(perform: removeFavorite)
-                
-                //                .onAppear {
-                //                    if tutors.isEmpty {
-                //                        for tutor in Tutor.previewData {
-                //                            modelContext.insert(tutor)
-                //                        }
-                //                    }
-                //
-                //                }
-                
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -75,9 +62,7 @@ struct AddFavoritesScreen: View {
 }
 
 #Preview {
-    //    let preview = PreviewContainer([Tutor.self])
     return NavigationStack {
         Favorites(tutors: Tutor.previewData)
     }
-    //    .modelContainer(preview.container)
 }

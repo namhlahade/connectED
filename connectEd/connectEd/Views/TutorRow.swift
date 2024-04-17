@@ -47,7 +47,6 @@ struct TutorRow: View {
 }
 
 #Preview {
-    //let preview = PreviewContainer([Tutor.self])
     let tutor = Tutor.previewData[0]
-    return TutorRow(tutor: tutor)//.modelContainer(preview.container)
+    return TutorRow(tutor: tutor)
 }

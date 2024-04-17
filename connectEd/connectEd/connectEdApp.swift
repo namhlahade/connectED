@@ -14,6 +14,5 @@ struct connectEdApp: App {
         WindowGroup {
             TabContainer(tutors: Tutor.previewData)
         }
-        //.modelContainer(for: [Tutor.self])
     }
 }
