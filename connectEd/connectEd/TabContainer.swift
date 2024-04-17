@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct TabContainer: View {
-    let tutors: [Tutor]
+    @State var tutors: [Tutor]
     var body: some View {
         TabView {
             NavigationStack {
-                Search()
+                Search(tutors: tutors)
             }
             .tabItem {
                 Label("Search", systemImage: "magnifyingglass")

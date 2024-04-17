@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct FavoritesRow: View {
+struct TutorRow: View {
     @Bindable var tutor: Tutor
     var body: some View {
         HStack {
@@ -17,10 +17,23 @@ struct FavoritesRow: View {
                 Image(systemName: "person.fill")
             }
         }
+            //TODO: Maybe find a different way to display courses?
             VStack (alignment: .leading) {
                 Text(tutor.name).bold().font(.title)
                 Text(tutor.bio ?? "No Bio Info").foregroundStyle(Color.gray)
-                Text("Courses: ").bold()
+                HStack {
+                    Text("Courses: ").bold()
+                    if tutor.courses.isEmpty == false {
+                        ForEach(tutor.courses) {
+                            course in
+                            Text(course.subject.rawValue)
+                        }
+                    }
+                    else {
+                        Text("None")
+                    }
+                }
+
                 HStack {
                     Image(systemName: "circle.fill").foregroundStyle(tutor.status == .online ? Color.green : Color.red)
                     Text(tutor.status.rawValue.capitalized)
@@ -36,5 +49,5 @@ struct FavoritesRow: View {
 #Preview {
     //let preview = PreviewContainer([Tutor.self])
     let tutor = Tutor.previewData[0]
-    return FavoritesRow(tutor: tutor)//.modelContainer(preview.container)
+    return TutorRow(tutor: tutor)//.modelContainer(preview.container)
 }
