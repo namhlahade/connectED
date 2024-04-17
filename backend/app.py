@@ -166,7 +166,6 @@ def addTutorClass():
     data = request.get_json()
     tutorId = data.get('tutorId')
     newClass = data.get('class')
-    price = data.get('price')
     try:
         user = User.query.filter_by(uid=tutorId).first()
 
@@ -177,7 +176,7 @@ def addTutorClass():
         if existing_tutor_class:
             return jsonify({'error': 'Tutor class already exists'}), 400
 
-        new_tutor_class = TutorClass(uid=tutorId, className=newClass, price=price)
+        new_tutor_class = TutorClass(uid=tutorId, className=newClass)
 
         db.session.add(new_tutor_class)
         db.session.commit()
