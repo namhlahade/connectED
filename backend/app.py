@@ -165,7 +165,7 @@ def getTutors():
 def addTutorClass():
     data = request.get_json()
     tutorId = data.get('tutorId')
-    newClass = data.get('class')
+    newClass = data.get('className')
     try:
         user = User.query.filter_by(uid=tutorId).first()
 
