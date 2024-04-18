@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct Favorites: View {
+    //TODO: Sort the tutors based on online or offline
     var tutors: [Tutor]
     @State var addFavorites = false
     

@@ -19,24 +19,31 @@ struct TutorRow: View {
         }
             //TODO: Maybe find a different way to display courses?
             VStack (alignment: .leading) {
-                Text(tutor.name).bold().font(.title)
+                HStack {
+                    Text(tutor.name).bold().font(.title)
+                    Spacer()
+                    Image(systemName: "circle.fill").foregroundStyle(tutor.status == .online ? Color.green : Color.red)
+                    Text(tutor.status.rawValue.capitalized)
+                }
+                
                 Text(tutor.bio ?? "No Bio Info").foregroundStyle(Color.gray)
                 HStack {
                     Text("Courses: ").bold()
                     if tutor.courses.isEmpty == false {
-                        ForEach(tutor.courses) {
-                            course in
-                            Text(course.subject.rawValue)
+                        VStack {
+                            ForEach(tutor.courses) {
+                                course in
+                                Text(course.subject.rawValue.uppercased() + " " + course.code)
+                            }
                         }
                     }
                     else {
                         Text("None")
                     }
                 }
-
+                
                 HStack {
-                    Image(systemName: "circle.fill").foregroundStyle(tutor.status == .online ? Color.green : Color.red)
-                    Text(tutor.status.rawValue.capitalized)
+                    
                 }
                 
                 
@@ -47,6 +54,6 @@ struct TutorRow: View {
 }
 
 #Preview {
-    let tutor = Tutor.previewData[0]
+    let tutor = Tutor.previewData[1]
     return TutorRow(tutor: tutor)
 }

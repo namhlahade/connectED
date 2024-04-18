@@ -82,7 +82,6 @@ extension Tutor {
     static func create(from formData: FormData, context: ModelContext) {
         let tutor = Tutor(name: formData.name, email: formData.email, courses: formData.courses, status: formData.status, isFavorite: false, availability_days: [], availability_times: [])
         Tutor.update(tutor, from: formData)
-        //context.insert(tutor)
     }
     
     static func update(_ tutor: Tutor, from formData: FormData) {
@@ -122,8 +121,8 @@ extension Tutor {
 
 extension Tutor {
     static let previewData: [Tutor] = [
-        Tutor(name: "James", email: "james@duke.edu", bio: "Random student", courses: [], status: Status.online, isFavorite: true, availability_days: [], availability_times: []),
-        Tutor(name: "Namh", email: "namh@duke.edu", courses: [], status: Status.offline, isFavorite: false, availability_days: [], availability_times: []),
+        Tutor(name: "James", email: "james@duke.edu", bio: "Random student", courses: [Course(subject: .ece, code: "350")], status: Status.online, isFavorite: true, availability_days: [], availability_times: []),
+        Tutor(name: "Namh", email: "namh@duke.edu", courses: [Course(subject: .egr, code: "101"), Course(subject: .ece, code: "661")], status: Status.offline, isFavorite: false, availability_days: [], availability_times: []),
         Tutor(name: "Neel", email: "neel@duke.edu", courses: [], status: Status.offline, isFavorite: true, availability_days: [], availability_times: []),
         Tutor(name: "Namh Lahade", email: "namhlahade@duke.edu", courses: [], status: Status.offline, isFavorite: false, availability_days: [], availability_times: [])
     ]
