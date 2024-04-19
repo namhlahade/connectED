@@ -17,7 +17,6 @@ struct TutorRow: View {
                 Image(systemName: "person.fill")
             }
         }
-            //TODO: Maybe find a different way to display courses?
             VStack (alignment: .leading) {
                 HStack {
                     Text(tutor.name).bold().font(.title)
@@ -41,12 +40,6 @@ struct TutorRow: View {
                         Text("None")
                     }
                 }
-                
-                HStack {
-                    
-                }
-                
-                
             }
         }
         

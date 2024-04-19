@@ -2,23 +2,35 @@ import SwiftUI
 import SwiftData
 
 struct Search: View {
-    //TODO: Sort the tutors based on online or offline
     @State var searchText: String = ""
     @State var tutors: [Tutor]
+    
+    var availableTutors: [Tutor] {
+        tutors.filter {$0.status == Status.online}
+    }
+    
+    var unavailableTutors: [Tutor] {
+        tutors.filter {$0.status == Status.offline}
+    }
+    
     var body: some View {
-            List(tutors) { tutor in
-                NavigationLink(destination: TutorProfile(tutor: tutor)){
-                    TutorRow(tutor: tutor)
-                }
+        List(availableTutors) { tutor in
+            NavigationLink(destination: TutorProfile(tutor: tutor)){
+                TutorRow(tutor: tutor)
             }
-            .navigationTitle("Your Saviors")
-            .onAppear() {
-                tutors = Tutor.previewData
+        }
+        List(unavailableTutors) { tutor in
+            NavigationLink(destination: TutorProfile(tutor: tutor)){
+                TutorRow(tutor: tutor)
             }
+        }
+        .navigationTitle("Your Saviors")
         .searchable(text: $searchText)
     }
 }
 
 #Preview {
-    Search(tutors: Tutor.previewData)
+    NavigationStack {
+        Search(tutors: Tutor.previewData)
+    }
 }
