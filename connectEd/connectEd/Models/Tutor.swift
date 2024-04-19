@@ -19,12 +19,12 @@ class Tutor: Identifiable, Codable {
     var image: String?
     var status: Status // computed in the frontend
     var rating: Double
-    var price: Double?
+    var price: Double
     var reviews: [Review]
     var isFavorite: Bool
     var availability: [Availability]
     
-    init(id: UUID = UUID(), name: String, email: String, bio: String? = nil, courses: [Course], image: String? = nil, status: Status, rating: Double = 2.0, price: Double? = nil, reviews: [Review], isFavorite: Bool, availability: [Availability]) {
+    init(id: UUID = UUID(), name: String, email: String, bio: String? = nil, courses: [Course], image: String? = nil, status: Status, rating: Double = 2.0, price: Double = 15.00, reviews: [Review], isFavorite: Bool, availability: [Availability]) {
         self.id = id
         self.name = name
         self.email = email

@@ -36,7 +36,7 @@ struct TutorProfile: View {
                 
                 HStack (alignment: .center) {
                     Text("Rating:")
-                    Text(String(format: "%.1f/5", tutor.rating)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    Text(String(format: "%.1f/5", tutor.rating + 1.0)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .center)
@@ -62,7 +62,7 @@ struct TutorProfile: View {
             ProfileSection(title: "Account Information", sectionLabels: ["Email", "About"], sectionData: [tutor.email, tutor.bio ?? "No bio provided"])
             
             
-            ProfileSection(title: "Tutoring Information", sectionLabels: ["Courses", "Availability", "Price per hour"], sectionData: [tutor.courses.count == 0 ? "No courses provided" : getCourselist(courses: tutor.courses), tutor.availability.count == 0 ? "No availability provided" : printAvailability(availability: tutor.availability), tutor.price == nil ? "$0.00" : String(format: "$%.2f", tutor.price!)])
+            ProfileSection(title: "Tutoring Information", sectionLabels: ["Courses", "Availability", "Price per hour"], sectionData: [tutor.courses.count == 0 ? "No courses provided" : getCourselist(courses: tutor.courses), tutor.availability.count == 0 ? "No availability provided" : printAvailability(availability: tutor.availability), String(format: "$%.2f", tutor.price)])
             
             
             Section(header: Text("Reviews")) {
