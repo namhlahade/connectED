@@ -15,7 +15,7 @@ struct TabContainer: View {
                 Search(tutors: tutors)
             }
             .tabItem {
-                Label("Search", systemImage: "magnifyingglass")
+                Label("Browse", systemImage: "house.fill")
             }
             NavigationStack {
                 Favorites(tutors: tutors)

@@ -6,7 +6,6 @@ struct Search: View {
     @State var searchText: String = ""
     @State var tutors: [Tutor]
     var body: some View {
-        NavigationStack {
             List(tutors) { tutor in
                 NavigationLink(destination: TutorProfile(tutor: tutor)){
                     TutorRow(tutor: tutor)
@@ -16,7 +15,6 @@ struct Search: View {
             .onAppear() {
                 tutors = Tutor.previewData
             }
-        }
         .searchable(text: $searchText)
     }
 }
