@@ -19,11 +19,6 @@ struct Favorites: View {
                 .onDelete(perform: removeFavorite)
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: AddFavoritesScreen(tutors: tutors.filter {$0.isFavorite == false})) {
-                        Text("Add")
-                    }
-                }
                 ToolbarItem(placement: .topBarLeading) {
                     EditButton()
                 }
