@@ -13,7 +13,7 @@ struct Search: View {
     var unavailableTutors: [Tutor] {
         tutors.filter {$0.status == Status.offline}
     }
-        
+    
     
     var body: some View {
         //TODO: Use an if/else statement for simple search vs advanced search features with sheet/form
@@ -30,7 +30,7 @@ struct SimpleSearchScreen: View {
     var nameSearchAvailableTutors: [Tutor] {
         availableTutors.filter {$0.name.contains(searchText)}
     }
-            
+    
     var nameSearchUnavailableTutors: [Tutor] {
         unavailableTutors.filter {$0.name.contains(searchText)}
     }
