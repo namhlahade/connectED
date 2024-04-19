@@ -8,7 +8,7 @@ struct Search: View {
     var body: some View {
         NavigationStack {
             List(tutors) { tutor in
-                NavigationLink(destination: TutorDetails(tutor: tutor)){
+                NavigationLink(destination: TutorProfile(tutor: tutor)){
                     TutorRow(tutor: tutor)
                 }
             }

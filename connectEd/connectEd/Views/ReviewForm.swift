@@ -42,11 +42,11 @@ struct ReviewForm: View {
             }
             
             Section(header: Text("Clarity")) {
-                RatingSlider(value: $clarityRating, scale: ratingScale, color: starColor) // Pass star color to RatingSlider
+                RatingSlider(value: $clarityRating, scale: ratingScale, color: starColor)
             }
             
             Section(header: Text("Preparation")) {
-                RatingSlider(value: $understandingRating, scale: ratingScale, color: starColor) // Pass star color to RatingSlider
+                RatingSlider(value: $understandingRating, scale: ratingScale, color: starColor)
             }
             
             Section(header: Text("Additional Comments")) {
@@ -75,14 +75,14 @@ struct ReviewForm: View {
 struct RatingSlider: View {
     @Binding var value: Double
     let scale: [String]
-    let color: Color // Receive star color
+    let color: Color
     
     var body: some View {
         VStack {
             HStack {
                 Spacer()
                 Slider(value: $value, in: 0...Double(scale.count - 1), step: 1)
-                    .accentColor(color) // Set accent color for slider
+                    .accentColor(color)
                 Spacer()
             }
             HStack(spacing: 0) {
