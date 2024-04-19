@@ -27,7 +27,7 @@ struct TutorBookingScreen: View {
                 }
             }
             
-            ProfileSection(title: "Meeting Time", sectionLabels: ["\(tutor.name)'s Availability"], sectionData: [printAvailability(days: tutor.availability_days, times: tutor.availability_times)])
+            ProfileSection(title: "Meeting Time", sectionLabels: ["\(tutor.name)'s Availability"], sectionData: [printAvailability(availability: tutor.availability)])
             
             
             Section(header: Text("Meeting Location")) {
@@ -67,5 +67,5 @@ struct TutorBookingScreen: View {
 }
 
 #Preview {
-    TutorBookingScreen(tutor: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [Course(subject: .ece, code: "110"), Course(subject: .ece, code: "230")], status: .online, isFavorite: false, availability_days: [], availability_times: []))
+    TutorBookingScreen(tutor: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [Course(subject: .ece, code: "110"), Course(subject: .ece, code: "230")], status: .online, reviews: [], isFavorite: false, availability: []))
 }

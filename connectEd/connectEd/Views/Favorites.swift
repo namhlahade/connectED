@@ -2,7 +2,6 @@ import SwiftUI
 import SwiftData
 
 struct Favorites: View {
-    //TODO: Sort the tutors based on online or offline
     var tutors: [Tutor]
     @State var addFavorites = false
     
@@ -20,11 +19,6 @@ struct Favorites: View {
                 .onDelete(perform: removeFavorite)
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: AddFavoritesScreen(tutors: tutors.filter {$0.isFavorite == false})) {
-                        Text("Add")
-                    }
-                }
                 ToolbarItem(placement: .topBarLeading) {
                     EditButton()
                 }

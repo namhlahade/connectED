@@ -13,9 +13,10 @@ struct TabContainer: View {
         TabView {
             NavigationStack {
                 Search(tutors: tutors)
+                    .navigationTitle("Your Saviors")
             }
             .tabItem {
-                Label("Search", systemImage: "magnifyingglass")
+                Label("Browse", systemImage: "house.fill")
             }
             NavigationStack {
                 Favorites(tutors: tutors)
@@ -30,7 +31,7 @@ struct TabContainer: View {
                 Label("Cipher", systemImage: "brain.head.profile")
             }
             NavigationStack {
-                Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false, availability_days: [], availability_times: []))
+                UserProfile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [], isFavorite: false, availability: []))
             }
             .tabItem {
                 Label("Profile", systemImage: "person.fill")

@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-struct Profile: View {
+struct UserProfile: View {
     
     @Bindable var user: Tutor
     
@@ -51,15 +51,15 @@ struct Profile: View {
             ProfileSection(title: "Account Information", sectionLabels: ["Name", "Email", "About me"], sectionData: [user.name, user.email, user.bio ?? "No bio entered"])
             
             
-            ProfileSection(title: "Tutoring Information", sectionLabels: ["Courses", "Availability", "Price per hour"], sectionData: [getCourselist(courses: user.courses), printAvailability(days: user.availability_days, times: user.availability_times), user.price == nil ? "$0.00" : String(format: "$%.2f", user.price!)])
+            ProfileSection(title: "Tutoring Information", sectionLabels: ["Courses", "Availability", "Price per hour"], sectionData: [getCourselist(courses: user.courses), printAvailability(availability: user.availability), user.price == nil ? "$0.00" : String(format: "$%.2f", user.price!)])
             
             
             Section(header: Text("My Reviews")) {
-                if (user.reviews == nil) {
+                if (user.reviews.count == 0) {
                     Text("You currently have no reviews")
                 }
                 else {
-                    List(user.reviews!) { review in
+                    List(user.reviews) { review in
                         // TODO: do review row
                         ReviewRow(review: review)
                     }
@@ -113,8 +113,8 @@ func getCourselist(courses: [Course]) -> String {
     return String(courseList.prefix(courseList.count - 2))
 }
 
-func printAvailability(days: [Tutor.Days], times: [[Date]]) -> String {
-    if days.count == 0 {
+func printAvailability(availability: [Availability]) -> String {
+    if availability.count == 0 {
         return "No availability entered"
     }
     
@@ -123,8 +123,8 @@ func printAvailability(days: [Tutor.Days], times: [[Date]]) -> String {
     let formatter = DateFormatter()
     formatter.dateFormat = "h:mm a"
     
-    for (index, element) in days.enumerated() {
-        ret.append("\(days[index].rawValue.capitalized(with: nil)) \(formatter.string(from: times[index][0])) - \(formatter.string(from: times[index][1]))\n")
+    for (index, element) in availability.enumerated() {
+        ret.append("\(availability[index].day.rawValue.capitalized(with: nil)) \(formatter.string(from: availability[index].times[0])) - \(formatter.string(from: availability[index].times[1]))\n")
     }
     
     return String(ret.prefix(ret.count - 1))
@@ -151,6 +151,6 @@ struct ProfileSection: View {
 
 #Preview {
     NavigationStack {
-        Profile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false, availability_days: [], availability_times: []))
+        UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [], isFavorite: false, availability: []))
     }
 }

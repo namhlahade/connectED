@@ -8,17 +8,19 @@
 import Foundation
 import SwiftData
 
-@Model
-class Review: Identifiable {
-    var author: String
-    var date: Date
-    var rating: Int
-    var body: String
+@Observable
+class Review: Identifiable, Codable {
+    var email: String
+    var rating: Double
+    var clarity: Double
+    var prep: Double
+    var review: String
     
-    init(author: String, date: Date, rating: Int, body: String) {
-        self.author = author
-        self.date = date
+    init(email: String, rating: Double, clarity: Double, prep: Double, review: String) {
+        self.email = email
         self.rating = rating
-        self.body = body
+        self.clarity = clarity
+        self.prep = prep
+        self.review = review
     }
 }
