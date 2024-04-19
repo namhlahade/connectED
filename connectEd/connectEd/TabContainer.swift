@@ -13,6 +13,7 @@ struct TabContainer: View {
         TabView {
             NavigationStack {
                 Search(tutors: tutors)
+                    .navigationTitle("Your Saviors")
             }
             .tabItem {
                 Label("Browse", systemImage: "house.fill")

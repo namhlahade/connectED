@@ -108,7 +108,8 @@ extension Tutor {
         Tutor(name: "James", email: "james@duke.edu", bio: "Random student", courses: [Course(subject: .ece, code: "350")], status: Status.online, reviews: [], isFavorite: true,  availability: []),
         Tutor(name: "Namh", email: "namh@duke.edu", courses: [Course(subject: .egr, code: "101"), Course(subject: .ece, code: "661")], status: Status.offline, reviews: [], isFavorite: false,  availability: []),
         Tutor(name: "Neel", email: "neel@duke.edu", courses: [], status: Status.offline, reviews: [], isFavorite: true,  availability: []),
-        Tutor(name: "Namh Lahade", email: "namhlahade@duke.edu", courses: [], status: Status.offline, reviews: [], isFavorite: false,  availability: [])
+        Tutor(name: "Namh Lahade", email: "namhlahade@duke.edu", courses: [], status: Status.offline, reviews: [], isFavorite: false,  availability: []),
+        Tutor(name: "Nick", email: "neel@duke.edu", courses: [], status: Status.online, reviews: [], isFavorite: true,  availability: []),
     ]
 }
 
