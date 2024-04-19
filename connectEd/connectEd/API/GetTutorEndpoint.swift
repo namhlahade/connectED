@@ -1,13 +1,13 @@
 //
-//  AddTutorEndpoint.swift
+//  GetTutorEndpoint.swift
 //  connectEd
 //
-//  Created by Namh Lahade on 4/17/24.
+//  Created by Namh Lahade on 4/19/24.
 //
 
 import Foundation
 
-class AddTutorAPI: APIClient {
+class GetTutorAPI: APIClient {
     var session: URLSession
     
     init(session: URLSession = .shared) {
@@ -15,7 +15,7 @@ class AddTutorAPI: APIClient {
     }
     
     func addTutor(tutor: TutorStruct) async throws -> AddAPIResponse {
-        let url = "https://shielded-ocean-89788-33c0d45404d1.herokuapp.com/addTutor"
+        let url = "https://shielded-ocean-89788-33c0d45404d1.herokuapp.com/getTutors"
         let encoder = JSONEncoder()
         let jsonData = try encoder.encode(tutor)
         
@@ -24,12 +24,4 @@ class AddTutorAPI: APIClient {
         
 
     }
-}
-
-struct TutorStruct: Codable {
-    var name: String
-    var email: String
-    var bio: String
-    var price: Double
-    var image: String?
 }

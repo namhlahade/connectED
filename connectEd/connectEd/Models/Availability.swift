@@ -7,7 +7,8 @@
 
 import Foundation
 
-class Availability: Identifiable {
+@Observable
+class Availability: Identifiable, Codable {
     var id = UUID()
     var day: Day
     var times: [Date]

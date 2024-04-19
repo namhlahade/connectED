@@ -10,3 +10,4 @@ import Foundation
 struct AddAPIResponse: Decodable {
     let message: String
 }
+

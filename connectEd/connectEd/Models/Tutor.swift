@@ -10,14 +10,14 @@ import SwiftData
 
 // Make Tutor Object Codable
 @Observable
-class Tutor: Identifiable {
+class Tutor: Identifiable, Codable {
     var id = UUID()
     var name: String
     var email: String
     var bio: String?
     var courses: [Course]
     var image: String?
-    var status: Status
+    var status: Status // computed in the frontend
     var rating: Double?
     var price: Double?
     var reviews: [Review]
