@@ -12,7 +12,6 @@ struct ReviewRow: View {
     var review: Review
     
     var body: some View {
-        // TODO: add list of reviews here when Review datastructure is available
         Text("review info will go here to display")
     }
 }

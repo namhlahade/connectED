@@ -19,6 +19,7 @@
 		4C14A2E92BD2D6510051FDA8 /* AddTutorLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A2E82BD2D6510051FDA8 /* AddTutorLoader.swift */; };
 		4C14A2EB2BD2DD150051FDA8 /* GetTutorEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A2EA2BD2DD150051FDA8 /* GetTutorEndpoint.swift */; };
 		4C14A2ED2BD2DD2B0051FDA8 /* GetTutorLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A2EC2BD2DD2B0051FDA8 /* GetTutorLoader.swift */; };
+		4C14A2F12BD2ECFB0051FDA8 /* TutorsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A2F02BD2ECFB0051FDA8 /* TutorsResponse.swift */; };
 		4C25DB592BD070C50089496B /* AddAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C25DB582BD070C50089496B /* AddAPIResponse.swift */; };
 		4C25DB5B2BD070E80089496B /* AddTutorEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C25DB5A2BD070E80089496B /* AddTutorEndpoint.swift */; };
 		4C25DB5D2BD076150089496B /* TutorClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C25DB5C2BD076150089496B /* TutorClasses.swift */; };
@@ -62,6 +63,7 @@
 		4C14A2E82BD2D6510051FDA8 /* AddTutorLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTutorLoader.swift; sourceTree = "<group>"; };
 		4C14A2EA2BD2DD150051FDA8 /* GetTutorEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTutorEndpoint.swift; sourceTree = "<group>"; };
 		4C14A2EC2BD2DD2B0051FDA8 /* GetTutorLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTutorLoader.swift; sourceTree = "<group>"; };
+		4C14A2F02BD2ECFB0051FDA8 /* TutorsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorsResponse.swift; sourceTree = "<group>"; };
 		4C25DB582BD070C50089496B /* AddAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAPIResponse.swift; sourceTree = "<group>"; };
 		4C25DB5A2BD070E80089496B /* AddTutorEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTutorEndpoint.swift; sourceTree = "<group>"; };
 		4C25DB5C2BD076150089496B /* TutorClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorClasses.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				979390D62BD233790093776F /* Availability.swift */,
 				4C25DB582BD070C50089496B /* AddAPIResponse.swift */,
 				4C25DB5C2BD076150089496B /* TutorClasses.swift */,
+				4C14A2F02BD2ECFB0051FDA8 /* TutorsResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -324,6 +327,7 @@
 				4549BFF82BC9EFF700C35577 /* Navigator.swift in Sources */,
 				4549BFEF2BC9EF7500C35577 /* EventService.swift in Sources */,
 				4549BFFC2BC9F0A200C35577 /* DateFormatters.swift in Sources */,
+				4C14A2F12BD2ECFB0051FDA8 /* TutorsResponse.swift in Sources */,
 				4C25DB5B2BD070E80089496B /* AddTutorEndpoint.swift in Sources */,
 				4C14A2ED2BD2DD2B0051FDA8 /* GetTutorLoader.swift in Sources */,
 				97C6B35B2BBE9D55002C8317 /* ProfileForm.swift in Sources */,

@@ -20,7 +20,7 @@ class AddTutorLoader {
     }
     
     @MainActor
-    func loadSynopsisData(tutor: TutorStruct) async {
+    func addTutorInfo(tutor: AddTutorStruct) async {
         self.state = .loading
         do {
             let response = try await apiClient.addTutor(tutor: tutor)

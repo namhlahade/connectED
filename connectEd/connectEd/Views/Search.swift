@@ -14,12 +14,7 @@ struct Search: View {
         tutors.filter {$0.status == Status.offline}
     }
     
-    
-    
-    
     var body: some View {
-        //TODO: Use an if/else statement for simple search vs advanced search features with sheet/form
-        //TODO: Use an original screen with propogated tutors and send it using a NavigationLink to two different screens
         var nameSearchAvailableTutors: [Tutor] {
             availableTutors.filter {$0.name.contains(searchText)}
         }
@@ -27,7 +22,6 @@ struct Search: View {
         var nameSearchUnavailableTutors: [Tutor] {
             unavailableTutors.filter {$0.name.contains(searchText)}
         }
-        
         
         List(searchText == "" ? availableTutors: nameSearchAvailableTutors) { tutor in
             NavigationLink(destination: TutorProfile(tutor: tutor)){

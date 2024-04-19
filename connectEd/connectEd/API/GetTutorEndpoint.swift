@@ -14,14 +14,11 @@ class GetTutorAPI: APIClient {
         self.session = session
     }
     
-    func addTutor(tutor: TutorStruct) async throws -> AddAPIResponse {
+    func getTutor() async throws -> TutorsResponse {
         let url = "https://shielded-ocean-89788-33c0d45404d1.herokuapp.com/getTutors"
-        let encoder = JSONEncoder()
-        let jsonData = try encoder.encode(tutor)
-        
-        let response: AddAPIResponse = try await performPostRequest(url: url, data: jsonData)
+        let response: TutorsResponse = try await performRequest(url: url)
+        print(response)
         return response
-        
-
     }
 }
+

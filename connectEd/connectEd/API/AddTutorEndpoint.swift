@@ -14,7 +14,7 @@ class AddTutorAPI: APIClient {
         self.session = session
     }
     
-    func addTutor(tutor: TutorStruct) async throws -> AddAPIResponse {
+    func addTutor(tutor: AddTutorStruct) async throws -> AddAPIResponse {
         let url = "https://shielded-ocean-89788-33c0d45404d1.herokuapp.com/addTutor"
         let encoder = JSONEncoder()
         let jsonData = try encoder.encode(tutor)
@@ -26,7 +26,7 @@ class AddTutorAPI: APIClient {
     }
 }
 
-struct TutorStruct: Codable {
+struct AddTutorStruct: Codable {
     var name: String
     var email: String
     var bio: String
