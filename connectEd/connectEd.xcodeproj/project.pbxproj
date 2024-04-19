@@ -24,6 +24,9 @@
 		4C14A2F12BD2ECFB0051FDA8 /* TutorsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A2F02BD2ECFB0051FDA8 /* TutorsResponse.swift */; };
 		4C14A2F32BD2FC640051FDA8 /* EmailStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A2F22BD2FC640051FDA8 /* EmailStruct.swift */; };
 		4C14A2F52BD302B10051FDA8 /* GetTutorInfoLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A2F42BD302B00051FDA8 /* GetTutorInfoLoader.swift */; };
+		4C14A2F72BD3129D0051FDA8 /* FavoriteInputStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A2F62BD3129D0051FDA8 /* FavoriteInputStruct.swift */; };
+		4C14A2F92BD312E00051FDA8 /* AddFavoriteEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A2F82BD312E00051FDA8 /* AddFavoriteEndpoint.swift */; };
+		4C14A2FC2BD3139B0051FDA8 /* AddFavoriteLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A2FB2BD3139B0051FDA8 /* AddFavoriteLoader.swift */; };
 		4C25DB592BD070C50089496B /* AddAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C25DB582BD070C50089496B /* AddAPIResponse.swift */; };
 		4C25DB5B2BD070E80089496B /* AddTutorEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C25DB5A2BD070E80089496B /* AddTutorEndpoint.swift */; };
 		4C2804222BCDDAEC00312524 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 4C2804212BCDDAEC00312524 /* OpenAI */; };
@@ -71,6 +74,9 @@
 		4C14A2F02BD2ECFB0051FDA8 /* TutorsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorsResponse.swift; sourceTree = "<group>"; };
 		4C14A2F22BD2FC640051FDA8 /* EmailStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailStruct.swift; sourceTree = "<group>"; };
 		4C14A2F42BD302B00051FDA8 /* GetTutorInfoLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTutorInfoLoader.swift; sourceTree = "<group>"; };
+		4C14A2F62BD3129D0051FDA8 /* FavoriteInputStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteInputStruct.swift; sourceTree = "<group>"; };
+		4C14A2F82BD312E00051FDA8 /* AddFavoriteEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFavoriteEndpoint.swift; sourceTree = "<group>"; };
+		4C14A2FB2BD3139B0051FDA8 /* AddFavoriteLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFavoriteLoader.swift; sourceTree = "<group>"; };
 		4C25DB582BD070C50089496B /* AddAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAPIResponse.swift; sourceTree = "<group>"; };
 		4C25DB5A2BD070E80089496B /* AddTutorEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTutorEndpoint.swift; sourceTree = "<group>"; };
 		4C2804292BCDE84B00312524 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
@@ -127,6 +133,7 @@
 				4C14A2E82BD2D6510051FDA8 /* AddTutorLoader.swift */,
 				4C14A2EC2BD2DD2B0051FDA8 /* GetTutorLoader.swift */,
 				4C14A2F42BD302B00051FDA8 /* GetTutorInfoLoader.swift */,
+				4C14A2FB2BD3139B0051FDA8 /* AddFavoriteLoader.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -162,6 +169,7 @@
 				4C2804282BCDE83000312524 /* API Client */,
 				4C25DB5A2BD070E80089496B /* AddTutorEndpoint.swift */,
 				4C14A2EA2BD2DD150051FDA8 /* GetTutorEndpoint.swift */,
+				4C14A2F82BD312E00051FDA8 /* AddFavoriteEndpoint.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -188,6 +196,7 @@
 				4C25DB582BD070C50089496B /* AddAPIResponse.swift */,
 				4C14A2F02BD2ECFB0051FDA8 /* TutorsResponse.swift */,
 				4C14A2F22BD2FC640051FDA8 /* EmailStruct.swift */,
+				4C14A2F62BD3129D0051FDA8 /* FavoriteInputStruct.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -350,6 +359,7 @@
 				97385D992BBAD5BF00BB8C8A /* TutorBookingScreen.swift in Sources */,
 				45F5332F2BD1FCF60009ED9E /* TutorProfile.swift in Sources */,
 				4549BFF82BC9EFF700C35577 /* Navigator.swift in Sources */,
+				4C14A2FC2BD3139B0051FDA8 /* AddFavoriteLoader.swift in Sources */,
 				4549BFEF2BC9EF7500C35577 /* EventService.swift in Sources */,
 				4549BFFC2BC9F0A200C35577 /* DateFormatters.swift in Sources */,
 				4C14A2F12BD2ECFB0051FDA8 /* TutorsResponse.swift in Sources */,
@@ -359,6 +369,7 @@
 				4C28042C2BCDE86700312524 /* APIError.swift in Sources */,
 				5B097E7C2BC4E20C0074CFB4 /* PreviewContainer.swift in Sources */,
 				4549BFF22BC9EF9200C35577 /* CalendarChooser.swift in Sources */,
+				4C14A2F72BD3129D0051FDA8 /* FavoriteInputStruct.swift in Sources */,
 				4CE71C5B2BCA14BA003043AE /* AITutor.swift in Sources */,
 				4C14A2F52BD302B10051FDA8 /* GetTutorInfoLoader.swift in Sources */,
 				97385D9D2BBAD96200BB8C8A /* ReviewForm.swift in Sources */,
@@ -380,6 +391,7 @@
 				97402E8B2BCA049700571E2E /* Course.swift in Sources */,
 				5B097E7A2BBE7F7D0074CFB4 /* TutorRow.swift in Sources */,
 				97385D9B2BBAD62F00BB8C8A /* Login.swift in Sources */,
+				4C14A2F92BD312E00051FDA8 /* AddFavoriteEndpoint.swift in Sources */,
 				4C14A2F32BD2FC640051FDA8 /* EmailStruct.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
