@@ -90,6 +90,7 @@ struct TutorProfile: View {
                 }
             }
         }
+        Spacer()
     }
     
 }

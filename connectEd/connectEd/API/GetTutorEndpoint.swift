@@ -20,5 +20,14 @@ class GetTutorAPI: APIClient {
         print(response)
         return response
     }
+    
+    func getTutorInfo(email: EmailStruct) async throws -> TutorResponse {
+        let url = "https://shielded-ocean-89788-33c0d45404d1.herokuapp.com/getTutorInfo"
+        let encoder = JSONEncoder()
+        let jsonData = try encoder.encode(email)
+        let response: TutorResponse = try await performPostRequest(url: url, data: jsonData)
+        print(response)
+        return response
+    }
 }
 
