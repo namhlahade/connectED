@@ -105,12 +105,11 @@ struct ProfileForm: View {
                     .bold()
                     .font(.caption)
                 
-                // TODO: get this working with form data
-                ForEach(Array($data.availability_times.enumerated()), id: \.offset) { index, element in
+                ForEach(Array($data.availability.enumerated()), id: \.offset) { index, element in
                     HStack {
                         VStack (alignment: .leading) {
-                            Picker("", selection: $data.availability_days[index]) {
-                                ForEach(Tutor.Days.allCases) { day in
+                            Picker("", selection: $data.availability[index].day) {
+                                ForEach(Availability.Day.allCases) { day in
                                     Text(day.rawValue.capitalized(with: nil))
                                 }
                             }
@@ -119,11 +118,11 @@ struct ProfileForm: View {
                             
                             HStack {
                                 
-                                DatePicker("", selection: $data.availability_times[index][0], displayedComponents: [.hourAndMinute]).labelsHidden()
+                                DatePicker("", selection: $data.availability[index].times[0], displayedComponents: [.hourAndMinute]).labelsHidden()
                                 
                                 Text("-")
                                 
-                                DatePicker("", selection: $data.availability_times[index][1], displayedComponents: [.hourAndMinute]).labelsHidden()
+                                DatePicker("", selection: $data.availability[index].times[1], displayedComponents: [.hourAndMinute]).labelsHidden()
                                 
                             }
                         }
@@ -131,8 +130,7 @@ struct ProfileForm: View {
                         Spacer()
                         
                         Button("", systemImage: "x.circle") {
-                            data.availability_times.remove(at: index)
-                            data.availability_days.remove(at: index)
+                            data.availability.remove(at: index)
                         }.buttonStyle(BorderlessButtonStyle())
                         
                     }
@@ -140,8 +138,7 @@ struct ProfileForm: View {
                 }
                 
                 Button("Add availability", systemImage: "plus.circle") {
-                    data.availability_times.append([dateGetter("00:00"), dateGetter("00:00")])
-                    data.availability_days.append(.sunday)
+                    data.availability.append(Availability(day: .sunday, times: [dateGetter("00:00"), dateGetter("00:00")]))
                 }.buttonStyle(BorderlessButtonStyle())
                 
                 
@@ -170,6 +167,6 @@ func dateGetter(_ time: String) -> Date {
      return ProfileForm(data: data)*/
     NavigationStack {
         //Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], image: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), status: .online, rating: 3.61, price: 23.99))
-        Profile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false, availability_days: [], availability_times: []))
+        UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [], isFavorite: false, availability: []))
     }
 }
