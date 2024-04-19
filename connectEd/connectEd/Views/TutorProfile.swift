@@ -12,7 +12,7 @@ struct TutorProfile: View {
     
     @Bindable var tutor: Tutor
     var body: some View {
-        Profile(user: tutor)
+        UserProfile(user: tutor)
         NavigationLink(destination: TutorBookingScreen(tutor: tutor)) {
             Text("Schedule Session")
         }
@@ -23,6 +23,6 @@ struct TutorProfile: View {
 
 #Preview {
     NavigationStack {
-        TutorProfile(tutor: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false, availability_days: [], availability_times: []))
+        TutorProfile(tutor: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [], isFavorite: false, availability: []))
     }
 }

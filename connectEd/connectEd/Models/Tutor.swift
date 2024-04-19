@@ -20,12 +20,11 @@ class Tutor: Identifiable {
     var status: Status
     var rating: Double?
     var price: Double?
-    var reviews: [Review]?
+    var reviews: [Review]
     var isFavorite: Bool
-    var availability_days: [Days]
-    var availability_times: [[Date]]
+    var availability: [Availability]
     
-    init(id: UUID = UUID(), name: String, email: String, bio: String? = nil, courses: [Course], image: String? = nil, status: Status, rating: Double? = nil, price: Double? = nil, reviews: [Review]? = nil, isFavorite: Bool, availability_days: [Days], availability_times: [[Date]]) {
+    init(id: UUID = UUID(), name: String, email: String, bio: String? = nil, courses: [Course], image: String? = nil, status: Status, rating: Double? = nil, price: Double? = nil, reviews: [Review], isFavorite: Bool, availability: [Availability]) {
         self.id = id
         self.name = name
         self.email = email
@@ -37,8 +36,7 @@ class Tutor: Identifiable {
         self.price = price
         self.reviews = reviews
         self.isFavorite = isFavorite
-        self.availability_days = availability_days
-        self.availability_times = availability_times
+        self.availability = availability
     }
     
 }
@@ -60,8 +58,7 @@ extension Tutor {
         var image: String = ""
         var status: Status = .online
         var price: Double = 0.0
-        var availability_days: [Days] = []
-        var availability_times: [[Date]] = []
+        var availability: [Availability] = []
     }
     
     var dataForForm: FormData {
@@ -74,13 +71,12 @@ extension Tutor {
             image: image ?? "",
             status: status,
             price: price ?? 0.0,
-            availability_days: availability_days,
-            availability_times: availability_times
+            availability: availability
         )
     }
     
     static func create(from formData: FormData, context: ModelContext) {
-        let tutor = Tutor(name: formData.name, email: formData.email, courses: formData.courses, status: formData.status, isFavorite: false, availability_days: [], availability_times: [])
+        let tutor = Tutor(name: formData.name, email: formData.email, courses: formData.courses, status: formData.status, reviews: [], isFavorite: false, availability: formData.availability)
         Tutor.update(tutor, from: formData)
     }
     
@@ -92,8 +88,7 @@ extension Tutor {
         tutor.image = formData.image.isEmpty ? nil : formData.image
         tutor.status = formData.status
         tutor.price = formData.price
-        tutor.availability_days = formData.availability_days
-        tutor.availability_times = formData.availability_times
+        tutor.availability = formData.availability
     }
 }
 
@@ -106,25 +101,14 @@ extension Tutor {
         case phys
         case chem
     }
-    
-    enum Days: String, Codable, CaseIterable, Identifiable {
-        var id: Self { self }
-        case sunday
-        case monday
-        case tuesday
-        case wednesday
-        case thursday
-        case friday
-        case saturday
-    }
 }
 
 extension Tutor {
     static let previewData: [Tutor] = [
-        Tutor(name: "James", email: "james@duke.edu", bio: "Random student", courses: [Course(subject: .ece, code: "350")], status: Status.online, isFavorite: true,  availability_days: [.monday, .wednesday], availability_times: [[Date(), Date()], [Date(), Date()]]),
-        Tutor(name: "Namh", email: "namh@duke.edu", courses: [Course(subject: .egr, code: "101"), Course(subject: .ece, code: "661")], status: Status.offline, isFavorite: false,  availability_days: [.tuesday, .thursday], availability_times: [[Date(), Date()], [Date(), Date()]]),
-        Tutor(name: "Neel", email: "neel@duke.edu", courses: [], status: Status.offline, isFavorite: true,  availability_days: [.tuesday, .thursday], availability_times: [[Date(), Date()], [Date(), Date()]]),
-        Tutor(name: "Namh Lahade", email: "namhlahade@duke.edu", courses: [], status: Status.offline, isFavorite: false,  availability_days: [.tuesday, .thursday], availability_times: [[Date(), Date()], [Date(), Date()]])
+        Tutor(name: "James", email: "james@duke.edu", bio: "Random student", courses: [Course(subject: .ece, code: "350")], status: Status.online, reviews: [], isFavorite: true,  availability: []),
+        Tutor(name: "Namh", email: "namh@duke.edu", courses: [Course(subject: .egr, code: "101"), Course(subject: .ece, code: "661")], status: Status.offline, reviews: [], isFavorite: false,  availability: []),
+        Tutor(name: "Neel", email: "neel@duke.edu", courses: [], status: Status.offline, reviews: [], isFavorite: true,  availability: []),
+        Tutor(name: "Namh Lahade", email: "namhlahade@duke.edu", courses: [], status: Status.offline, reviews: [], isFavorite: false,  availability: [])
     ]
 }
 

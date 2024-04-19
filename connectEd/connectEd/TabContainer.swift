@@ -30,7 +30,7 @@ struct TabContainer: View {
                 Label("Cipher", systemImage: "brain.head.profile")
             }
             NavigationStack {
-                Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false, availability_days: [], availability_times: []))
+                UserProfile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [], isFavorite: false, availability: []))
             }
             .tabItem {
                 Label("Profile", systemImage: "person.fill")
