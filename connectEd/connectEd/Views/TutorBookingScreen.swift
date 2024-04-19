@@ -12,35 +12,45 @@ struct TutorBookingScreen: View {
     @State private var selectedLocation: CLLocationCoordinate2D?
     @State var searchResults: [MKMapItem] = []
     @State private var visibleRegion: MKCoordinateRegion = .duke
+    @State private var selectedOptionIndex = 0
+    @State private var isPresentingNavigator: Bool = false
     
     var body: some View {
         Form {
-            
-            ProfileSection(title: "Tutoring Information", sectionLabels: ["Courses"], sectionData: [getCourselist(courses: tutor.courses)])
-            
-//            Section(header: Text("Course to Cover")) {
-//                Picker("Course", selection: $selectedCourse) {
-//                    ForEach(tutor.courses, id: \.self){ course in
-//                        Text(course).tag(course)
-//                    }
-//                }
-//            }
+        
+            Section(header: Text("Select a Course:")) {
+                Picker(selection: $selectedCourse, label: Text("")) {
+                    ForEach(tutor.courses) { course in
+                        Text("\(course.subject.rawValue.uppercased()) \(course.code)")    .frame(maxWidth: .infinity, alignment: .center)
+                        
+                    }
+                }
+            }
             
             ProfileSection(title: "Meeting Time", sectionLabels: ["\(tutor.name)'s Availability"], sectionData: [printAvailability(days: tutor.availability_days, times: tutor.availability_times)])
             
             
             Section(header: Text("Meeting Location")) {
-                Navigator()
+                Button("Edit") {
+                    isPresentingNavigator.toggle()
+                }
             }
             
             Button(action: {
                 self.submit()
             }) {
-                Text("Submit")
+                Text("Submit").frame(maxWidth: .infinity, alignment: .center)
+                
             }
             .disabled(selectedCourse.isEmpty) /*|| selectedLocation == nil)*/
         }
-        .navigationBarTitle("Meet with \(tutor.name)!").navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Meet with \(tutor.name)!").navigationBarTitleDisplayMode(.inline).frame(alignment: .center)
+        .sheet(isPresented: $isPresentingNavigator){
+            
+            NavigationStack {
+                Navigator()
+            }
+        }
     }
     
     private func submit() {
@@ -57,5 +67,5 @@ struct TutorBookingScreen: View {
 }
 
 #Preview {
-    TutorBookingScreen(tutor: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false, availability_days: [], availability_times: []))
+    TutorBookingScreen(tutor: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [Course(subject: .ece, code: "110"), Course(subject: .ece, code: "230")], status: .online, isFavorite: false, availability_days: [], availability_times: []))
 }

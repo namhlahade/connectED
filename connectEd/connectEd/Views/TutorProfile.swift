@@ -16,6 +16,7 @@ struct TutorProfile: View {
         NavigationLink(destination: TutorBookingScreen(tutor: tutor)) {
             Text("Schedule Session")
         }
+        Spacer()
     }
     
 }
