@@ -3,158 +3,194 @@ import MapKit
 import CoreLocation
 
 extension CLLocationCoordinate2D {
-  static let grossHall = CLLocationCoordinate2D(latitude: 36.001312, longitude: -78.944745)
-  static let lsrc = CLLocationCoordinate2D(latitude: 36.004556, longitude: -78.941755)
+    static let lily = CLLocationCoordinate2D(latitude: 36.00764022529388, longitude: -78.91534436772467)
+    static let perkins = CLLocationCoordinate2D(latitude: 36.00218581433478, longitude: -78.93853196719694)
+    static let twinnies = CLLocationCoordinate2D(latitude: 36.003598463809276, longitude: -78.93945945727503)
+    static let wu = CLLocationCoordinate2D(latitude: 36.00109648676538, longitude: -78.93925997447101)
 }
 
+enum LocationCoordinate {
+    case lily
+    case perkins
+    case twinnies
+    case wu
+
+    var coordinate: CLLocationCoordinate2D {
+        switch self {
+        case .lily:
+            return CLLocationCoordinate2D.lily
+        case .perkins:
+            return CLLocationCoordinate2D.perkins
+        case .twinnies:
+            return CLLocationCoordinate2D.twinnies
+        case .wu:
+            return CLLocationCoordinate2D.wu
+        }
+    }
+
+    var name: String {
+        switch self {
+        case .lily:
+            return "Lily"
+        case .perkins:
+            return "Perkins"
+        case .twinnies:
+            return "Twinnies"
+        case .wu:
+            return "WU"
+        }
+    }
+}
+
+
 extension MKCoordinateRegion {
-  static let duke = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 36.002250, longitude: -78.938638), span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
-  static let sanJuan = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 18.388814, longitude: -66.062151), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5))
+    static let duke = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 36.002250, longitude: -78.938638), span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
 }
 
 struct Location: Identifiable {
-  let id: UUID = UUID()
-  var name: String
-  var coordinate: CLLocationCoordinate2D
-
-  static let dukeCampus = [Location(name: "LSRC", coordinate: .lsrc), Location(name: "Gross Hall", coordinate: .grossHall)]
+    let id: UUID = UUID()
+    var name: String
+    var coordinate: CLLocationCoordinate2D
+    
+    static let dukeCampus = [Location(name: "Perkins", coordinate: .perkins), Location(name: "WU", coordinate: .wu), Location(name: "Twinnies", coordinate: .twinnies), Location(name: "Lily", coordinate: .lily)]
 }
 
 struct Navigator: View {
-  let illRepute = CLLocationCoordinate2D(latitude: 36.001167, longitude: -78.909326)
-  let locationManager = CLLocationManager()
-  @State var position: MapCameraPosition = .userLocation(fallback: .automatic)
-  @State var searchResults: [MKMapItem] = []
-  @State private var visibleRegion: MKCoordinateRegion = .duke
-  @State private var selectedMapItem: MKMapItem?
-  @State private var route: MKRoute?
-
-  var body: some View {
-    Map(position: $position, selection: $selectedMapItem) {
-      ForEach(searchResults, id: \.self) { mapItem in
-        Marker(item: mapItem)
-      }
-      UserAnnotation()
-      if let route {
-        MapPolyline(route)
-          .stroke(.blue, lineWidth: 5)
-      }
-      Marker("", systemImage: "flame", coordinate: illRepute)
-                .tint(.orange)
-      Annotation(coordinate: illRepute) {
-        Image(systemName: "flame.fill")
-          .font(.largeTitle)
-         .foregroundStyle(.white)
-          .background (Color.blue)
-          .cornerRadius(4)
-      } label: { Text("Shooters") }
-    }
-    .mapStyle(.hybrid)
-    .onMapCameraChange { context in
-      visibleRegion = context.region
-    }
-    .mapControls {
-      MapUserLocationButton()
-    }
-    .safeAreaInset(edge: .top) {
-      HStack {
-        Spacer()
-        SearchQuery(searchResults: $searchResults, region: visibleRegion)
-        Spacer()
-      }
-      .background(.ultraThickMaterial)
-    }
-    .safeAreaInset(edge: .bottom) {
-      VStack {
-        if let selectedMapItem {
-          Text(selectedMapItem.name ?? "No name")
-          Button("Directions") { getDirections() }
+    let locationManager = CLLocationManager()
+    @State var position: MapCameraPosition = .userLocation(fallback: .automatic)
+    @State var searchResults: [MKMapItem] = []
+    @State private var visibleRegion: MKCoordinateRegion = .duke
+    @State private var selectedMapItem: MKMapItem?
+    @State private var route: MKRoute?
+    
+    var body: some View {
+        VStack{
+            
+            Map(position: $position, selection: $selectedMapItem) {
+                ForEach(searchResults, id: \.self) { mapItem in
+                    Marker(item: mapItem)
+                }
+                UserAnnotation()
+                if let route {
+                    MapPolyline(route)
+                        .stroke(.blue, lineWidth: 5)
+                }
+                Marker("", systemImage: "book", coordinate: .perkins)
+                    .tint(.orange)
+                Annotation(coordinate: .perkins) {
+                    Image(systemName: "book.fill")
+                        .font(.largeTitle)
+                        .foregroundStyle(.white)
+                        .background (Color.blue)
+                        .cornerRadius(4)
+                } label: { Text("Perkins") }
+            }
+            .mapStyle(.hybrid)
+            .onMapCameraChange { context in
+                visibleRegion = context.region
+            }
+            .mapControls {
+                MapUserLocationButton()
+            }.cornerRadius(20)
+                .safeAreaInset(edge: .top) {
+                    HStack {
+                        Spacer()
+                        SearchQuery(searchResults: $searchResults, region: visibleRegion)
+                        Spacer()
+                    }
+                    .background(.white)
+                }.padding()
+                .safeAreaInset(edge: .bottom) {
+                    VStack {
+                        if let selectedMapItem {
+                            Text(selectedMapItem.name ?? "No name")
+                            Button("Directions") { getDirections() }
+                        }
+                        HStack {
+                            Spacer()
+                            RegionButtons(position: $position)
+                                .padding(.top)
+                            Spacer()
+                        }
+                    }
+                    .background(.white)
+                }
+                .onAppear {
+                    locationManager.requestWhenInUseAuthorization()
+                }
         }
-        HStack {
-          Spacer()
-          RegionButtons(position: $position)
-            .padding(.top)
-          Spacer()
+        
+    }
+    
+    func getDirections() {
+        route = nil
+        guard let selectedMapItem else { return }
+        let request = MKDirections.Request()
+        request.source = MKMapItem(placemark: MKPlacemark(coordinate: .perkins))
+        request.destination = selectedMapItem
+        
+        Task {
+            let directions = MKDirections(request: request)
+            let response = try? await directions.calculate()
+            route = response?.routes.first
         }
-      }
-      .background(.ultraThinMaterial)
     }
-    .onAppear {
-      locationManager.requestWhenInUseAuthorization()
-    }
-
-  }
-
-  func getDirections() {
-    route = nil
-    guard let selectedMapItem else { return }
-    let request = MKDirections.Request()
-    request.source = MKMapItem(placemark: MKPlacemark(coordinate: .grossHall))
-    request.destination = selectedMapItem
-
-    Task {
-      let directions = MKDirections(request: request)
-      let response = try? await directions.calculate()
-      route = response?.routes.first
-    }
-  }
-
+    
 }
 
 struct SearchQuery: View {
-  @Binding var searchResults: [MKMapItem]
-  let region: MKCoordinateRegion
-  @State var query: String = ""
-
-  func search() {
-    let request = MKLocalSearch.Request()
-    request.naturalLanguageQuery = query
-    request.resultTypes = .pointOfInterest
-    request.region = region
-
-    Task {
-      let search = MKLocalSearch(request: request)
-      let response = try? await search.start()
-      searchResults = response?.mapItems ?? []
+    @Binding var searchResults: [MKMapItem]
+    let region: MKCoordinateRegion
+    @State var query: String = ""
+    
+    func search() {
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = query
+        request.resultTypes = .pointOfInterest
+        request.region = region
+        
+        Task {
+            let search = MKLocalSearch(request: request)
+            let response = try? await search.start()
+            searchResults = response?.mapItems ?? []
+        }
     }
-  }
-
-  var body: some View {
-    TextField("Search", text: $query)
-      .padding()
-      .overlay(RoundedRectangle(cornerRadius: 10.0).strokeBorder(Color.gray, style: StrokeStyle(lineWidth: 1.0)))
-      .padding()
-      .onSubmit {
-        search()
-      }
-  }
+    
+    var body: some View {
+        TextField("Search", text: $query)
+            .padding()
+            .overlay(RoundedRectangle(cornerRadius: 10.0).strokeBorder(Color.gray, style: StrokeStyle(lineWidth: 1.0)))
+            .padding()
+            .onSubmit {
+                search()
+            }
+    }
 }
 
 struct RegionButtons: View {
-  @Binding var position: MapCameraPosition
+    @Binding var position: MapCameraPosition
+    @State private var selectedLocationIndex = 0
+    let locations = [LocationCoordinate.lily, LocationCoordinate.perkins, LocationCoordinate.twinnies, LocationCoordinate.wu]
 
-  var body: some View {
-    HStack {
-      Button {
-        position = .region(.duke)
-      } label: {
-        Label("Broke", systemImage: "book.and.wrench")
-          .labelStyle(.titleAndIcon)
-      }
-      .buttonStyle(.bordered)
-      Button {
-        position = .region(.sanJuan)
-      } label: {
-        Label("Break", systemImage: "beach.umbrella")
-          .labelStyle(.titleAndIcon)
-      }
-      .buttonStyle(.borderedProminent)
+    var body: some View {
+        
+        VStack {
+            Picker(selection: $selectedLocationIndex, label: Text("Locations")) {
+                ForEach(locations.indices, id: \.self) { index in
+                    Text(locations[index].name)
+                }
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .onChange(of: selectedLocationIndex) {
+                position = .region(MKCoordinateRegion(center: locations[selectedLocationIndex].coordinate, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)))
+            }
+        }
+        .padding()
     }
-    .labelStyle(.iconOnly)
-  }
 }
 
 
+
 #Preview {
-  Navigator()
+    Navigator()
 }

@@ -16,6 +16,8 @@
 		4549BFFC2BC9F0A200C35577 /* DateFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFFB2BC9F0A200C35577 /* DateFormatters.swift */; };
 		4549BFFE2BC9F25E00C35577 /* HexStringToColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFFD2BC9F25E00C35577 /* HexStringToColor.swift */; };
 		45F5332F2BD1FCF60009ED9E /* TutorProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5332E2BD1FCF60009ED9E /* TutorProfile.swift */; };
+		45F533332BD207DE0009ED9E /* korinna-regular-bt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 45F533322BD207DE0009ED9E /* korinna-regular-bt.ttf */; };
+		45F533352BD21C620009ED9E /* HourPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F533342BD21C620009ED9E /* HourPicker.swift */; };
 		4C14A2E92BD2D6510051FDA8 /* AddTutorLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A2E82BD2D6510051FDA8 /* AddTutorLoader.swift */; };
 		4C14A2EB2BD2DD150051FDA8 /* GetTutorEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A2EA2BD2DD150051FDA8 /* GetTutorEndpoint.swift */; };
 		4C14A2ED2BD2DD2B0051FDA8 /* GetTutorLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A2EC2BD2DD2B0051FDA8 /* GetTutorLoader.swift */; };
@@ -60,6 +62,8 @@
 		4549BFFB2BC9F0A200C35577 /* DateFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatters.swift; sourceTree = "<group>"; };
 		4549BFFD2BC9F25E00C35577 /* HexStringToColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexStringToColor.swift; sourceTree = "<group>"; };
 		45F5332E2BD1FCF60009ED9E /* TutorProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorProfile.swift; sourceTree = "<group>"; };
+		45F533322BD207DE0009ED9E /* korinna-regular-bt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "korinna-regular-bt.ttf"; sourceTree = "<group>"; };
+		45F533342BD21C620009ED9E /* HourPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourPicker.swift; sourceTree = "<group>"; };
 		4C14A2E82BD2D6510051FDA8 /* AddTutorLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTutorLoader.swift; sourceTree = "<group>"; };
 		4C14A2EA2BD2DD150051FDA8 /* GetTutorEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTutorEndpoint.swift; sourceTree = "<group>"; };
 		4C14A2EC2BD2DD2B0051FDA8 /* GetTutorLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTutorLoader.swift; sourceTree = "<group>"; };
@@ -133,6 +137,22 @@
 			path = UIKit;
 			sourceTree = "<group>";
 		};
+		45F533302BD207730009ED9E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				45F533312BD2077E0009ED9E /* Fonts */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		45F533312BD2077E0009ED9E /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				45F533322BD207DE0009ED9E /* korinna-regular-bt.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		4C2804232BCDDEFA00312524 /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,6 +205,7 @@
 				4549BFF92BC9F00C00C35577 /* Calendar.swift */,
 				4CE71C5A2BCA14BA003043AE /* AITutor.swift */,
 				45F5332E2BD1FCF60009ED9E /* TutorProfile.swift */,
+				45F533342BD21C620009ED9E /* HourPicker.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -208,6 +229,7 @@
 		977FA7A82BB1144A006CF4C2 /* connectEd */ = {
 			isa = PBXGroup;
 			children = (
+				45F533302BD207730009ED9E /* Resources */,
 				4C2804232BCDDEFA00312524 /* API */,
 				453FADB92BCA1C9C00A63F7B /* Info.plist */,
 				4549BFF02BC9EF8500C35577 /* UIKit */,
@@ -305,6 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				977FA7B12BB1144C006CF4C2 /* Preview Assets.xcassets in Resources */,
+				45F533332BD207DE0009ED9E /* korinna-regular-bt.ttf in Resources */,
 				977FA7AE2BB1144C006CF4C2 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -347,6 +370,7 @@
 				4C14A2E92BD2D6510051FDA8 /* AddTutorLoader.swift in Sources */,
 				4C25DB592BD070C50089496B /* AddAPIResponse.swift in Sources */,
 				4C28042A2BCDE84B00312524 /* APIClient.swift in Sources */,
+				45F533352BD21C620009ED9E /* HourPicker.swift in Sources */,
 				4CE71C5D2BCA1739003043AE /* Message.swift in Sources */,
 				97385D952BBAD59200BB8C8A /* Favorites.swift in Sources */,
 				977FA7AA2BB1144A006CF4C2 /* connectEdApp.swift in Sources */,
