@@ -1,7 +1,10 @@
 import SwiftUI
 
 struct ReviewForm: View {
-    @State private var course: String = ""
+    
+    @Bindable var tutor: Tutor
+    
+    @State private var course: Course = Course(subject: .ece, code: "101")
     @State private var rating: Int = 0
     @State private var clarityRating: Double = 0
     @State private var understandingRating: Double = 0
@@ -15,14 +18,24 @@ struct ReviewForm: View {
             Section(header: Text("Tutor")) {
                 HStack {
                     Spacer()
-                    Text("TUTOR_NAME")
+                    Text(tutor.name)
                     Spacer()
                 }
             }
             
             Section(header: Text("Course Being Tutored")) {
-                TextField("Course", text: $course)
-                    .multilineTextAlignment(.center)
+                HStack {
+                    
+                    Picker("", selection: $course.subject) {
+                        ForEach(Tutor.Subject.allCases) { subject in
+                            Text(subject.rawValue.uppercased())
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    
+                    TextField("Class code", text: $course.code, prompt: Text("Class code"))
+                    
+                }
             }
             
             Section(header: Text("Overall Rating")) {
@@ -100,6 +113,6 @@ struct RatingSlider: View {
 
 struct ReviewForm_Previews: PreviewProvider {
     static var previews: some View {
-        ReviewForm()
+        ReviewForm(tutor: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [], isFavorite: false, availability: []))
     }
 }
