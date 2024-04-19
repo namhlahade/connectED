@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Tutors: Codable {
+struct TutorResponse: Codable {
     let availabilities: [String: [Int]]
     let bio: String
     let email: String
@@ -22,5 +22,5 @@ struct Tutors: Codable {
 }
 
 struct TutorsResponse: Codable {
-    let tutors: [Tutors]
+    let tutors: [TutorsResponse]
 }

@@ -1,7 +1,24 @@
 import SwiftUI
 
-struct TutorRow: View {
+struct ParentStruct_TutorRow: View {
     @Bindable var tutor: Tutor
+    let getTutorInfoLoader = GetTutorInfoLoader()
+    var body: some View {
+      VStack {
+        switch getTutorInfoLoader.state {
+        case .idle: Color.clear
+        case .loading: ProgressView()
+        case .failed(let error): TutorRow(tutor: tutor)
+        case .success(let tutorInfo):
+          TutorRow(tutor: tutor)
+        }
+      }
+      .task { await getTutorInfoLoader.getTutorInfo(email: EmailStruct(tutorEmail: tutor.email)) }
+    }
+}
+
+struct TutorRow: View {
+    @State var tutor: Tutor
     var body: some View {
         HStack {
             AsyncImage(url: URL(string: tutor.image ?? ""))
@@ -46,7 +63,7 @@ struct TutorRow: View {
     }
 }
 
-#Preview {
-    let tutor = Tutor.previewData[1]
-    return TutorRow(tutor: tutor)
-}
+//#Preview {
+//    let tutor = Tutor.previewData[1]
+//    return TutorRow(tutor: tutor)
+//}

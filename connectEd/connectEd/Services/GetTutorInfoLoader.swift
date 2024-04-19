@@ -1,5 +1,5 @@
 //
-//  GetTutorLoader.swift
+//  GetTutorInfoLoader.swift
 //  connectEd
 //
 //  Created by Namh Lahade on 4/19/24.
@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-class GetTutorLoader {
+class GetTutorInfoLoader {
     let apiClient = GetTutorAPI()
     private(set) var state: LoadingState = .idle
     
@@ -29,5 +29,4 @@ class GetTutorLoader {
             self.state = .failed(error: error)
         }
     }
-    
 }
