@@ -14,10 +14,10 @@ struct TutorResponse: Codable {
     let image: String?
     let name: String
     let price: Double
-    let tutorClasses: [String]
+    let tutor_classes: [String]
 
     private enum CodingKeys: String, CodingKey {
-        case availabilities, bio, email, image, name, price, tutorClasses = "tutor_classes"
+        case availabilities, bio, email, image, name, price, tutor_classes = "tutor_classes"
     }
 }
 
