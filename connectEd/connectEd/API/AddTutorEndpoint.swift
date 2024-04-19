@@ -13,15 +13,15 @@ class TutorAPI: APIClient {
     init(session: URLSession = .shared) {
         self.session = session
     }
-    
-    func addTutor(tutor: Tutor) async throws -> AddAPIResponse {
-        let url = "https://shielded-ocean-89788-33c0d45404d1.herokuapp.com/addTutor"
-        let encoder = JSONEncoder()
-        let jsonData = try encoder.encode(tutor)
-        
-        let response: AddAPIResponse = try await performPostRequest(url: url, data: jsonData)
-        return response
-        
-
-    }
+//    
+//    func addTutor(tutor: Tutor) async throws -> AddAPIResponse {
+//        let url = "https://shielded-ocean-89788-33c0d45404d1.herokuapp.com/addTutor"
+//        let encoder = JSONEncoder()
+//        let jsonData = try encoder.encode(tutor)
+//        
+//        let response: AddAPIResponse = try await performPostRequest(url: url, data: jsonData)
+//        return response
+//        
+//
+//    }
 }

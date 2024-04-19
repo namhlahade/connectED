@@ -10,7 +10,7 @@ import SwiftData
 
 
 @Observable
-class Course: Identifiable, Codable, Encodable {
+class Course: Identifiable, Codable {
     var id = UUID()
     var subject: Tutor.Subject
     var code: String
