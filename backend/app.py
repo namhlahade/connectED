@@ -299,6 +299,9 @@ def getTutorInfo():
 
             count += 1
 
+        if count == 0:
+            count = 1
+
         tutor_data = {
             'email': tutor.email,
             'name': tutor.name,
