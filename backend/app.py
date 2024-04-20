@@ -118,18 +118,22 @@ def getTutors():
         users = User.query.all()
         tutor_data = []
         for user in users:
-            availabilityDict = availabilityHelper(user.email)
+
+            availability_dict = availabilityHelper(user.email)
+            reviews = get_reviews(user.email)
+            favorites = get_favorites(user.email)
+
             user_data = {
                 'email': user.email,
                 'name': user.name,
                 'bio': user.bio,
                 'image': user.image,
                 'price': user.price,
-                'availabilities': availabilityDict,
+                'availabilities': availability_dict,
+                'reviews': reviews,
+                'favorites': favorites,
                 'tutor_classes': [
-                    {
-                        'class_name': tutor_class.className
-                    } for tutor_class in user.tutor_classes
+                    tutor_class.className for tutor_class in user.tutor_classes
                 ]
             }
             tutor_data.append(user_data)
@@ -139,6 +143,23 @@ def getTutors():
     except Exception as e:
         db.session.rollback()
         return str(e), 500
+
+def get_reviews(tutor_email):
+    reviews = Review.query.filter_by(email=tutor_email).all()
+    return [
+        {
+            'clarity': review.clarity,
+            'prep': review.prep,
+            'review': review.review,
+            'rating': review.rating
+        } for review in reviews
+    ]
+
+def get_favorites(tutor_email):
+    favorites = Favorites.query.filter_by(user_email = tutor_email).all()
+    return [
+            favorite.reviewer_email for favorite in favorites
+            ]
 
 
 @app.route('/getTutorReviews', methods=['POST'])
