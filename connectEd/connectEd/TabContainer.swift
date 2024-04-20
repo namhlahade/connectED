@@ -8,15 +8,10 @@
 import SwiftUI
 
 struct TabContainer: View {
+    
     @State var tutors: [Tutor]
     var body: some View {
         TabView {
-            NavigationStack {
-               Signup()
-            }
-            .tabItem {
-                Label("Login", systemImage: "house.fill")
-            }
             NavigationStack {
                 Search(tutors: tutors)
                     .navigationTitle("Your Saviors")
@@ -45,8 +40,4 @@ struct TabContainer: View {
         }
         
     }
-}
-
-#Preview {
-    TabContainer(tutors: Tutor.previewData)
 }

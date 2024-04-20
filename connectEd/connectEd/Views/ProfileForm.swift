@@ -55,9 +55,9 @@ struct ProfileForm: View {
             
             
             
-            TextFieldWithLabel(label: "Name", text: $data.name, prompt: "Enter your name")
+            TextFieldWithLabelAlt(label: "Name", text: $data.name, prompt: "Enter your name")
             
-            TextFieldWithLabel(label: "Email", text: $data.email, prompt: "Enter your email")
+            TextFieldWithLabelAlt(label: "Email", text: $data.email, prompt: "Enter your email")
             
             VStack(alignment: .leading) {
                 Text("About me")
@@ -155,6 +155,7 @@ struct ProfileForm: View {
         }
     }
 }
+
 
 func dateGetter(_ time: String) -> Date {
     let formatter = DateFormatter()

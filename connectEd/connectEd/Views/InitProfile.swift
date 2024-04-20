@@ -14,6 +14,9 @@ struct InitProfile: View {
     
     var body: some View {
        ProfileForm(data: $editTutorFormData)
+        NavigationLink(destination: TabContainer(tutors: Tutor.previewData)){
+            Text("Submit")
+        }
     }
 }
 

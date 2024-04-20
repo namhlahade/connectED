@@ -19,6 +19,9 @@
 		45F533332BD207DE0009ED9E /* korinna-regular-bt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 45F533322BD207DE0009ED9E /* korinna-regular-bt.ttf */; };
 		45F533352BD21C620009ED9E /* HourPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F533342BD21C620009ED9E /* HourPicker.swift */; };
 		45F5333B2BD38CC70009ED9E /* InitProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5333A2BD38CC70009ED9E /* InitProfile.swift */; };
+		45F5333D2BD3CE340009ED9E /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5333C2BD3CE340009ED9E /* AuthenticationService.swift */; };
+		45F5333F2BD3CF1F0009ED9E /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5333E2BD3CF1F0009ED9E /* Login.swift */; };
+		45F533412BD3CFE70009ED9E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F533402BD3CFE70009ED9E /* User.swift */; };
 		4C14A2E92BD2D6510051FDA8 /* AddTutorLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A2E82BD2D6510051FDA8 /* AddTutorLoader.swift */; };
 		4C14A2EB2BD2DD150051FDA8 /* GetTutorEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A2EA2BD2DD150051FDA8 /* GetTutorEndpoint.swift */; };
 		4C14A2ED2BD2DD2B0051FDA8 /* GetTutorLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A2EC2BD2DD2B0051FDA8 /* GetTutorLoader.swift */; };
@@ -67,6 +70,9 @@
 		45F533322BD207DE0009ED9E /* korinna-regular-bt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "korinna-regular-bt.ttf"; sourceTree = "<group>"; };
 		45F533342BD21C620009ED9E /* HourPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourPicker.swift; sourceTree = "<group>"; };
 		45F5333A2BD38CC70009ED9E /* InitProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitProfile.swift; sourceTree = "<group>"; };
+		45F5333C2BD3CE340009ED9E /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
+		45F5333E2BD3CF1F0009ED9E /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		45F533402BD3CFE70009ED9E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		4C14A2E82BD2D6510051FDA8 /* AddTutorLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTutorLoader.swift; sourceTree = "<group>"; };
 		4C14A2EA2BD2DD150051FDA8 /* GetTutorEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTutorEndpoint.swift; sourceTree = "<group>"; };
 		4C14A2EC2BD2DD2B0051FDA8 /* GetTutorLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTutorLoader.swift; sourceTree = "<group>"; };
@@ -129,6 +135,7 @@
 				4C14A2E82BD2D6510051FDA8 /* AddTutorLoader.swift */,
 				4C14A2EC2BD2DD2B0051FDA8 /* GetTutorLoader.swift */,
 				4C14A2F42BD302B00051FDA8 /* GetTutorInfoLoader.swift */,
+				45F5333C2BD3CE340009ED9E /* AuthenticationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -190,6 +197,7 @@
 				4C25DB582BD070C50089496B /* AddAPIResponse.swift */,
 				4C14A2F02BD2ECFB0051FDA8 /* TutorsResponse.swift */,
 				4C14A2F22BD2FC640051FDA8 /* EmailStruct.swift */,
+				45F533402BD3CFE70009ED9E /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -202,6 +210,7 @@
 				97EDD35B2BCA5329002518B0 /* UserProfile.swift */,
 				97385D982BBAD5BF00BB8C8A /* TutorBookingScreen.swift */,
 				97385D9A2BBAD62F00BB8C8A /* Signup.swift */,
+				45F5333E2BD3CF1F0009ED9E /* Login.swift */,
 				97385D9C2BBAD96200BB8C8A /* ReviewForm.swift */,
 				5B097E792BBE7F7D0074CFB4 /* TutorRow.swift */,
 				97C6B35A2BBE9D55002C8317 /* ProfileForm.swift */,
@@ -357,6 +366,7 @@
 				4549BFFC2BC9F0A200C35577 /* DateFormatters.swift in Sources */,
 				4C14A2F12BD2ECFB0051FDA8 /* TutorsResponse.swift in Sources */,
 				4C25DB5B2BD070E80089496B /* AddTutorEndpoint.swift in Sources */,
+				45F5333D2BD3CE340009ED9E /* AuthenticationService.swift in Sources */,
 				4C14A2ED2BD2DD2B0051FDA8 /* GetTutorLoader.swift in Sources */,
 				97C6B35B2BBE9D55002C8317 /* ProfileForm.swift in Sources */,
 				4C28042C2BCDE86700312524 /* APIError.swift in Sources */,
@@ -365,6 +375,7 @@
 				4CE71C5B2BCA14BA003043AE /* AITutor.swift in Sources */,
 				4C14A2F52BD302B10051FDA8 /* GetTutorInfoLoader.swift in Sources */,
 				97385D9D2BBAD96200BB8C8A /* ReviewForm.swift in Sources */,
+				45F5333F2BD3CF1F0009ED9E /* Login.swift in Sources */,
 				4549BFFA2BC9F00C00C35577 /* Calendar.swift in Sources */,
 				97385D932BBAD58300BB8C8A /* Search.swift in Sources */,
 				979390D72BD233790093776F /* Availability.swift in Sources */,
@@ -385,6 +396,7 @@
 				5B097E7A2BBE7F7D0074CFB4 /* TutorRow.swift in Sources */,
 				97385D9B2BBAD62F00BB8C8A /* Signup.swift in Sources */,
 				4C14A2F32BD2FC640051FDA8 /* EmailStruct.swift in Sources */,
+				45F533412BD3CFE70009ED9E /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
