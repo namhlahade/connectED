@@ -19,13 +19,9 @@ struct ReviewRow: View {
             
             HStack {
                 ForEach(1...5, id: \.self) { index in
-                    Button(action: {
-                        review.rating = Double(index)
-                    }) {
-                        Image(systemName: getStarImageName(for: index, review: review))
-                            .foregroundColor(starColor)
-                            .font(.system(size: 20))
-                    }.buttonStyle(.plain)
+                    Image(systemName: getStarImageName(for: index, review: review))
+                        .foregroundColor(starColor)
+                        .font(.system(size: 20))
                     //Spacer()
                 }
             }.padding([.bottom], 5)
@@ -33,7 +29,7 @@ struct ReviewRow: View {
             Text("Clarity: \(Int(review.clarity))/5   Understanding: \(Int(review.prep))/5").padding([.bottom], 5)
             
             //Text("Comments").fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-            Text("\"\(review.review)\"")
+            Text("\"\(review.review)\"").padding([.bottom], 5)
         }
     }
 }

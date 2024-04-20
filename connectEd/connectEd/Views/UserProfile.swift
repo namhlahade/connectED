@@ -60,7 +60,6 @@ struct UserProfile: View {
                 }
                 else {
                     List(user.reviews) { review in
-                        // TODO: do review row
                         ReviewRow(review: review)
                     }
                 }

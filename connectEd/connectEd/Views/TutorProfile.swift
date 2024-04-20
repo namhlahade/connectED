@@ -71,7 +71,6 @@ struct TutorProfile: View {
                 }
                 else {
                     List(tutor.reviews) { review in
-                        // TODO: do review row
                         ReviewRow(review: review)
                     }
                 }
