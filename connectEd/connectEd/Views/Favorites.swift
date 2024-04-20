@@ -1,19 +1,46 @@
 import SwiftUI
 import SwiftData
 
+struct ParentFavorites: View {
+    let getTutorLoader = GetTutorLoader()
+    var user: Tutor
+    
+    var body: some View {
+    VStack {
+      switch getTutorLoader.state {
+      case .idle: Color.clear
+      case .loading: ProgressView()
+      case .failed(let error): Text("Error \(error.localizedDescription)")
+      case .success(let allTutorInfo):
+          Favorites(user: user, tutors: allTutorInfo.getTutors())
+      }
+    }
+    .navigationTitle("Favorite Tutors")
+    .task { await getTutorLoader.getAllTutorInfo() }
+  }
+}
+
 struct Favorites: View {
-    var tutors: [Tutor]
+    
+    @State var user: Tutor
+    @State var tutors: [Tutor]
+    
     @State var addFavorites = false
     
     var favoriteTutors: [Tutor] {
-        tutors.filter {$0.isFavorite}
+        tutors.filter {
+            user.favorites.contains($0.email)
+        }
     }
     
     var body: some View {
         NavigationStack{
             List {
                 ForEach (favoriteTutors) {
-                    tutor in TutorRow(tutor: tutor)
+                    tutor in
+                    NavigationLink(destination: TutorProfile(user: user, tutor: tutor)){
+                        TutorRow(user: user, tutor: tutor)
+                        }
                 }
                 
                 .onDelete(perform: removeFavorite)
@@ -22,23 +49,22 @@ struct Favorites: View {
                 ToolbarItem(placement: .topBarLeading) {
                     EditButton()
                 }
-                
             }
-            
-            
         }
-        .navigationTitle("Favorite Tutors")
         
     }
     func removeFavorite(at offsets: IndexSet) {
         for offset in offsets {
-            favoriteTutors[offset].isFavorite = false
+            //favoriteTutors[offset].isFavorite = false
+            user.favorites.remove(at: offset)
+//            favoriteTutors.remove(at: offset)
+            print(offset)
         }
     }
 }
 
 
-struct AddFavoritesScreen: View {
+/*struct AddFavoritesScreen: View {
     @State var tutors: [Tutor]
     var body: some View {
         List(tutors) { tutor in
@@ -54,10 +80,10 @@ struct AddFavoritesScreen: View {
             .navigationTitle("Add to Favorites")
         }
     }
-}
+}*/
 
 #Preview {
     return NavigationStack {
-        Favorites(tutors: Tutor.previewData)
+        Favorites(user: Tutor.previewData[0], tutors: Tutor.previewData)
     }
 }

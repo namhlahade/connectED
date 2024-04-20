@@ -44,7 +44,7 @@ struct AITutor: View {
     @State var prompt: String = ""
     var body: some View {
         VStack{
-            Text("Don't have a Tutor, Ask Cipher")
+            Text("Don't have a Tutor? Ask Cipher!")
                             .font(.title2)
                             .padding(20)
                             .bold()

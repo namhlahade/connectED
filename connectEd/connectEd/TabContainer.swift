@@ -10,6 +10,7 @@ import SwiftUI
 struct TabContainer: View {
     @State private var isLoggedOut = false
     @State var tutors: [Tutor]
+    
     var body: some View {
         if isLoggedOut {
             LoginScreen()
@@ -17,14 +18,13 @@ struct TabContainer: View {
             
             TabView {
                 NavigationStack {
-                    Search(tutors: tutors)
-                        .navigationTitle("Your Saviors")
+                    ParentSearch(user: Tutor.previewData[0])
                 }
                 .tabItem {
                     Label("Browse", systemImage: "house.fill")
                 }
                 NavigationStack {
-                    Favorites(tutors: tutors)
+                    ParentFavorites(user: Tutor.previewData[0])
                 }
                 .tabItem {
                     Label("Favorites", systemImage: "star.fill")
@@ -36,13 +36,12 @@ struct TabContainer: View {
                     Label("Cipher", systemImage: "brain.head.profile")
                 }
                 NavigationStack {
-                    UserProfile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [], isFavorite: false, availability: []), loggedOut: $isLoggedOut)
+                    ProfileView(email: Tutor.previewData[0].email, isLoggedOut: $isLoggedOut)
                 }
                 .tabItem {
                     Label("Profile", systemImage: "person.fill")
                 }
             }
         }
-        
     }
 }

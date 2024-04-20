@@ -15,7 +15,7 @@ class GetTutorInfoLoader {
     enum LoadingState {
         case idle
         case loading
-        case success(data: TutorResponse)
+        case success(data: TutorInfo)
         case failed(error: Error)
     }
     

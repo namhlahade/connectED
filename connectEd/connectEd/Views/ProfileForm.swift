@@ -10,44 +10,85 @@ import PhotosUI
 
 
 struct ProfileForm: View {
-    @State var selectedImage: PhotosPickerItem? = nil
+    
+    
+    @State var selectedImage: PhotosPickerItem?
+    @State private var imageData: Data? = nil
+    
+    
     @Binding var data: Tutor.FormData
-    
-    
-    //@State private var times: [[Date]] = []
-    //@State private var days: [Days] = []
     
     var body: some View {
         
         Form {
             
-            // TODO: have to get images actually changeable from library
             VStack (alignment: .leading) {
-                AsyncImage(url: URL(string: data.image), content: { image in
-                    image
+                if let imageData = imageData, let uiImage = UIImage(data: imageData) {
+                    Image(uiImage: uiImage)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                }, placeholder: {
-                    if data.image != "" {
-                        ProgressView()
-                    } else {
+                        .overlay(alignment: .bottomTrailing) {
+                            PhotosPicker(selection: $selectedImage,
+                                         matching: .images) {
+                                Image(systemName: "pencil.circle.fill")
+                                    .symbolRenderingMode(.multicolor)
+                                    .font(.system(size: 30))
+                                    .foregroundColor(.accentColor)
+                            }
+                                         .buttonStyle(.borderless)
+                                         .onChange(of: selectedImage) {
+                                             if let newItem = selectedImage {
+                                                 loadPhoto(item: newItem)
+                                             }
+                                         }
+                        }
+                        .frame(maxWidth: 200, maxHeight: 200)
+                        .padding()
+                } else {
+                    if data.image == Data() {
                         Image(systemName: "person.circle")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
+                            .overlay(alignment: .bottomTrailing) {
+                                PhotosPicker(selection: $selectedImage,
+                                             matching: .images) {
+                                    Image(systemName: "pencil.circle.fill")
+                                        .symbolRenderingMode(.multicolor)
+                                        .font(.system(size: 30))
+                                        .foregroundColor(.accentColor)
+                                }
+                                             .buttonStyle(.borderless)
+                                             .onChange(of: selectedImage) {
+                                                 if let newItem = selectedImage {
+                                                     loadPhoto(item: newItem)
+                                                 }
+                                             }
+                            }
+                            .frame(maxWidth: 200, maxHeight: 200)
+                            .padding()
+                    } else {
+                        Image(uiImage: UIImage(data: data.image)!)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .overlay(alignment: .bottomTrailing) {
+                                PhotosPicker(selection: $selectedImage,
+                                             matching: .images) {
+                                    Image(systemName: "pencil.circle.fill")
+                                        .symbolRenderingMode(.multicolor)
+                                        .font(.system(size: 30))
+                                        .foregroundColor(.accentColor)
+                                }
+                                             .buttonStyle(.borderless)
+                                             .onChange(of: selectedImage) {
+                                                 if let newItem = selectedImage {
+                                                     loadPhoto(item: newItem)
+                                                 }
+                                             }
+                            }
+                            .frame(maxWidth: 200, maxHeight: 200)
+                            .padding()
                     }
-                })
-                .overlay(alignment: .bottomTrailing) {
-                    PhotosPicker(selection: $selectedImage,
-                                 matching: .images) {
-                        Image(systemName: "pencil.circle.fill")
-                            .symbolRenderingMode(.multicolor)
-                            .font(.system(size: 30))
-                            .foregroundColor(.accentColor)
-                    }
-                                 .buttonStyle(.borderless)
                 }
-                .frame(maxWidth: 200, maxHeight: 200)
-                .padding()
             }
             .frame(maxWidth: .infinity)
             
@@ -86,7 +127,7 @@ struct ProfileForm: View {
                         
                         Button("", systemImage: "x.circle") {
                             data.courses.remove(at: index)
-                        }.buttonStyle(BorderlessButtonStyle())
+                        }.buttonStyle(BorderlessButtonStyle()).foregroundStyle(Color.red)
                         
                     }
                 }
@@ -94,6 +135,7 @@ struct ProfileForm: View {
                 Button("Add course", systemImage: "plus.circle") {
                     data.courses.append(Course(subject: .ece, code: "101"))
                 }.buttonStyle(BorderlessButtonStyle())
+                //.foregroundStyle(Color.green)
                 
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -103,7 +145,7 @@ struct ProfileForm: View {
                     .bold()
                     .font(.caption)
                 
-                ForEach(Array($data.availability.enumerated()), id: \.offset) { index, element in
+                ForEach(Array($data.selectedHours.enumerated()), id: \.offset) { index, element in
                     HStack {
                         VStack (alignment: .leading) {
                             Picker("", selection: $data.availability[index].day) {
@@ -113,14 +155,48 @@ struct ProfileForm: View {
                             }
                             .pickerStyle(.menu)
                             .labelsHidden()
+                            .padding([.bottom], -15)
                             
                             HStack {
+                                Picker(selection: $data.selectedHours[index][0], label: Text("Select Hour")) {
+                                    ForEach(1...12, id: \.self) { hour in
+                                        Text("\(hour)").tag(hour)
+                                    }
+                                }
+                                .labelsHidden()
+                                .pickerStyle(.wheel)
+                                .frame(width: 50, height: 85)
+                                .padding([.trailing], -15)
                                 
-                                DatePicker("", selection: $data.availability[index].times[0], displayedComponents: [.hourAndMinute]).labelsHidden()
+                                Picker(selection: $data.areAM[index][0], label: Text("")) {
+                                    Text("AM").tag(true)
+                                    Text("PM").tag(false)
+                                }
+                                .labelsHidden()
+                                .pickerStyle(.wheel)
+                                .frame(width: 60, height: 85)
+                                .padding([.trailing], -15)
                                 
                                 Text("-")
                                 
-                                DatePicker("", selection: $data.availability[index].times[1], displayedComponents: [.hourAndMinute]).labelsHidden()
+                                Picker(selection: $data.selectedHours[index][1], label: Text("Select Hour")) {
+                                    ForEach(1...12, id: \.self) { hour in
+                                        Text("\(hour)").tag(hour)
+                                    }
+                                }
+                                .labelsHidden()
+                                .pickerStyle(.wheel)
+                                .frame(width: 50, height: 85)
+                                .padding([.trailing, .leading], -15)
+                                
+                                Picker(selection: $data.areAM[index][1], label: Text("")) {
+                                    Text("AM").tag(true)
+                                    Text("PM").tag(false)
+                                }
+                                .labelsHidden()
+                                .pickerStyle(.wheel)
+                                .frame(width: 60, height: 85)
+                                
                                 
                             }
                         }
@@ -129,6 +205,8 @@ struct ProfileForm: View {
                         
                         Button("", systemImage: "x.circle") {
                             data.availability.remove(at: index)
+                            data.selectedHours.remove(at: index)
+                            data.areAM.remove(at: index)
                         }.buttonStyle(BorderlessButtonStyle())
                         
                     }
@@ -137,7 +215,11 @@ struct ProfileForm: View {
                 
                 Button("Add availability", systemImage: "plus.circle") {
                     data.availability.append(Availability(day: .sunday, times: [dateGetter("00:00"), dateGetter("00:00")]))
+                    data.selectedHours.append([6, 6])
+                    data.areAM.append([true, true])
+                    
                 }.buttonStyle(BorderlessButtonStyle())
+                //.foregroundStyle(Color.green)
                 
                 
             }
@@ -152,6 +234,35 @@ struct ProfileForm: View {
             }
         }
     }
+    
+    private func loadPhoto(item: PhotosPickerItem) {
+        // Request the image data
+        item.loadTransferable(type: Data.self) { result in
+            switch result {
+            case .success(let data):
+                if let data = data {
+                    // Update the image data to be displayed
+                    imageData = data
+                    self.data.image = data
+                } else {
+                    // Handle the case where no image data is found
+                    print("Failed to load image data.")
+                }
+            case .failure(let error):
+                // Handle errors
+                print("Error loading image: \(error.localizedDescription)")
+            }
+        }
+    }
+}
+
+func editTime(selectedHour: Int, isAM: Bool) -> Date {
+    if selectedHour != 12 {
+        //print("\(selectedHour + (isAM ? 0 : 12)):00")
+        return dateGetter("\(selectedHour + (isAM ? 0 : 12)):00")
+    }
+    //print("\(isAM ? 0 : 12):00")
+    return dateGetter("\(isAM ? 0 : 12):00")
 }
 
 
@@ -167,8 +278,84 @@ struct ProfileForm_Previews: PreviewProvider {
      return ProfileForm(data: data)*/
     static var previews: some View {
         NavigationStack {
-            //Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], image: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), status: .online, rating: 3.61, price: 23.99))
-            UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [], isFavorite: false, availability: []),  loggedOut: $isLoggedOut)
-        }
+                //Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], image: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), status: .online, rating: 3.61, price: 23.99))
+                UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [], favorites: [], availability: []), loggedOut: $isLoggedOut)
+            }
+
     }
 }
+
+
+
+
+
+
+
+/*
+ 
+ if let imageData = imageData, let uiImage = UIImage(data: imageData) {
+ Image(uiImage: uiImage)
+ .resizable()
+ .aspectRatio(contentMode: .fit)
+ .overlay(alignment: .bottomTrailing) {
+ PhotosPicker(selection: $selectedImage,
+ matching: .images) {
+ Image(systemName: "pencil.circle.fill")
+ .symbolRenderingMode(.multicolor)
+ .font(.system(size: 30))
+ .foregroundColor(.accentColor)
+ }
+ .buttonStyle(.borderless)
+ .onChange(of: selectedImage) {
+ if let newItem = selectedImage {
+ loadPhoto(item: newItem)
+ }
+ }
+ }
+ .frame(maxWidth: 200, maxHeight: 200)
+ .padding()
+ } else {
+ if data.image == Data() {
+ Image(systemName: "person.circle")
+ .resizable()
+ .aspectRatio(contentMode: .fit)
+ .overlay(alignment: .bottomTrailing) {
+ PhotosPicker(selection: $selectedImage,
+ matching: .images) {
+ Image(systemName: "pencil.circle.fill")
+ .symbolRenderingMode(.multicolor)
+ .font(.system(size: 30))
+ .foregroundColor(.accentColor)
+ }
+ .buttonStyle(.borderless)
+ .onChange(of: selectedImage) {
+ if let newItem = selectedImage {
+ loadPhoto(item: newItem)
+ }
+ }
+ }
+ } else {
+ Image(uiImage: UIImage(data: data.image)!)
+ .resizable()
+ .aspectRatio(contentMode: .fit)
+ .overlay(alignment: .bottomTrailing) {
+ PhotosPicker(selection: $selectedImage,
+ matching: .images) {
+ Image(systemName: "pencil.circle.fill")
+ .symbolRenderingMode(.multicolor)
+ .font(.system(size: 30))
+ .foregroundColor(.accentColor)
+ }
+ .buttonStyle(.borderless)
+ .onChange(of: selectedImage) {
+ if let newItem = selectedImage {
+ loadPhoto(item: newItem)
+ }
+ }
+ }
+ }
+ }
+ 
+ 
+ 
+ */

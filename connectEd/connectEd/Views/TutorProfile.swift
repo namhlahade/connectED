@@ -6,37 +6,41 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 
 struct TutorProfile: View {
     
+    
+    @State var user: Tutor
     @Bindable var tutor: Tutor
+    
     
     var body: some View {
         
         Form {
             
-            // TODO: change this to a SwiftUI saved image
             VStack (alignment: .center) {
-                AsyncImage(url: URL(string: tutor.image ?? ""), content: { image in
-                    image
+                if (tutor.image == Data() || tutor.image == nil) {
+                    Image(systemName: "person.circle")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                }, placeholder: {
-                    if tutor.image != nil {
-                        ProgressView()
-                    } else {
-                        Image(systemName: "person.circle")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                    }
-                })
-                .frame(maxWidth: 200, maxHeight: 200)
-                .padding()
+                        .frame(maxWidth: 200, maxHeight: 200)
+                        .padding()
+                    
+                }
+                else {
+                    Image(uiImage: UIImage(data: tutor.image!)!)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: 200, maxHeight: 200)
+                        .padding()
+                }
+                
                 
                 HStack (alignment: .center) {
                     Text("Rating:")
-                    Text(String(format: "%.1f/5.0", tutor.rating + 1.0)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    Text(tutor.rating == 0 ? "--/5.0" : String(format: "%.1f/5.0", tutor.rating)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .center)
@@ -82,10 +86,15 @@ struct TutorProfile: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    tutor.isFavorite.toggle()
+                    if (user.favorites.contains(tutor.email)) {
+                        user.favorites.remove(at: user.favorites.firstIndex(of: tutor.email)!)
+                    }
+                    else {
+                        user.favorites.append(tutor.email)
+                    }
                 } label: {
-                    Text(tutor.isFavorite ? "Unfavorite" : "Favorite")
-                    Image(systemName: tutor.isFavorite ? "star.fill" : "star")
+                    Text(user.favorites.contains(tutor.email) ? "Unfavorite" : "Favorite")
+                    Image(systemName: user.favorites.contains(tutor.email) ? "star.fill" : "star")
                 }
             }
         }
@@ -97,6 +106,6 @@ struct TutorProfile: View {
 
 #Preview {
     NavigationStack {
-        TutorProfile(tutor: Tutor.previewData[0])
+        TutorProfile(user: Tutor.previewData[0], tutor: Tutor.previewData[1])
     }
 }

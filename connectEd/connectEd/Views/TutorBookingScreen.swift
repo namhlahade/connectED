@@ -19,12 +19,17 @@ struct TutorBookingScreen: View {
         Form {
         
             Section(header: Text("Select a Course:")) {
-                Picker(selection: $selectedCourse, label: Text("")) {
-                    ForEach(tutor.courses) { course in
-                        Text("\(course.subject.rawValue.uppercased()) \(course.code)").frame(maxWidth: .infinity, alignment: .center)
-                        
-                    }
-                }.labelsHidden()
+                if tutor.courses.isEmpty {
+                    Text("No available courses to select")
+                }
+                else {
+                    Picker(selection: $selectedCourse, label: Text("")) {
+                        ForEach(tutor.courses) { course in
+                            Text("\(course.subject.rawValue.uppercased()) \(course.code)").frame(maxWidth: .infinity, alignment: .center)
+                            
+                        }
+                    }.labelsHidden()
+                }
             }
             
             ProfileSection(title: "Meeting Time", sectionLabels: ["\(tutor.name)'s Availability"], sectionData: [tutor.availability.count == 0 ? "No availability provided" : printAvailability(availability: tutor.availability)])

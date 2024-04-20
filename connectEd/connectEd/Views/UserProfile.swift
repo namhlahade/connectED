@@ -7,6 +7,23 @@
 
 import SwiftUI
 
+struct ProfileView: View {
+    let email: String
+    let getTutorLoader = GetTutorLoader()
+    @Binding var isLoggedOut: Bool
+    var body: some View {
+    VStack {
+      switch getTutorLoader.state {
+      case .idle: Color.clear
+      case .loading: ProgressView()
+      case .failed(let error): Text("Error \(error.localizedDescription)")
+      case .success(let tutorInformation):
+          UserProfile(user: tutorInformation.getTutors().filter { $0.email == email }[0], loggedOut: $isLoggedOut)
+      }
+    }
+    .task { await getTutorLoader.getAllTutorInfo() }
+  }
+}
 
 struct UserProfile: View {
     
@@ -20,27 +37,26 @@ struct UserProfile: View {
         
         Form {
             
-            // TODO: change this to a SwiftUI saved image
             VStack (alignment: .center) {
-                AsyncImage(url: URL(string: user.image ?? ""), content: { image in
-                    image
+                if (user.image == Data() || user.image == nil) {
+                    Image(systemName: "person.circle")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                }, placeholder: {
-                    if user.image != nil {
-                        ProgressView()
-                    } else {
-                        Image(systemName: "person.circle")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                    }
-                })
-                .frame(maxWidth: 200, maxHeight: 200)
-                .padding()
+                        .frame(maxWidth: 200, maxHeight: 200)
+                        .padding()
+                    
+                }
+                else {
+                    Image(uiImage: UIImage(data: user.image!)!)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: 200, maxHeight: 200)
+                        .padding()
+                }
                 
                 HStack (alignment: .center) {
                     Text("My rating:")
-                    Text(String(format: "%.1f/5.0", user.rating + 1.0)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    Text(user.rating == 0 ? "--/5.0" : String(format: "%.1f/5.0", user.rating)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .center)
@@ -101,6 +117,7 @@ struct UserProfile: View {
                             Button("Save") {
                                 Tutor.update(user, from: editTutorFormData)
                                 isPresentingEditForm.toggle()
+                                // TODO: make API call to edit profile
                             }
                         }
                     }
@@ -130,7 +147,7 @@ func printAvailability(availability: [Availability]) -> String {
     let formatter = DateFormatter()
     formatter.dateFormat = "h:mm a"
     
-    for (index, element) in availability.enumerated() {
+    for (index, _) in availability.enumerated() {
         ret.append("\(availability[index].day.rawValue.capitalized(with: nil)) \(formatter.string(from: availability[index].times[0])) - \(formatter.string(from: availability[index].times[1]))\n")
     }
     
@@ -160,7 +177,8 @@ struct UserProfile_Previews: PreviewProvider {
     @State static var isLoggedOut = false
     static var previews: some View {
         NavigationStack {
-            UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], isFavorite: false, availability: []), loggedOut: $isLoggedOut)
+            UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], favorites: [], availability: []), loggedOut: $isLoggedOut)
         }
+        
     }
 }

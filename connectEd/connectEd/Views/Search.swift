@@ -1,93 +1,76 @@
 import SwiftUI
 import SwiftData
 
-struct Search: View {
-    @State private var searchText: String = ""
-    @State private var advancedSearch: Bool = false
-    @State private var rating: Double = 0.0
-    @State private var price: Int = 40
-    @State var tutors: [Tutor]
-    
-    let ratingScale = ["Poor", "Fair", "Average", "Good", "Excellent"]
-    let starColor = HexStringToColor(hex: "#3498eb").color
-    
-    var availableTutors: [Tutor] {
-        tutors.filter {$0.status == Status.online}
-    }
-    
-    var unavailableTutors: [Tutor] {
-        tutors.filter {$0.status == Status.offline}
-    }
+struct ParentSearch: View {
+    let getTutorLoader = GetTutorLoader()
+    var user: Tutor
     
     var body: some View {
-        var searchAvailableTutors: [Tutor] {
-            if searchText == "" {
-                availableTutors.filter
-                {$0.rating >= rating &&
-                    $0.price <= Double(price)}
-            }
-            else {
-                availableTutors.filter
-                {$0.name.contains(searchText) &&
-                    $0.rating >= rating && $0.price <= Double(price)}
+        VStack {
+            switch getTutorLoader.state {
+            case .idle: Color.clear
+            case .loading: ProgressView()
+            case .failed(let error): Text("Error \(error.localizedDescription)")
+            case .success(let allTutorInfo):
+                Search(user: user, tutors: allTutorInfo.getTutors())
             }
         }
-        
-        var searchUnavailableTutors: [Tutor] {
-            if searchText == "" {
-                unavailableTutors.filter
-                {$0.rating >= rating && $0.price <= Double(price)}
-            }
-            else {
-                unavailableTutors.filter
-                {$0.name.contains(searchText) &&
-                    $0.rating >= rating && $0.price <= Double(price)}
-            }
-        }
-        
-        Form {
-            
-            //                    Picker(selection: $tutors.courses, label: Text("Courses").modifier(FormLabel())) {
-            //                        ForEach(courses) {
-            //                            course in Text(course.rawValue)
-            //                        }
-            //                    }
-            //                    .pickerStyle(.menu)
-
-            Section(header: Text("Filter by rating")) {
-                RatingSlider(value: $rating, scale: ratingScale, color: starColor)
-            }
-            //TODO: Figure out why picker isn't showing or working correctly?
-            Section(header: Text("Filter by price")) {
-                Picker(selection: $price, label: Text("Price")) {
-                    ForEach(0..<50) {
-                        index in Text("\(index)")
-                    }
-                }
-                .pickerStyle(.menu)
-            }
-            Section(header: Text("Available Tutors")) {
-                List(searchAvailableTutors) { tutor in
-                    NavigationLink(destination: TutorProfile(tutor: tutor)){
-                        TutorRow(tutor: tutor)
-                    }
-                }
-            }
-            Section(header: Text("Unavailable Tutors")) {
-                List(searchUnavailableTutors) { tutor in
-                    NavigationLink(destination: TutorProfile(tutor: tutor)){
-                        TutorRow(tutor: tutor)
-                    }
-                }
-            }
-        }
-        .navigationTitle("Your Saviors")
-        .searchable(text: $searchText, prompt: "Search for Name")
+        .task { await getTutorLoader.getAllTutorInfo() }
+        .navigationTitle("Get ConnectED")
     }
 }
 
-#Preview {
-    NavigationStack {
-        Search(tutors: Tutor.previewData)
+struct Search: View {
+    @State private var searchText: String = ""
+    @State private var advancedSearch: Bool = false
+    @State var rating: Double = 0.0
+    @State var price: Int = 40
+    @State var availableOnly: Bool = false
+    @State var user: Tutor
+    @State var tutors: [Tutor]
+    @State var courses: [Course] = []
+    
+    var body: some View {
+        var searchTutors: [Tutor] {
+            if searchText == "" {
+                tutors.filter
+                {tutor in (tutor.rating >= rating || tutor.rating == 0.0) &&
+                    tutor.price <= Double(price) && courses.allSatisfy {tutorCourse in tutor.courses.contains {$0.code == tutorCourse.code && $0.subject == tutorCourse.subject}}}
+            }
+            else {
+                tutors.filter
+                {tutor in tutor.name.contains(searchText) && (tutor.rating >= rating || tutor.rating == 0.0) &&
+                    tutor.price <= Double(price) && courses.allSatisfy {tutorCourse in tutor.courses.contains {$0.code == tutorCourse.code && $0.subject == tutorCourse.subject}}}
+            }
+        }
+        
+        List(availableOnly ? searchTutors.filter {$0.status == Status.online} : searchTutors) { tutor in
+            NavigationLink(destination: TutorProfile(user: Tutor.previewData[0], tutor: tutor)){
+                TutorRow(user: user, tutor: tutor)
+            }
+        }
+        .searchable(text: $searchText, prompt: "Search for Name")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Filters") {
+                    advancedSearch.toggle()
+                }
+            }
+        }
+        .sheet(isPresented: $advancedSearch) {
+            NavigationStack {
+                AdvancedSearchForm(rating: $rating, price: $price, availableOnly: $availableOnly, courses: $courses)
+                    .toolbar {
+                        ToolbarItem(placement: .principal) {
+                            Text("Advanced Search").bold()
+                        }
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button("Exit") {
+                                advancedSearch.toggle()
+                            }
+                        }
+                    }
+            }
+        }
     }
 }
