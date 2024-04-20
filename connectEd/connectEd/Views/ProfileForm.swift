@@ -153,6 +153,7 @@ struct ProfileForm: View {
                             }
                             .pickerStyle(.menu)
                             .labelsHidden()
+                            .padding([.bottom], -15)
                             
                             HStack {
                                 Picker(selection: $data.selectedHours[index][0], label: Text("Select Hour")) {
@@ -163,6 +164,7 @@ struct ProfileForm: View {
                                 .labelsHidden()
                                 .pickerStyle(.wheel)
                                 .frame(width: 50, height: 85)
+                                .padding([.trailing], -15)
                                 
                                 Picker(selection: $data.areAM[index][0], label: Text("")) {
                                     Text("AM").tag(true)
@@ -171,6 +173,7 @@ struct ProfileForm: View {
                                 .labelsHidden()
                                 .pickerStyle(.wheel)
                                 .frame(width: 60, height: 85)
+                                .padding([.trailing], -15)
                                 
                                 Text("-")
                                 
@@ -182,6 +185,7 @@ struct ProfileForm: View {
                                 .labelsHidden()
                                 .pickerStyle(.wheel)
                                 .frame(width: 50, height: 85)
+                                .padding([.trailing, .leading], -15)
                                 
                                 Picker(selection: $data.areAM[index][1], label: Text("")) {
                                     Text("AM").tag(true)

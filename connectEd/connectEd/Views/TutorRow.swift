@@ -1,16 +1,20 @@
 import SwiftUI
 
 struct ParentStruct_TutorRow: View {
+    
+    var user: Tutor
     @Bindable var tutor: Tutor
+    
+    
     let getTutorInfoLoader = GetTutorInfoLoader()
     var body: some View {
         VStack {
             switch getTutorInfoLoader.state {
             case .idle: Color.clear
             case .loading: ProgressView()
-            case .failed(let error): TutorRow(tutor: tutor)
+            case .failed(let error): TutorRow(user: user, tutor: tutor)
             case .success(let tutorInfo):
-                TutorRow(tutor: tutor)
+                TutorRow(user: user, tutor: tutor)
             }
         }
         .task { await getTutorInfoLoader.getTutorInfo(email: EmailStruct(tutorEmail: tutor.email)) }
@@ -18,6 +22,7 @@ struct ParentStruct_TutorRow: View {
 }
 
 struct TutorRow: View {
+    var user: Tutor
     @State var tutor: Tutor
     var body: some View {
         HStack (alignment: .center) {
@@ -26,6 +31,13 @@ struct TutorRow: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(maxWidth: 65, maxHeight: 65)
+                    .overlay(alignment: .bottomTrailing) {
+                            Image(systemName: "circle.fill")
+                            .resizable()
+                            .frame(maxWidth: 15, maxHeight: 15)
+                            .foregroundStyle(tutor.status == .online ? Color.green : Color.red)
+                    }
+
                 
             }
             else {
@@ -33,14 +45,21 @@ struct TutorRow: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(maxWidth: 65, maxHeight: 65)
+                    .overlay(alignment: .bottomTrailing) {
+                            Image(systemName: "circle.fill")
+                            .resizable()
+                            .frame(maxWidth: 15, maxHeight: 15)
+                            .foregroundStyle(tutor.status == .online ? Color.green : Color.red)
+                    }
             }
             VStack (alignment: .leading) {
                 HStack {
                     Text(tutor.name).bold().font(.title2)
                     Spacer()
-                    Image(systemName: "circle.fill").foregroundStyle(tutor.status == .online ? Color.green : Color.red)
-                    Text(tutor.status == .online ? "Available" : "Unavailable").font(.caption)
-                }
+                    if user.favorites.contains(tutor.email) {
+                        Image(systemName: "star.fill")
+                    }
+                }.padding([.bottom], -5)
                 HStack {
                     Text("Rating: ").bold()
                     Text(tutor.rating == 0 ? "--/5.0" : String(format: "%.1f/5.0", tutor.rating)).foregroundStyle(Color.gray)
@@ -65,5 +84,5 @@ struct TutorRow: View {
 
 #Preview {
     let tutor = Tutor.previewData[1]
-    return TutorRow(tutor: tutor)
+    return TutorRow(user: Tutor.previewData[0], tutor: tutor)
 }

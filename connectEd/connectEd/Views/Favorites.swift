@@ -39,7 +39,7 @@ struct Favorites: View {
                 ForEach (favoriteTutors) {
                     tutor in
                     NavigationLink(destination: TutorProfile(user: user, tutor: tutor)){
-                            TutorRow(tutor: tutor)
+                        TutorRow(user: user, tutor: tutor)
                         }
                 }
                 
