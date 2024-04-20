@@ -9,19 +9,19 @@ import SwiftUI
 
 struct ProfileView: View {
     let email: String
-    let getTutorInfoLoader = GetTutorInfoLoader()
+    let getTutorLoader = GetTutorLoader()
     
     var body: some View {
     VStack {
-      switch getTutorInfoLoader.state {
+      switch getTutorLoader.state {
       case .idle: Color.clear
       case .loading: ProgressView()
       case .failed(let error): Text("Error \(error.localizedDescription)")
       case .success(let tutorInformation):
-          UserProfile(user: tutorInformation.getInfoTutor(userEmail: email))
+          UserProfile(user: tutorInformation.getTutors().filter { $0.email == email }[0])
       }
     }
-    .task { await getTutorInfoLoader.getTutorInfo(email: EmailStruct(tutorEmail: email)) }
+    .task { await getTutorLoader.getAllTutorInfo() }
   }
 }
 
