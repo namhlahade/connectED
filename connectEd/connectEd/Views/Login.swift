@@ -13,11 +13,10 @@ struct LoginScreen: View {
     @State var editTutorFormData: Tutor.FormData = Tutor.FormData()
     @State var authorized: Bool = false
     var body: some View {
-        authorized ? VStack{
+        if authorized {
             TabContainer(tutors: Tutor.previewData)
         }
-        :
-        VStack{
+        else {
             ScrollView {
                 TextFieldWithLabel(label: "Email", hint: "Make sure to include an @ in your email!", text: $email, validationStatus: $validationStatus, validationMessage: "You currently do not have an @ sign in your email") { email.contains("@") }
                 Button("Login") {
@@ -46,8 +45,9 @@ struct LoginScreen: View {
                                 Text("Edit Profile").fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                             }
                             ToolbarItem(placement: .navigationBarTrailing) {
-                                NavigationLink(destination: TabContainer(tutors: Tutor.previewData)) {
-                                    Text("Complete")
+                                Button("Complete") {
+                                    authorized = true
+                                    isPresentingProfileForm.toggle()
                                 }
                             }
                         }

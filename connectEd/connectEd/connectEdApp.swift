@@ -27,8 +27,13 @@ struct connectEdApp: App {
             }
         }()
         WindowGroup {
-            LoginScreen()
-                .onAppear { authenticationService.maybeLoginSavedUser(modelContext: sharedModelContainer.mainContext) }
+            if (authenticationService.maybeLoginSavedUser(modelContext: sharedModelContainer.mainContext)){
+                TabContainer(tutors: Tutor.previewData)
+            } else{
+                LoginScreen()
+                    .onAppear { authenticationService.maybeLoginSavedUser(modelContext: sharedModelContainer.mainContext) }
+            
+            }
         }
         .modelContainer(sharedModelContainer)
         .environment(authenticationService)

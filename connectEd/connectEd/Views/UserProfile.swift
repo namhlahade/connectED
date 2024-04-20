@@ -11,7 +11,7 @@ import SwiftUI
 struct UserProfile: View {
     
     @Bindable var user: Tutor
-    
+    let authenticationService = FakeAuthenticationService()
     @State private var isPresentingEditForm: Bool = false
     @State private var editTutorFormData: Tutor.FormData = Tutor.FormData()
     
@@ -65,7 +65,6 @@ struct UserProfile: View {
                 }
             }
             
-            
         }
         .navigationTitle("My Profile")
         .toolbar {
@@ -97,6 +96,9 @@ struct UserProfile: View {
                         }
                     }
             }
+        }
+        Button("Logout"){
+            authenticationService.logout()
         }
     }
 }
