@@ -40,7 +40,7 @@ struct UserProfile: View {
                 
                 HStack (alignment: .center) {
                     Text("My rating:")
-                    Text(String(format: "%.1f/5", user.rating + 1.0)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    Text(String(format: "%.1f/5.0", user.rating + 1.0)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .center)
@@ -60,7 +60,6 @@ struct UserProfile: View {
                 }
                 else {
                     List(user.reviews) { review in
-                        // TODO: do review row
                         ReviewRow(review: review)
                     }
                 }
@@ -151,6 +150,6 @@ struct ProfileSection: View {
 
 #Preview {
     NavigationStack {
-        UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [], isFavorite: false, availability: []))
+        UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], isFavorite: false, availability: []))
     }
 }

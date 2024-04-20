@@ -36,7 +36,7 @@ struct TutorProfile: View {
                 
                 HStack (alignment: .center) {
                     Text("Rating:")
-                    Text(String(format: "%.1f/5", tutor.rating + 1.0)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    Text(String(format: "%.1f/5.0", tutor.rating + 1.0)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .center)
@@ -71,7 +71,6 @@ struct TutorProfile: View {
                 }
                 else {
                     List(tutor.reviews) { review in
-                        // TODO: do review row
                         ReviewRow(review: review)
                     }
                 }
@@ -98,6 +97,6 @@ struct TutorProfile: View {
 
 #Preview {
     NavigationStack {
-        TutorProfile(tutor: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [], isFavorite: false, availability: []))
+        TutorProfile(tutor: Tutor.previewData[0])
     }
 }
