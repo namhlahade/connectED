@@ -12,14 +12,13 @@ struct TabContainer: View {
     var body: some View {
         TabView {
             NavigationStack {
-                Search(tutors: tutors)
-                    .navigationTitle("Your Saviors")
+                ParentSearch(user: Tutor.previewData[0])
             }
             .tabItem {
                 Label("Browse", systemImage: "house.fill")
             }
             NavigationStack {
-                Favorites(tutors: tutors)
+                Favorites(user: Tutor.previewData[0], tutors: tutors)
             }
             .tabItem {
                 Label("Favorites", systemImage: "star.fill")
@@ -31,7 +30,7 @@ struct TabContainer: View {
                 Label("Cipher", systemImage: "brain.head.profile")
             }
             NavigationStack {
-                ProfileView(email: "nlahade@gmail.com")
+                ProfileView(email: Tutor.previewData[0].email)
             }
             .tabItem {
                 Label("Profile", systemImage: "person.fill")

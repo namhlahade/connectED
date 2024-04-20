@@ -2,11 +2,17 @@ import SwiftUI
 import SwiftData
 
 struct Favorites: View {
-    var tutors: [Tutor]
+    
+    @State var user: Tutor
+    @State var tutors: [Tutor]
+    
     @State var addFavorites = false
     
     var favoriteTutors: [Tutor] {
-        tutors.filter {$0.isFavorite}
+        //tutors.filter {$0.isFavorite}
+        tutors.filter {
+            user.favorites.contains($0.email)
+        }
     }
     
     var body: some View {
@@ -14,7 +20,7 @@ struct Favorites: View {
             List {
                 ForEach (favoriteTutors) {
                     tutor in
-                        NavigationLink(destination: TutorProfile(tutor: tutor)){
+                    NavigationLink(destination: TutorProfile(user: user, tutor: tutor)){
                             TutorRow(tutor: tutor)
                         }
                 }
@@ -35,13 +41,14 @@ struct Favorites: View {
     }
     func removeFavorite(at offsets: IndexSet) {
         for offset in offsets {
-            favoriteTutors[offset].isFavorite = false
+            //favoriteTutors[offset].isFavorite = false
+            user.favorites.remove(at: offset)
         }
     }
 }
 
 
-struct AddFavoritesScreen: View {
+/*struct AddFavoritesScreen: View {
     @State var tutors: [Tutor]
     var body: some View {
         List(tutors) { tutor in
@@ -57,10 +64,10 @@ struct AddFavoritesScreen: View {
             .navigationTitle("Add to Favorites")
         }
     }
-}
+}*/
 
 #Preview {
     return NavigationStack {
-        Favorites(tutors: Tutor.previewData)
+        Favorites(user: Tutor.previewData[0], tutors: Tutor.previewData)
     }
 }

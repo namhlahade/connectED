@@ -11,7 +11,10 @@ import PhotosUI
 
 struct TutorProfile: View {
     
+    
+    @State var user: Tutor
     @Bindable var tutor: Tutor
+    
     
     var body: some View {
         
@@ -83,10 +86,15 @@ struct TutorProfile: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    tutor.isFavorite.toggle()
+                    if (user.favorites.contains(tutor.email)) {
+                        user.favorites.remove(at: user.favorites.firstIndex(of: tutor.email)!)
+                    }
+                    else {
+                        user.favorites.append(tutor.email)
+                    }
                 } label: {
-                    Text(tutor.isFavorite ? "Unfavorite" : "Favorite")
-                    Image(systemName: tutor.isFavorite ? "star.fill" : "star")
+                    Text(user.favorites.contains(tutor.email) ? "Unfavorite" : "Favorite")
+                    Image(systemName: user.favorites.contains(tutor.email) ? "star.fill" : "star")
                 }
             }
         }
@@ -98,6 +106,6 @@ struct TutorProfile: View {
 
 #Preview {
     NavigationStack {
-        TutorProfile(tutor: Tutor.previewData[0])
+        TutorProfile(user: Tutor.previewData[0], tutor: Tutor.previewData[1])
     }
 }

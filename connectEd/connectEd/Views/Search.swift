@@ -1,12 +1,31 @@
 import SwiftUI
 import SwiftData
 
+struct ParentSearch: View {
+    let getTutorLoader = GetTutorLoader()
+    var user: Tutor
+    
+    var body: some View {
+    VStack {
+      switch getTutorLoader.state {
+      case .idle: Color.clear
+      case .loading: ProgressView()
+      case .failed(let error): Text("Error \(error.localizedDescription)")
+      case .success(let allTutorInfo):
+          Search(user: user, tutors: allTutorInfo.getTutors())
+      }
+    }
+    .task { await getTutorLoader.getAllTutorInfo() }
+  }
+}
+
 struct Search: View {
     @State private var searchText: String = ""
     @State private var advancedSearch: Bool = false
     @State var rating: Double = 0.0
     @State var price: Int = 40
     @State var availableOnly: Bool = false
+    @State var user: Tutor
     @State var tutors: [Tutor]
     @State var courses: [Course] = []
     
@@ -25,7 +44,7 @@ struct Search: View {
         }
         
         List(availableOnly ? searchTutors.filter {$0.status == Status.online} : searchTutors) { tutor in
-            NavigationLink(destination: TutorProfile(tutor: tutor)){
+            NavigationLink(destination: TutorProfile(user: Tutor.previewData[0], tutor: tutor)){
                 TutorRow(tutor: tutor)
             }
         }
@@ -59,6 +78,6 @@ struct Search: View {
 
 #Preview {
     NavigationStack {
-        Search(tutors: Tutor.previewData)
+        Search(user: Tutor.previewData[0], tutors: Tutor.previewData)
     }
 }
