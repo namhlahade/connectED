@@ -1,7 +1,7 @@
 import SwiftUI
 import EventKit
 
-struct Calendar: View {
+struct CalendarView: View {
   @Environment(\.openURL) var openURL
   let eventService = EventService()
   @State var isPresentingAddEvent: Bool = false
@@ -71,7 +71,7 @@ struct Calendar: View {
 }
 struct Calendar_Previews: PreviewProvider {
   static var previews: some View {
-    Calendar()
+    CalendarView()
   }
 }
 
