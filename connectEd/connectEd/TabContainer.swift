@@ -18,7 +18,7 @@ struct TabContainer: View {
                 Label("Browse", systemImage: "house.fill")
             }
             NavigationStack {
-                Favorites(user: Tutor.previewData[0], tutors: tutors)
+                ParentFavorites(user: Tutor.previewData[0])
             }
             .tabItem {
                 Label("Favorites", systemImage: "star.fill")

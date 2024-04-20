@@ -1,6 +1,24 @@
 import SwiftUI
 import SwiftData
 
+struct ParentFavorites: View {
+    let getTutorLoader = GetTutorLoader()
+    var user: Tutor
+    
+    var body: some View {
+    VStack {
+      switch getTutorLoader.state {
+      case .idle: Color.clear
+      case .loading: ProgressView()
+      case .failed(let error): Text("Error \(error.localizedDescription)")
+      case .success(let allTutorInfo):
+          Favorites(user: user, tutors: allTutorInfo.getTutors())
+      }
+    }
+    .task { await getTutorLoader.getAllTutorInfo() }
+  }
+}
+
 struct Favorites: View {
     
     @State var user: Tutor
@@ -9,7 +27,6 @@ struct Favorites: View {
     @State var addFavorites = false
     
     var favoriteTutors: [Tutor] {
-        //tutors.filter {$0.isFavorite}
         tutors.filter {
             user.favorites.contains($0.email)
         }
@@ -31,18 +48,22 @@ struct Favorites: View {
                 ToolbarItem(placement: .topBarLeading) {
                     EditButton()
                 }
-                
             }
-            
-            
         }
         .navigationTitle("Favorite Tutors")
+        ForEach(favoriteTutors) {
+            tutor in
+            Text(tutor.name)
+            Text(tutor.email)
+        }
         
     }
     func removeFavorite(at offsets: IndexSet) {
         for offset in offsets {
             //favoriteTutors[offset].isFavorite = false
             user.favorites.remove(at: offset)
+//            favoriteTutors.remove(at: offset)
+            print(offset)
         }
     }
 }
