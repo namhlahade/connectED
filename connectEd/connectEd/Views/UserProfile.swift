@@ -10,7 +10,7 @@ import SwiftUI
 struct ProfileView: View {
     let email: String
     let getTutorLoader = GetTutorLoader()
-    
+    @Binding var isLoggedOut: Bool
     var body: some View {
     VStack {
       switch getTutorLoader.state {
@@ -18,7 +18,7 @@ struct ProfileView: View {
       case .loading: ProgressView()
       case .failed(let error): Text("Error \(error.localizedDescription)")
       case .success(let tutorInformation):
-          UserProfile(user: tutorInformation.getTutors().filter { $0.email == email }[0])
+          UserProfile(user: tutorInformation.getTutors().filter { $0.email == email }[0], loggedOut: $isLoggedOut)
       }
     }
     .task { await getTutorLoader.getAllTutorInfo() }
@@ -28,11 +28,11 @@ struct ProfileView: View {
 struct UserProfile: View {
     
     @Bindable var user: Tutor
-    
+    let authenticationService = FakeAuthenticationService()
     @State private var isPresentingEditForm: Bool = false
     @State private var editTutorFormData: Tutor.FormData = Tutor.FormData()
     
-    
+    @Binding var loggedOut: Bool
     var body: some View {
         
         Form {
@@ -81,10 +81,15 @@ struct UserProfile: View {
                 }
             }
             
-            
         }
         .navigationTitle("My Profile")
         .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button("Logout") {
+                    authenticationService.logout()
+                    loggedOut = true
+                }
+            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Edit") {
                     editTutorFormData = user.dataForForm
@@ -104,6 +109,9 @@ struct UserProfile: View {
                         }
                         ToolbarItem(placement: .principal) {
                             Text("Edit Profile").fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                        }
+                        ToolbarItem(placement: .principal) {
+                            Text("Logout").fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                         }
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button("Save") {
@@ -165,8 +173,12 @@ struct ProfileSection: View {
 }
 
 
-#Preview {
-    NavigationStack {
-        UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], favorites: [], availability: []))
+struct UserProfile_Previews: PreviewProvider {
+    @State static var isLoggedOut = false
+    static var previews: some View {
+        NavigationStack {
+            UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], favorites: [], availability: []), loggedOut: $isLoggedOut)
+        }
+        
     }
 }
