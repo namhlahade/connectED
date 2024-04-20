@@ -13,7 +13,10 @@ struct Favorites: View {
         NavigationStack{
             List {
                 ForEach (favoriteTutors) {
-                    tutor in TutorRow(tutor: tutor)
+                    tutor in
+                        NavigationLink(destination: TutorProfile(tutor: tutor)){
+                            TutorRow(tutor: tutor)
+                        }
                 }
                 
                 .onDelete(perform: removeFavorite)

@@ -6,47 +6,31 @@ struct Search: View {
     @State private var advancedSearch: Bool = false
     @State private var rating: Double = 0.0
     @State private var price: Int = 40
+    @State private var availableOnly: Bool = false
     @State var tutors: [Tutor]
     
     let ratingScale = ["Poor", "Fair", "Average", "Good", "Excellent"]
     let starColor = HexStringToColor(hex: "#3498eb").color
     
-    var availableTutors: [Tutor] {
-        tutors.filter {$0.status == Status.online}
-    }
-    
-    var unavailableTutors: [Tutor] {
-        tutors.filter {$0.status == Status.offline}
-    }
+//    var availableTutors: [Tutor] {
+//        tutors.filter {$0.status == Status.online}
+//    }
     
     var body: some View {
-        var searchAvailableTutors: [Tutor] {
+        var searchTutors: [Tutor] {
             if searchText == "" {
-                availableTutors.filter
+                tutors.filter
                 {$0.rating >= rating &&
                     $0.price <= Double(price)}
             }
             else {
-                availableTutors.filter
-                {$0.name.contains(searchText) &&
-                    $0.rating >= rating && $0.price <= Double(price)}
-            }
-        }
-        
-        var searchUnavailableTutors: [Tutor] {
-            if searchText == "" {
-                unavailableTutors.filter
-                {$0.rating >= rating && $0.price <= Double(price)}
-            }
-            else {
-                unavailableTutors.filter
+                tutors.filter
                 {$0.name.contains(searchText) &&
                     $0.rating >= rating && $0.price <= Double(price)}
             }
         }
         
         Form {
-            
             //                    Picker(selection: $tutors.courses, label: Text("Courses").modifier(FormLabel())) {
             //                        ForEach(courses) {
             //                            course in Text(course.rawValue)
@@ -57,7 +41,6 @@ struct Search: View {
             Section(header: Text("Filter by rating")) {
                 RatingSlider(value: $rating, scale: ratingScale, color: starColor)
             }
-            //TODO: Figure out why picker isn't showing or working correctly?
             Section(header: Text("Filter by price")) {
                 Picker(selection: $price, label: Text("Price")) {
                     ForEach(0..<50) {
@@ -66,15 +49,8 @@ struct Search: View {
                 }
                 .pickerStyle(.menu)
             }
-            Section(header: Text("Available Tutors")) {
-                List(searchAvailableTutors) { tutor in
-                    NavigationLink(destination: TutorProfile(tutor: tutor)){
-                        TutorRow(tutor: tutor)
-                    }
-                }
-            }
-            Section(header: Text("Unavailable Tutors")) {
-                List(searchUnavailableTutors) { tutor in
+            Section(header: Text("Tutors")) {
+                List(searchTutors) { tutor in
                     NavigationLink(destination: TutorProfile(tutor: tutor)){
                         TutorRow(tutor: tutor)
                     }
@@ -83,6 +59,13 @@ struct Search: View {
         }
         .navigationTitle("Your Saviors")
         .searchable(text: $searchText, prompt: "Search for Name")
+//        .toolbar {
+//            ToolbarItem(placement: .topBarLeading) {
+//                Button(availableOnly ? "All Tutors": "Only Available Tutors") {
+//                    availableOnly.toggle()
+//                }
+//            }
+//        }
     }
 }
 

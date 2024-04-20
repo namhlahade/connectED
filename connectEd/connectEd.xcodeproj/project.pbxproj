@@ -34,6 +34,7 @@
 		5B097E782BBE7DE40074CFB4 /* Tutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B097E772BBE7DE40074CFB4 /* Tutor.swift */; };
 		5B097E7A2BBE7F7D0074CFB4 /* TutorRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B097E792BBE7F7D0074CFB4 /* TutorRow.swift */; };
 		5B097E7C2BC4E20C0074CFB4 /* PreviewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B097E7B2BC4E20C0074CFB4 /* PreviewContainer.swift */; };
+		5B0E1BF82BD37A4B001DB89C /* AdvancedSearchForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0E1BF72BD37A4B001DB89C /* AdvancedSearchForm.swift */; };
 		97385D932BBAD58300BB8C8A /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97385D922BBAD58300BB8C8A /* Search.swift */; };
 		97385D952BBAD59200BB8C8A /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97385D942BBAD59200BB8C8A /* Favorites.swift */; };
 		97385D992BBAD5BF00BB8C8A /* TutorBookingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97385D982BBAD5BF00BB8C8A /* TutorBookingScreen.swift */; };
@@ -80,6 +81,7 @@
 		5B097E772BBE7DE40074CFB4 /* Tutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutor.swift; sourceTree = "<group>"; };
 		5B097E792BBE7F7D0074CFB4 /* TutorRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorRow.swift; sourceTree = "<group>"; };
 		5B097E7B2BC4E20C0074CFB4 /* PreviewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContainer.swift; sourceTree = "<group>"; };
+		5B0E1BF72BD37A4B001DB89C /* AdvancedSearchForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSearchForm.swift; sourceTree = "<group>"; };
 		97385D922BBAD58300BB8C8A /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		97385D942BBAD59200BB8C8A /* Favorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
 		97385D982BBAD5BF00BB8C8A /* TutorBookingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorBookingScreen.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				97385D922BBAD58300BB8C8A /* Search.swift */,
+				5B0E1BF72BD37A4B001DB89C /* AdvancedSearchForm.swift */,
 				97385D942BBAD59200BB8C8A /* Favorites.swift */,
 				97EDD35B2BCA5329002518B0 /* UserProfile.swift */,
 				97385D982BBAD5BF00BB8C8A /* TutorBookingScreen.swift */,
@@ -345,6 +348,7 @@
 				5B097E782BBE7DE40074CFB4 /* Tutor.swift in Sources */,
 				977FA7AC2BB1144A006CF4C2 /* TabContainer.swift in Sources */,
 				4549BFFE2BC9F25E00C35577 /* HexStringToColor.swift in Sources */,
+				5B0E1BF82BD37A4B001DB89C /* AdvancedSearchForm.swift in Sources */,
 				9744D5852BBEE2C000758135 /* ReviewRow.swift in Sources */,
 				97EDD35C2BCA5329002518B0 /* UserProfile.swift in Sources */,
 				97385D992BBAD5BF00BB8C8A /* TutorBookingScreen.swift in Sources */,
