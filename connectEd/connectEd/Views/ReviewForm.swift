@@ -48,7 +48,7 @@ struct ReviewForm: View {
                         Button(action: {
                             review.rating = Double(index)
                         }) {
-                            Image(systemName: self.getStarImageName(for: index))
+                            Image(systemName: getStarImageName(for: index, review: review))
                                 .foregroundColor(self.starColor)
                                 .font(.system(size: 25))
                         }.buttonStyle(.plain)
@@ -82,12 +82,13 @@ struct ReviewForm: View {
         .navigationBarTitle("Leave a Review")
     }
 
-    private func getStarImageName(for index: Int) -> String {
-        if Double(index) <= review.rating {
-            return "star.fill"
-        } else {
-            return "star"
-        }
+}
+
+func getStarImageName(for index: Int, review: Review) -> String {
+    if Double(index) <= review.rating {
+        return "star.fill"
+    } else {
+        return "star"
     }
 }
 

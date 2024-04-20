@@ -21,13 +21,13 @@ struct TutorBookingScreen: View {
             Section(header: Text("Select a Course:")) {
                 Picker(selection: $selectedCourse, label: Text("")) {
                     ForEach(tutor.courses) { course in
-                        Text("\(course.subject.rawValue.uppercased()) \(course.code)")    .frame(maxWidth: .infinity, alignment: .center)
+                        Text("\(course.subject.rawValue.uppercased()) \(course.code)").frame(maxWidth: .infinity, alignment: .center)
                         
                     }
-                }
+                }.labelsHidden()
             }
             
-            ProfileSection(title: "Meeting Time", sectionLabels: ["\(tutor.name)'s Availability"], sectionData: [printAvailability(availability: tutor.availability)])
+            ProfileSection(title: "Meeting Time", sectionLabels: ["\(tutor.name)'s Availability"], sectionData: [tutor.availability.count == 0 ? "No availability provided" : printAvailability(availability: tutor.availability)])
             
             
             Section(header: Text("Meeting Location")) {
@@ -54,7 +54,7 @@ struct TutorBookingScreen: View {
     }
     
     private func submit() {
-        
+        // TODO: submit meeting form
     }
     
     func dateDisplay(for event: EKEvent) -> String {
@@ -67,5 +67,5 @@ struct TutorBookingScreen: View {
 }
 
 #Preview {
-    TutorBookingScreen(tutor: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [Course(subject: .ece, code: "110"), Course(subject: .ece, code: "230")], status: .online, reviews: [], isFavorite: false, availability: []))
+    TutorBookingScreen(tutor: Tutor.previewData[3])
 }
