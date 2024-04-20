@@ -308,7 +308,7 @@ def addClass():
         db.session.add(classRelationship)
         db.session.commit()
 
-        return jsonify({"message": "User added successfully"}), 201
+        return jsonify({"message": "Class added successfully"}), 201
 
     except Exception as e:
         db.session.rollback()

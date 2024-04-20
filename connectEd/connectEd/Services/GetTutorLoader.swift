@@ -20,7 +20,7 @@ class GetTutorLoader {
     }
     
     @MainActor
-    func getTutorInfo() async {
+    func getAllTutorInfo() async {
         self.state = .loading
         do {
             let response = try await apiClient.getTutor()

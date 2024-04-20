@@ -18,7 +18,7 @@ struct ProfileView: View {
       case .loading: ProgressView()
       case .failed(let error): Text("Error \(error.localizedDescription)")
       case .success(let tutorInformation):
-          UserProfile(user: tutorInformation.getInfoTutor())
+          UserProfile(user: tutorInformation.getInfoTutor(userEmail: email))
       }
     }
     .task { await getTutorInfoLoader.getTutorInfo(email: EmailStruct(tutorEmail: email)) }
@@ -167,6 +167,6 @@ struct ProfileSection: View {
 
 #Preview {
     NavigationStack {
-        UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], isFavorite: false, availability: []))
+        UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], favorites: [], availability: []))
     }
 }

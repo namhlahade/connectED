@@ -120,6 +120,6 @@ struct RatingSlider: View {
 
 struct ReviewForm_Previews: PreviewProvider {
     static var previews: some View {
-        ReviewForm(tutor: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [], isFavorite: false, availability: []))
+        ReviewForm(tutor: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [], favorites: [], availability: []))
     }
 }
