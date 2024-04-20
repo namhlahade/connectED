@@ -296,6 +296,24 @@ def deleteFavorite():
     except Exception as e:
         db.session.rollback()
         return str(e), 500
+    
+@app.route('/addClass', methods=['POST'])
+def addClass():
+    try:
+        data = request.get_json()
+        tutor_email = data.get('tutorEmail')
+        className = data.get('className')
+
+        classRelationship = TutorClass(email=tutor_email, className=className)
+        db.session.add(classRelationship)
+        db.session.commit()
+
+        return jsonify({"message": "User added successfully"}), 201
+
+    except Exception as e:
+        db.session.rollback()
+        return str(e), 500
+
 
 @app.route('/getTutorInfo', methods=['POST'])
 def getTutorInfo():
