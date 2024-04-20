@@ -9,21 +9,17 @@ struct Search: View {
     @State var availableOnly: Bool = false
     @State var tutors: [Tutor]
     
-    //    var availableTutors: [Tutor] {
-    //        tutors.filter {$0.status == Status.online}
-    //    }
-    
     var body: some View {
         var searchTutors: [Tutor] {
             if searchText == "" {
                 tutors.filter
-                {$0.rating >= rating &&
+                {($0.rating >= rating || $0.rating == 0.0) &&
                     $0.price <= Double(price)}
             }
             else {
                 tutors.filter
                 {$0.name.contains(searchText) &&
-                    $0.rating >= rating && $0.price <= Double(price)}
+                    ($0.rating >= rating || $0.rating == 0.0) && $0.price <= Double(price)}
             }
         }
         
