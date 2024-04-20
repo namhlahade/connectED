@@ -41,10 +41,17 @@ struct TutorRow: View {
                     Text(tutor.name).bold().font(.title)
                     Spacer()
                     Image(systemName: "circle.fill").foregroundStyle(tutor.status == .online ? Color.green : Color.red)
-                    Text(tutor.status.rawValue.capitalized)
+                    Text(tutor.status == .online ? "Available" : "Unavailable")
                 }
-                
-                Text(tutor.bio ?? "No Bio Info").foregroundStyle(Color.gray)
+                HStack {
+                    Text("Rating: ").bold()
+                    Text(tutor.rating == 0 ? "--/5.0" : String(format: "%.1f/5.0", tutor.rating)).foregroundStyle(Color.gray)
+                }
+                HStack {
+                    Text("Price: ").bold()
+                    Text(String(format: "$%.2f", tutor.price))
+                }
+
                 HStack {
                     Text("Courses: ").bold()
                     if tutor.courses.isEmpty == false {
@@ -65,7 +72,7 @@ struct TutorRow: View {
     }
 }
 
-//#Preview {
-//    let tutor = Tutor.previewData[1]
-//    return TutorRow(tutor: tutor)
-//}
+#Preview {
+    let tutor = Tutor.previewData[1]
+    return TutorRow(tutor: tutor)
+}
