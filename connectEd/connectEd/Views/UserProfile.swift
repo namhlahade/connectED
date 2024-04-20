@@ -55,6 +55,15 @@ struct UserProfile: View {
                 }
                 
                 HStack (alignment: .center) {
+                    Image(systemName: "circle.fill")
+                        .resizable()
+                        .frame(maxWidth: 15, maxHeight: 15)
+                        .foregroundStyle(user.status == .online ? Color.green : Color.red)
+                    Text(user.status == .online ? "Available" : "Unavailable")
+                    
+                }
+                
+                HStack (alignment: .center) {
                     Text("My rating:")
                     Text(user.rating == 0 ? "--/5.0" : String(format: "%.1f/5.0", user.rating)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                 }

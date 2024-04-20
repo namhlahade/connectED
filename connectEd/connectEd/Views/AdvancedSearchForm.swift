@@ -21,10 +21,11 @@ struct AdvancedSearchForm: View {
                     }
                 }
                 .pickerStyle(WheelPickerStyle())
+                .frame(height: 150)
             }
             Section(header: Text("Filter by availability")) {
                 HStack {
-                    Button("Only Available Tutors") {
+                    Button("Only show available tutors") {
                         availableOnly.toggle()
                     }
                     Spacer()
@@ -46,16 +47,26 @@ struct AdvancedSearchForm: View {
                         
                         TextField("Class code", text: $courses[index].code, prompt: Text("Class code"))
                         
-                        Button("", systemImage: "x.circle") {
+                        Button("", systemImage: "minus.circle.fill") {
                             courses.remove(at: index)
                         }.buttonStyle(BorderlessButtonStyle()).foregroundStyle(Color.red)
                         
                     }
                 }
                 
-                Button("Add course", systemImage: "plus.circle") {
+                
+                Button(action: {
                     courses.append(Course(subject: .ece, code: "101"))
-                }.buttonStyle(BorderlessButtonStyle()).foregroundStyle(Color.green)
+                }) {
+                    HStack {
+                        Image(systemName: "plus.circle")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(.green)
+                        Text("Add course")
+                    }
+                }
+                .buttonStyle(BorderlessButtonStyle())
             }
         }
     }

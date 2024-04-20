@@ -45,3 +45,7 @@ struct TabContainer: View {
         }
     }
 }
+
+#Preview {
+    TabContainer(tutors: Tutor.previewData)
+}

@@ -120,7 +120,7 @@ struct ProfileForm: View {
                     .font(.caption)
                 
                 ForEach(Array($data.courses.enumerated()), id: \.offset) { index, element in
-                    HStack {
+                    HStack (alignment: .center) {
                         
                         Picker("", selection: $data.courses[index].subject) {
                             ForEach(Tutor.Subject.allCases) { subject in
@@ -132,17 +132,25 @@ struct ProfileForm: View {
                         
                         TextField("Class code", text: $data.courses[index].code, prompt: Text("Class code"))
                         
-                        Button("", systemImage: "x.circle") {
+                        Button("", systemImage: "minus.circle.fill") {
                             data.courses.remove(at: index)
                         }.buttonStyle(BorderlessButtonStyle()).foregroundStyle(Color.red)
                         
                     }
                 }
                 
-                Button("Add course", systemImage: "plus.circle") {
+                Button(action: {
                     data.courses.append(Course(subject: .ece, code: "101"))
-                }.buttonStyle(BorderlessButtonStyle())
-                //.foregroundStyle(Color.green)
+                }) {
+                    HStack {
+                        Image(systemName: "plus.circle")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(.green)
+                        Text("Add course")
+                    }
+                }
+                .buttonStyle(BorderlessButtonStyle())
                 
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -210,23 +218,31 @@ struct ProfileForm: View {
                         
                         Spacer()
                         
-                        Button("", systemImage: "x.circle") {
+                        Button("", systemImage: "minus.circle.fill") {
                             data.availability.remove(at: index)
                             data.selectedHours.remove(at: index)
                             data.areAM.remove(at: index)
                         }.buttonStyle(BorderlessButtonStyle())
+                            .foregroundStyle(Color.red)
                         
                     }
                     
                 }
-                
-                Button("Add availability", systemImage: "plus.circle") {
+                                
+                Button(action: {
                     data.availability.append(Availability(day: .sunday, times: [dateGetter("00:00"), dateGetter("00:00")]))
                     data.selectedHours.append([6, 6])
                     data.areAM.append([true, true])
-                    
-                }.buttonStyle(BorderlessButtonStyle())
-                //.foregroundStyle(Color.green)
+                }) {
+                    HStack {
+                        Image(systemName: "plus.circle")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(.green)
+                        Text("Add availability")
+                    }
+                }
+                .buttonStyle(BorderlessButtonStyle())
                 
                 
             }
