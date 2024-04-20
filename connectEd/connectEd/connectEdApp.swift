@@ -12,7 +12,7 @@ import SwiftData
 struct connectEdApp: App {
     var body: some Scene {
         WindowGroup {
-            TabContainer(tutors: Tutor.previewData)
+            Signup()
         }
     }
 }

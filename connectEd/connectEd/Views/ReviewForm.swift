@@ -25,22 +25,6 @@ struct ReviewForm: View {
                 }
             }
             
-            // TODO: add course into review (will require db changes in API)
-            /*Section(header: Text("Course Being Tutored")) {
-                HStack {
-                    
-                    Picker("", selection: $course.subject) {
-                        ForEach(Tutor.Subject.allCases) { subject in
-                            Text(subject.rawValue.uppercased())
-                        }
-                    }
-                    .pickerStyle(.menu)
-                    
-                    TextField("Class code", text: $course.code, prompt: Text("Class code"))
-                    
-                }
-            }*/
-            
             Section(header: Text("Overall Rating")) {
                 HStack {
                     Spacer()

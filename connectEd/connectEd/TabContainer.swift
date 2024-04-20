@@ -12,6 +12,12 @@ struct TabContainer: View {
     var body: some View {
         TabView {
             NavigationStack {
+               Signup()
+            }
+            .tabItem {
+                Label("Login", systemImage: "house.fill")
+            }
+            NavigationStack {
                 Search(tutors: tutors)
                     .navigationTitle("Your Saviors")
             }
