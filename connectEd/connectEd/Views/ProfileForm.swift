@@ -10,9 +10,7 @@ import PhotosUI
 
 
 struct ProfileForm: View {
-    
     @State var selectedImage: PhotosPickerItem? = nil
-    
     @Binding var data: Tutor.FormData
     
     
@@ -163,11 +161,14 @@ func dateGetter(_ time: String) -> Date {
     return formatter.date(from: time)!
 }
 
-#Preview {
+struct ProfileForm_Previews: PreviewProvider {
+    @State static var isLoggedOut = false
     /*let data = Binding.constant(Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false).dataForForm)
      return ProfileForm(data: data)*/
-    NavigationStack {
-        //Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], image: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), status: .online, rating: 3.61, price: 23.99))
-        UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [], isFavorite: false, availability: []))
+    static var previews: some View {
+        NavigationStack {
+            //Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], image: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), status: .online, rating: 3.61, price: 23.99))
+            UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [], isFavorite: false, availability: []),  loggedOut: $isLoggedOut)
+        }
     }
 }

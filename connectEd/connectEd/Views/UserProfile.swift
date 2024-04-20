@@ -15,7 +15,7 @@ struct UserProfile: View {
     @State private var isPresentingEditForm: Bool = false
     @State private var editTutorFormData: Tutor.FormData = Tutor.FormData()
     
-    @State var loggedOut: Bool = false
+    @Binding var loggedOut: Bool
     var body: some View {
         
         Form {
@@ -156,8 +156,11 @@ struct ProfileSection: View {
 }
 
 
-#Preview {
-    NavigationStack {
-        UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], isFavorite: false, availability: []))
+struct UserProfile_Previews: PreviewProvider {
+    @State static var isLoggedOut = false
+    static var previews: some View {
+        NavigationStack {
+            UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], isFavorite: false, availability: []), loggedOut: $isLoggedOut)
+        }
     }
 }
