@@ -46,7 +46,7 @@ struct Search: View {
                             Text("Advanced Search").bold()
                         }
                         ToolbarItem(placement: .navigationBarTrailing) {
-                            Button("Apply") {
+                            Button("Exit") {
                                 advancedSearch.toggle()
                             }
                         }

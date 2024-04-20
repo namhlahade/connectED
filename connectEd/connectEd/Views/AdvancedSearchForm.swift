@@ -20,7 +20,7 @@ struct AdvancedSearchForm: View {
                         index in Text("\(index)")
                     }
                 }
-                .pickerStyle(.menu)
+                .pickerStyle(WheelPickerStyle())
             }
             Section(header: Text("Filter by availability")) {
                 HStack {
@@ -56,10 +56,6 @@ struct AdvancedSearchForm: View {
                 Button("Add course", systemImage: "plus.circle") {
                     courses.append(Course(subject: .ece, code: "101"))
                 }.buttonStyle(BorderlessButtonStyle())
-            }
-            ForEach(courses) { course in
-                Text(course.subject.rawValue)
-                Text(course.code)
             }
         }
     }

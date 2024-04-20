@@ -39,7 +39,7 @@ struct TutorRow: View {
                     Text(tutor.name).bold().font(.title2)
                     Spacer()
                     Image(systemName: "circle.fill").foregroundStyle(tutor.status == .online ? Color.green : Color.red)
-                    Text(tutor.status == .online ? "Available" : "Unavailable")
+                    Text(tutor.status == .online ? "Available" : "Unavailable").font(.caption)
                 }
                 HStack {
                     Text("Rating: ").bold()
