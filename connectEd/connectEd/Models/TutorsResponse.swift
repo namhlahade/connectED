@@ -20,7 +20,7 @@ struct TutorResponse: Codable {
         case availabilities, bio, email, image, name, price, tutorClasses = "tutor_classes"
     }
     
-    func getInfoTutor() {
+    func getInfoTutor() -> Tutor {
         //var ret = Tutor(name: self.name, email: self.email, courses: [], status: .offline, reviews: [], isFavorite: false, availability: [])
         
         // Process image
@@ -50,7 +50,7 @@ struct TutorResponse: Codable {
 //                //ret.availability.append(Availability(day: <#T##Availability.Day#>, times: <#T##[Date]#>))
 //            }
 //        }
-        //return Tutor(name: name, email: email, bio: bio, courses: allCourses, rating: 0, price: price, status: .offline, reviews: [], isFavorite: false, availability: [])
+        return Tutor(name: name, email: email, bio: bio, courses: allCourses, status: .offline, rating: 0, price: price, reviews: [], isFavorite: false, availability: [])
         
         // Process reviews
         
@@ -63,7 +63,7 @@ struct TutorsResponse: Codable {
     private func getTutors() -> [Tutor] {
         var ret: [Tutor] = []
         for tutor in self.tutors {
-            //ret.append(tutor.getTutor())
+            ret.append(tutor.getInfoTutor())
         }
         return ret
     }
