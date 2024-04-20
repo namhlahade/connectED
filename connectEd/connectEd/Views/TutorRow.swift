@@ -21,19 +21,21 @@ struct TutorRow: View {
     @State var tutor: Tutor
     var body: some View {
         HStack {
-            AsyncImage(url: URL(string: tutor.image ?? ""))
-            { image in
-                image
+            if (tutor.image == Data() || tutor.image == nil) {
+                Image(systemName: "person.circle")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: 200, maxHeight: 200)
+                    .padding()
+                
             }
-        placeholder: {
-            if tutor.image != nil {
-                ProgressView()
-            } else {
-                Image(systemName: "person.fill")
+            else {
+                Image(uiImage: UIImage(data: tutor.image!)!)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: 200, maxHeight: 200)
+                    .padding()
             }
-        }
             VStack (alignment: .leading) {
                 HStack {
                     Text(tutor.name).bold().font(.title)

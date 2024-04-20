@@ -37,27 +37,26 @@ struct UserProfile: View {
         
         Form {
             
-            // TODO: change this to a SwiftUI saved image
             VStack (alignment: .center) {
-                AsyncImage(url: URL(string: user.image ?? ""), content: { image in
-                    image
+                if (user.image == Data() || user.image == nil) {
+                    Image(systemName: "person.circle")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                }, placeholder: {
-                    if user.image != nil {
-                        ProgressView()
-                    } else {
-                        Image(systemName: "person.circle")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                    }
-                })
-                .frame(maxWidth: 200, maxHeight: 200)
-                .padding()
+                        .frame(maxWidth: 200, maxHeight: 200)
+                        .padding()
+                    
+                }
+                else {
+                    Image(uiImage: UIImage(data: user.image!)!)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: 200, maxHeight: 200)
+                        .padding()
+                }
                 
                 HStack (alignment: .center) {
                     Text("My rating:")
-                    Text(String(format: "%.1f/5.0", user.rating + 1.0)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    Text(user.rating == 0 ? "--/5.0" : String(format: "%.1f/5.0", user.rating)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .center)

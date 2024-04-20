@@ -32,6 +32,7 @@ struct TabContainer: View {
             }
             NavigationStack {
                 ProfileView(email: "nlahade@gmail.com")
+                //UserProfile(user: Tutor.previewData[1])
             }
             .tabItem {
                 Label("Profile", systemImage: "person.fill")

@@ -43,36 +43,49 @@ struct ProfileForm: View {
                         .frame(maxWidth: 200, maxHeight: 200)
                         .padding()
                 } else {
-                    AsyncImage(url: URL(string: data.image), content: { image in
-                        image
+                    if data.image == Data() {
+                        Image(systemName: "person.circle")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                    }, placeholder: {
-                        if data.image == "" {
-                            Image(systemName: "person.circle")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                        } else {
-                            ProgressView()
-                        }
-                    })
-                    .overlay(alignment: .bottomTrailing) {
-                        PhotosPicker(selection: $selectedImage,
-                                     matching: .images) {
-                            Image(systemName: "pencil.circle.fill")
-                                .symbolRenderingMode(.multicolor)
-                                .font(.system(size: 30))
-                                .foregroundColor(.accentColor)
-                        }
-                                     .buttonStyle(.borderless)
-                                     .onChange(of: selectedImage) {
-                                         if let newItem = selectedImage {
-                                             loadPhoto(item: newItem)
-                                         }
-                                     }
+                            .overlay(alignment: .bottomTrailing) {
+                                PhotosPicker(selection: $selectedImage,
+                                             matching: .images) {
+                                    Image(systemName: "pencil.circle.fill")
+                                        .symbolRenderingMode(.multicolor)
+                                        .font(.system(size: 30))
+                                        .foregroundColor(.accentColor)
+                                }
+                                             .buttonStyle(.borderless)
+                                             .onChange(of: selectedImage) {
+                                                 if let newItem = selectedImage {
+                                                     loadPhoto(item: newItem)
+                                                 }
+                                             }
+                            }
+                            .frame(maxWidth: 200, maxHeight: 200)
+                            .padding()
+                    } else {
+                        Image(uiImage: UIImage(data: data.image)!)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .overlay(alignment: .bottomTrailing) {
+                                PhotosPicker(selection: $selectedImage,
+                                             matching: .images) {
+                                    Image(systemName: "pencil.circle.fill")
+                                        .symbolRenderingMode(.multicolor)
+                                        .font(.system(size: 30))
+                                        .foregroundColor(.accentColor)
+                                }
+                                             .buttonStyle(.borderless)
+                                             .onChange(of: selectedImage) {
+                                                 if let newItem = selectedImage {
+                                                     loadPhoto(item: newItem)
+                                                 }
+                                             }
+                            }
+                            .frame(maxWidth: 200, maxHeight: 200)
+                            .padding()
                     }
-                    .frame(maxWidth: 200, maxHeight: 200)
-                    .padding()
                 }
             }
             .frame(maxWidth: .infinity)
@@ -187,6 +200,7 @@ struct ProfileForm: View {
                 if let data = data {
                     // Update the image data to be displayed
                     imageData = data
+                    self.data.image = data
                 } else {
                     // Handle the case where no image data is found
                     print("Failed to load image data.")
@@ -213,3 +227,79 @@ func dateGetter(_ time: String) -> Date {
         UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [], isFavorite: false, availability: []))
     }
 }
+
+
+
+
+
+
+
+
+/*
+ 
+ if let imageData = imageData, let uiImage = UIImage(data: imageData) {
+ Image(uiImage: uiImage)
+ .resizable()
+ .aspectRatio(contentMode: .fit)
+ .overlay(alignment: .bottomTrailing) {
+ PhotosPicker(selection: $selectedImage,
+ matching: .images) {
+ Image(systemName: "pencil.circle.fill")
+ .symbolRenderingMode(.multicolor)
+ .font(.system(size: 30))
+ .foregroundColor(.accentColor)
+ }
+ .buttonStyle(.borderless)
+ .onChange(of: selectedImage) {
+ if let newItem = selectedImage {
+ loadPhoto(item: newItem)
+ }
+ }
+ }
+ .frame(maxWidth: 200, maxHeight: 200)
+ .padding()
+ } else {
+ if data.image == Data() {
+ Image(systemName: "person.circle")
+ .resizable()
+ .aspectRatio(contentMode: .fit)
+ .overlay(alignment: .bottomTrailing) {
+ PhotosPicker(selection: $selectedImage,
+ matching: .images) {
+ Image(systemName: "pencil.circle.fill")
+ .symbolRenderingMode(.multicolor)
+ .font(.system(size: 30))
+ .foregroundColor(.accentColor)
+ }
+ .buttonStyle(.borderless)
+ .onChange(of: selectedImage) {
+ if let newItem = selectedImage {
+ loadPhoto(item: newItem)
+ }
+ }
+ }
+ } else {
+ Image(uiImage: UIImage(data: data.image)!)
+ .resizable()
+ .aspectRatio(contentMode: .fit)
+ .overlay(alignment: .bottomTrailing) {
+ PhotosPicker(selection: $selectedImage,
+ matching: .images) {
+ Image(systemName: "pencil.circle.fill")
+ .symbolRenderingMode(.multicolor)
+ .font(.system(size: 30))
+ .foregroundColor(.accentColor)
+ }
+ .buttonStyle(.borderless)
+ .onChange(of: selectedImage) {
+ if let newItem = selectedImage {
+ loadPhoto(item: newItem)
+ }
+ }
+ }
+ }
+ }
+ 
+ 
+ 
+ */
