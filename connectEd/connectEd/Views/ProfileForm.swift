@@ -125,14 +125,14 @@ struct ProfileForm: View {
                         
                         Button("", systemImage: "x.circle") {
                             data.courses.remove(at: index)
-                        }.buttonStyle(BorderlessButtonStyle())
+                        }.buttonStyle(BorderlessButtonStyle()).foregroundStyle(Color.red)
                         
                     }
                 }
                 
                 Button("Add course", systemImage: "plus.circle") {
                     data.courses.append(Course(subject: .ece, code: "101"))
-                }.buttonStyle(BorderlessButtonStyle())
+                }.buttonStyle(BorderlessButtonStyle()).foregroundStyle(Color.green)
                 
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -176,7 +176,7 @@ struct ProfileForm: View {
                 
                 Button("Add availability", systemImage: "plus.circle") {
                     data.availability.append(Availability(day: .sunday, times: [dateGetter("00:00"), dateGetter("00:00")]))
-                }.buttonStyle(BorderlessButtonStyle())
+                }.buttonStyle(BorderlessButtonStyle()).foregroundStyle(Color.green)
                 
                 
             }

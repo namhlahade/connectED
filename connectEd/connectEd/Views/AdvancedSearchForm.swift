@@ -48,14 +48,14 @@ struct AdvancedSearchForm: View {
                         
                         Button("", systemImage: "x.circle") {
                             courses.remove(at: index)
-                        }.buttonStyle(BorderlessButtonStyle())
+                        }.buttonStyle(BorderlessButtonStyle()).foregroundStyle(Color.red)
                         
                     }
                 }
                 
                 Button("Add course", systemImage: "plus.circle") {
                     courses.append(Course(subject: .ece, code: "101"))
-                }.buttonStyle(BorderlessButtonStyle())
+                }.buttonStyle(BorderlessButtonStyle()).foregroundStyle(Color.green)
             }
         }
     }
