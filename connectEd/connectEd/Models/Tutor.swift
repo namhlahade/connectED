@@ -18,7 +18,7 @@ class Tutor: Identifiable, Codable {
     var courses: [Course]
     var image: Data?
     var status: Status // computed in the frontend
-    var rating: Double
+    var rating: Double // computed in the frontend
     var price: Double
     var reviews: [Review]
     var favorites: [String]
@@ -59,6 +59,8 @@ extension Tutor {
         var image: Data = Data()
         var price: Double = 0.0
         var availability: [Availability] = []
+        var selectedHours: [[Int]] = []
+        var areAM: [[Bool]] = []
     }
     
     var dataForForm: FormData {
@@ -70,12 +72,51 @@ extension Tutor {
             courses: courses,
             image: image ?? Data(),
             price: price,
-            availability: availability
+            availability: availability,
+            selectedHours: Tutor.getSelectedHours(availability: availability),
+            areAM: Tutor.getAreAM(availability: availability)
         )
     }
     
+    static func getSelectedHours(availability: [Availability]) -> [[Int]] {
+        var ret: [[Int]] = []
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h"
+        
+        for avail in availability {
+            ret.append([Int(formatter.string(from: avail.times[0]))!, Int(formatter.string(from: avail.times[1]))!])
+        }
+        
+        return ret
+    }
+    
+    static func getAreAM(availability: [Availability]) -> [[Bool]] {
+        var ret: [[Bool]] = []
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "a"
+        
+        for avail in availability {
+            ret.append([formatter.string(from: avail.times[0]) == "AM" ? true : false, formatter.string(from: avail.times[1]) == "AM" ? true : false])
+        }
+        
+        return ret
+    }
+    
+    static func getAvailability(existingAvailability: [Availability], selectedHours: [[Int]], areAM: [[Bool]]) -> [Availability] {
+        var ret: [Availability] = []
+        
+        for (index, _) in existingAvailability.enumerated() {
+            ret.append(Availability(day: existingAvailability[index].day, times: [editTime(selectedHour: selectedHours[index][0], isAM: areAM[index][0]), editTime(selectedHour: selectedHours[index][1], isAM: areAM[index][1])]))
+        }
+        
+        return ret
+    }
+    
     static func create(from formData: FormData) {
-        let tutor = Tutor(name: formData.name, email: formData.email, courses: formData.courses, status: .offline, reviews: [], favorites: [], availability: formData.availability)
+        var avail: [Availability] = getAvailability(existingAvailability: formData.availability, selectedHours: formData.selectedHours, areAM: formData.areAM)
+        let tutor = Tutor(name: formData.name, email: formData.email, courses: formData.courses, status: .online, reviews: [], favorites: [], availability: avail)
         Tutor.update(tutor, from: formData)
     }
     
@@ -86,7 +127,7 @@ extension Tutor {
         tutor.courses = formData.courses
         tutor.image = formData.image
         tutor.price = formData.price
-        tutor.availability = formData.availability
+        tutor.availability = getAvailability(existingAvailability: formData.availability, selectedHours: formData.selectedHours, areAM: formData.areAM)
     }
 }
 

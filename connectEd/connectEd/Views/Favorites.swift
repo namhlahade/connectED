@@ -51,11 +51,6 @@ struct Favorites: View {
             }
         }
         .navigationTitle("Favorite Tutors")
-        ForEach(favoriteTutors) {
-            tutor in
-            Text(tutor.name)
-            Text(tutor.email)
-        }
         
     }
     func removeFavorite(at offsets: IndexSet) {

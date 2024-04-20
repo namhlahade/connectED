@@ -139,7 +139,7 @@ func printAvailability(availability: [Availability]) -> String {
     let formatter = DateFormatter()
     formatter.dateFormat = "h:mm a"
     
-    for (index, element) in availability.enumerated() {
+    for (index, _) in availability.enumerated() {
         ret.append("\(availability[index].day.rawValue.capitalized(with: nil)) \(formatter.string(from: availability[index].times[0])) - \(formatter.string(from: availability[index].times[1]))\n")
     }
     

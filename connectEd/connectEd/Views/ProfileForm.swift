@@ -132,7 +132,8 @@ struct ProfileForm: View {
                 
                 Button("Add course", systemImage: "plus.circle") {
                     data.courses.append(Course(subject: .ece, code: "101"))
-                }.buttonStyle(BorderlessButtonStyle()).foregroundStyle(Color.green)
+                }.buttonStyle(BorderlessButtonStyle())
+                //.foregroundStyle(Color.green)
                 
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -142,7 +143,7 @@ struct ProfileForm: View {
                     .bold()
                     .font(.caption)
                 
-                ForEach(Array($data.availability.enumerated()), id: \.offset) { index, element in
+                ForEach(Array($data.selectedHours.enumerated()), id: \.offset) { index, element in
                     HStack {
                         VStack (alignment: .leading) {
                             Picker("", selection: $data.availability[index].day) {
@@ -154,12 +155,42 @@ struct ProfileForm: View {
                             .labelsHidden()
                             
                             HStack {
+                                Picker(selection: $data.selectedHours[index][0], label: Text("Select Hour")) {
+                                    ForEach(1...12, id: \.self) { hour in
+                                        Text("\(hour)").tag(hour)
+                                    }
+                                }
+                                .labelsHidden()
+                                .pickerStyle(.wheel)
+                                .frame(width: 50, height: 85)
                                 
-                                DatePicker("", selection: $data.availability[index].times[0], displayedComponents: [.hourAndMinute]).labelsHidden()
+                                Picker(selection: $data.areAM[index][0], label: Text("")) {
+                                    Text("AM").tag(true)
+                                    Text("PM").tag(false)
+                                }
+                                .labelsHidden()
+                                .pickerStyle(.wheel)
+                                .frame(width: 60, height: 85)
                                 
                                 Text("-")
                                 
-                                DatePicker("", selection: $data.availability[index].times[1], displayedComponents: [.hourAndMinute]).labelsHidden()
+                                Picker(selection: $data.selectedHours[index][1], label: Text("Select Hour")) {
+                                    ForEach(1...12, id: \.self) { hour in
+                                        Text("\(hour)").tag(hour)
+                                    }
+                                }
+                                .labelsHidden()
+                                .pickerStyle(.wheel)
+                                .frame(width: 50, height: 85)
+                                
+                                Picker(selection: $data.areAM[index][1], label: Text("")) {
+                                    Text("AM").tag(true)
+                                    Text("PM").tag(false)
+                                }
+                                .labelsHidden()
+                                .pickerStyle(.wheel)
+                                .frame(width: 60, height: 85)
+                                
                                 
                             }
                         }
@@ -168,6 +199,8 @@ struct ProfileForm: View {
                         
                         Button("", systemImage: "x.circle") {
                             data.availability.remove(at: index)
+                            data.selectedHours.remove(at: index)
+                            data.areAM.remove(at: index)
                         }.buttonStyle(BorderlessButtonStyle())
                         
                     }
@@ -176,7 +209,11 @@ struct ProfileForm: View {
                 
                 Button("Add availability", systemImage: "plus.circle") {
                     data.availability.append(Availability(day: .sunday, times: [dateGetter("00:00"), dateGetter("00:00")]))
-                }.buttonStyle(BorderlessButtonStyle()).foregroundStyle(Color.green)
+                    data.selectedHours.append([6, 6])
+                    data.areAM.append([true, true])
+                    
+                }.buttonStyle(BorderlessButtonStyle())
+                //.foregroundStyle(Color.green)
                 
                 
             }
@@ -211,6 +248,15 @@ struct ProfileForm: View {
             }
         }
     }
+}
+
+func editTime(selectedHour: Int, isAM: Bool) -> Date {
+    if selectedHour != 12 {
+        //print("\(selectedHour + (isAM ? 0 : 12)):00")
+        return dateGetter("\(selectedHour + (isAM ? 0 : 12)):00")
+    }
+    //print("\(isAM ? 0 : 12):00")
+    return dateGetter("\(isAM ? 0 : 12):00")
 }
 
 func dateGetter(_ time: String) -> Date {

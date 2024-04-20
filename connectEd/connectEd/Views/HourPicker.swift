@@ -1,41 +1,63 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedHour = 1 // Start from 1
-    @State private var isAM = true
+    @State private var selectedHours: [[Int]] = []
+    @State private var areAM: [[Bool]] = []
     
     var body: some View {
         HStack {
-            Picker(selection: $selectedHour, label: Text("Select Hour")) {
-                ForEach(1...12, id: \.self) { hour in
-                    Text("\(hour)").tag(hour)
-                }
-            }
-            .padding()
-            .labelsHidden()
-            .pickerStyle(WheelPickerStyle())
-            .frame(width: 200) // Adjust the width as needed
             
-            Picker(selection: $isAM, label: Text("")) {
-                Text("AM").tag(true)
-                Text("PM").tag(false)
+            /*Picker(selection: $selectedHour, label: Text("Select Hour")) {
+             ForEach(1...12, id: \.self) { hour in
+             Text("\(hour)").tag(hour)
+             }
+             }
+             .labelsHidden()
+             .pickerStyle(.wheel)
+             .frame(width: 50, height: 100)
+             .onChange(of: selectedHour) {
+             print("Selected time: \(selectedHour) \(isAM ? "AM" : "PM")")
+             }*/
+            ForEach(Array($selectedHours.enumerated()), id: \.offset) { index, element in
+                Picker(selection: $selectedHours[index][0], label: Text("Select Hour")) {
+                    ForEach(1...12, id: \.self) { hour in
+                        Text("\(hour)").tag(hour)
+                    }
+                }
+                .labelsHidden()
+                .pickerStyle(.wheel)
+                .frame(width: 50, height: 100)
+                /*.onChange(of: selectedHours[index][0]) {
+                 print("Selected time: \(selectedHour) \(isAM ? "AM" : "PM")")
+                 }*/
+                
+                Picker(selection: $areAM[index][0], label: Text("")) {
+                    Text("AM").tag(true)
+                    Text("PM").tag(false)
+                }
+                .labelsHidden()
+                .pickerStyle(.wheel)
+                .frame(width: 60, height: 100)
+                /*.onChange(of: isAM) {
+                 print("Selected time: \(selectedHour) \(isAM ? "AM" : "PM")")
+                 }*/
             }
-            .labelsHidden()
-            .pickerStyle(SegmentedPickerStyle())
-            .padding()
+            
         }
-        .onReceive([self.selectedHour].publisher.first()) { _ in
-            if self.selectedHour > 12 {
-                self.selectedHour = 1
-            } else if self.selectedHour < 1 {
-                self.selectedHour = 12
-            }
+        
+        Button("Add availability", systemImage: "plus.circle") {
+            //data.availability.append(Availability(day: .sunday, times: [dateGetter("00:00"), dateGetter("00:00")]))
+            selectedHours.append([6, 6])
+            areAM.append([true, true])
+            
+            //print(data.availability)
+            print(selectedHours)
+            print(areAM)
+            
         }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+#Preview {
+    ContentView()
 }
