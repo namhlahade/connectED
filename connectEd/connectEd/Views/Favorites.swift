@@ -27,7 +27,7 @@ struct Favorites: View {
             
             
         }
-        .navigationTitle("Favorites")
+        .navigationTitle("Favorite Tutors")
         
     }
     func removeFavorite(at offsets: IndexSet) {
