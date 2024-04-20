@@ -5,7 +5,7 @@ struct Search: View {
     @State private var searchText: String = ""
     @State private var advancedSearch: Bool = false
     @State private var rating: Double = 0.0
-    @State private var price: Double = 0.0
+    @State private var price: Int = 40
     @State var tutors: [Tutor]
     
     let ratingScale = ["Poor", "Fair", "Average", "Good", "Excellent"]
@@ -24,24 +24,24 @@ struct Search: View {
             if searchText == "" {
                 availableTutors.filter
                 {$0.rating >= rating &&
-                    $0.price <= price}
+                    $0.price <= Double(price)}
             }
             else {
                 availableTutors.filter
                 {$0.name.contains(searchText) &&
-                    $0.rating >= rating && $0.price <= price}
+                    $0.rating >= rating && $0.price <= Double(price)}
             }
         }
         
         var searchUnavailableTutors: [Tutor] {
             if searchText == "" {
                 unavailableTutors.filter
-                {$0.rating >= rating && $0.price <= price}
+                {$0.rating >= rating && $0.price <= Double(price)}
             }
             else {
                 unavailableTutors.filter
                 {$0.name.contains(searchText) &&
-                    $0.rating >= rating && $0.price <= price}
+                    $0.rating >= rating && $0.price <= Double(price)}
             }
         }
         
@@ -53,16 +53,18 @@ struct Search: View {
             //                        }
             //                    }
             //                    .pickerStyle(.menu)
+
             Section(header: Text("Filter by rating")) {
                 RatingSlider(value: $rating, scale: ratingScale, color: starColor)
             }
+            //TODO: Figure out why picker isn't showing or working correctly?
             Section(header: Text("Filter by price")) {
-                //                RatingSlider(value: $price, scale: ratingScale, color: starColor)
-                Picker(selection: $price, label: Text("Prices")) {
+                Picker(selection: $price, label: Text("Price")) {
                     ForEach(0..<50) {
-                        price in Text("\(price)")
+                        index in Text("\(index)")
                     }
                 }
+                .pickerStyle(.menu)
             }
             Section(header: Text("Available Tutors")) {
                 List(searchAvailableTutors) { tutor in

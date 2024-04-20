@@ -70,7 +70,7 @@ extension Tutor {
             courses: courses,
             image: image ?? "",
             status: status,
-            price: price ?? 0.0,
+            price: price,
             availability: availability
         )
     }
@@ -105,10 +105,10 @@ extension Tutor {
 
 extension Tutor {
     static let previewData: [Tutor] = [
-        Tutor(name: "James", email: "james@duke.edu", bio: "Random student", courses: [Course(subject: .ece, code: "350")], status: Status.online, rating: 4.0, reviews: [], isFavorite: true,  availability: []),
-        Tutor(name: "Namh", email: "namh@duke.edu", courses: [Course(subject: .egr, code: "101"), Course(subject: .ece, code: "661")], status: Status.offline, rating: 0.0, reviews: [], isFavorite: false,  availability: []),
+        Tutor(name: "James", email: "james@duke.edu", bio: "Random student", courses: [Course(subject: .ece, code: "350")], status: Status.online, rating: 4.0, price: 20.00, reviews: [], isFavorite: true,  availability: []),
+        Tutor(name: "Namh", email: "namh@duke.edu", courses: [Course(subject: .egr, code: "101"), Course(subject: .ece, code: "661")], status: Status.offline, rating: 0.0, price: 5.00, reviews: [], isFavorite: false,  availability: []),
         Tutor(name: "Neel", email: "neel@duke.edu", courses: [], status: Status.offline, reviews: [], isFavorite: true,  availability: []),
-        Tutor(name: "Namh Lahade", email: "namhlahade@duke.edu", courses: [], status: Status.offline, rating: 1.0, reviews: [], isFavorite: false,  availability: []),
+        Tutor(name: "Namh Lahade", email: "namhlahade@duke.edu", courses: [], status: Status.offline, rating: 1.0, price: 40.00, reviews: [], isFavorite: false,  availability: []),
         Tutor(name: "Nick", email: "neel@duke.edu", courses: [], status: Status.online, reviews: [], isFavorite: true,  availability: []),
     ]
 }
