@@ -6,21 +6,22 @@ struct ParentFavorites: View {
     var user: Tutor
     
     var body: some View {
-    VStack {
-      switch getTutorLoader.state {
-      case .idle: Color.clear
-      case .loading: ProgressView()
-      case .failed(let error): Text("Error \(error.localizedDescription)")
-      case .success(let allTutorInfo):
-          Favorites(user: user, tutors: allTutorInfo.getTutors())
-      }
+        VStack {
+            switch getTutorLoader.state {
+            case .idle: Color.clear
+            case .loading: ProgressView()
+            case .failed(let error): Text("Error \(error.localizedDescription)")
+            case .success(let allTutorInfo):
+                Favorites(user: user, tutors: allTutorInfo.getTutors())
+            }
+        }
+        .navigationTitle("Favorite Tutors")
+        .task { await getTutorLoader.getAllTutorInfo() }
     }
-    .navigationTitle("Favorite Tutors")
-    .task { await getTutorLoader.getAllTutorInfo() }
-  }
 }
 
 struct Favorites: View {
+    let deleteFavoritesLoader = DeleteFavoriteLoader()
     
     @State var user: Tutor
     @State var tutors: [Tutor]
@@ -40,7 +41,7 @@ struct Favorites: View {
                     tutor in
                     NavigationLink(destination: TutorProfile(user: user, tutor: tutor)){
                         TutorRow(user: user, tutor: tutor)
-                        }
+                    }
                 }
                 
                 .onDelete(perform: removeFavorite)
@@ -55,32 +56,33 @@ struct Favorites: View {
     }
     func removeFavorite(at offsets: IndexSet) {
         for offset in offsets {
-            //favoriteTutors[offset].isFavorite = false
-            user.favorites.remove(at: offset)
-//            favoriteTutors.remove(at: offset)
-            print(offset)
+            Task {
+                await deleteFavoritesLoader.deleteFavoriteInfo(favoriteInput: FavoriteInputStruct(userEmail: user.email, tutorEmail: favoriteTutors[offset].email))
+            }
+            user.favorites.remove(at: user.favorites.firstIndex(of: favoriteTutors[offset].email)!)
+            print(user.favorites)
         }
     }
 }
 
 
 /*struct AddFavoritesScreen: View {
-    @State var tutors: [Tutor]
-    var body: some View {
-        List(tutors) { tutor in
-            HStack {
-                TutorRow(tutor: tutor)
-                Spacer()
-                Button("Add") {
-                    tutor.isFavorite.toggle()
-                }
-                Image(systemName: tutor.isFavorite ?  "checkmark.circle.fill": "circle")
-                    .foregroundStyle(tutor.isFavorite ? Color.green: Color.black)
-            }
-            .navigationTitle("Add to Favorites")
-        }
-    }
-}*/
+ @State var tutors: [Tutor]
+ var body: some View {
+ List(tutors) { tutor in
+ HStack {
+ TutorRow(tutor: tutor)
+ Spacer()
+ Button("Add") {
+ tutor.isFavorite.toggle()
+ }
+ Image(systemName: tutor.isFavorite ?  "checkmark.circle.fill": "circle")
+ .foregroundStyle(tutor.isFavorite ? Color.green: Color.black)
+ }
+ .navigationTitle("Add to Favorites")
+ }
+ }
+ }*/
 
 #Preview {
     return NavigationStack {

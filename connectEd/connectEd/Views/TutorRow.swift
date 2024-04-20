@@ -57,7 +57,7 @@ struct TutorRow: View {
                     Text(tutor.name).bold().font(.title2)
                     Spacer()
                     if user.favorites.contains(tutor.email) {
-                        Image(systemName: "star.fill")
+                        Image(systemName: "star.fill").foregroundStyle(Color.yellow)
                     }
                 }.padding([.bottom], -5)
                 HStack {

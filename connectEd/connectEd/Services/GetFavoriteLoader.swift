@@ -13,7 +13,7 @@ class GetFavoriteLoader {
     }
     
     @MainActor
-    func getTutorInfo(email: EmailStruct) async {
+    func getFavoritesInfo(email: EmailStruct) async {
         self.state = .loading
         do {
             let response = try await apiClient.getFavorites(email: email)

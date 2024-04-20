@@ -15,6 +15,9 @@ struct TutorProfile: View {
     @State var user: Tutor
     @Bindable var tutor: Tutor
     
+    let deleteFavoritesLoader = DeleteFavoriteLoader()
+    let addFavoritesLoader = AddFavoriteLoader()
+    
     
     var body: some View {
         
@@ -87,10 +90,16 @@ struct TutorProfile: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     if (user.favorites.contains(tutor.email)) {
+                        Task {
+                            await deleteFavoritesLoader.deleteFavoriteInfo(favoriteInput: FavoriteInputStruct(userEmail: user.email, tutorEmail: tutor.email))
+                        }
                         user.favorites.remove(at: user.favorites.firstIndex(of: tutor.email)!)
                     }
                     else {
                         user.favorites.append(tutor.email)
+                        Task {
+                            await addFavoritesLoader.addToFavorites(favoriteInput: FavoriteInputStruct(userEmail: user.email, tutorEmail: tutor.email))
+                        }
                     }
                 } label: {
                     Text(user.favorites.contains(tutor.email) ? "Unfavorite" : "Favorite")

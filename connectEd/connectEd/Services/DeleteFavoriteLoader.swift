@@ -13,7 +13,7 @@ class DeleteFavoriteLoader {
     }
     
     @MainActor
-    func addTutorInfo(favoriteInput: FavoriteInputStruct) async {
+    func deleteFavoriteInfo(favoriteInput: FavoriteInputStruct) async {
         self.state = .loading
         do {
             let response = try await apiClient.deleteFavorite(favoriteInput: favoriteInput)

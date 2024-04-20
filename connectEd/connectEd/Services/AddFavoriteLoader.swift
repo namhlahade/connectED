@@ -20,7 +20,7 @@ class AddFavoriteLoader {
     }
     
     @MainActor
-    func getTutorInfo(favoriteInput: FavoriteInputStruct) async {
+    func addToFavorites(favoriteInput: FavoriteInputStruct) async {
         self.state = .loading
         do {
             let response = try await apiClient.addFavorite(favoriteInput: favoriteInput)
