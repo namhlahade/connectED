@@ -21,6 +21,7 @@ struct LoginScreen: View {
                 TextFieldWithLabel(label: "Email", hint: "Make sure to include an @ in your email!", text: $email, validationStatus: $validationStatus, validationMessage: "You currently do not have an @ sign in your email") { email.contains("@") }
                 Button("Login") {
                     authenticationService.login(email: email, modelContext: modelContext)
+                    editTutorFormData = Tutor(name: "", email: email, courses: [], status: .offline, reviews: [], favorites: [], availability: []).dataForForm
                     isPresentingProfileForm.toggle()
                 }
                 .buttonStyle(.borderedProminent)

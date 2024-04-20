@@ -96,7 +96,14 @@ struct ProfileForm: View {
             
             TextFieldWithLabelAlt(label: "Name", text: $data.name, prompt: "Enter your name")
             
-            TextFieldWithLabelAlt(label: "Email", text: $data.email, prompt: "Enter your email")
+            VStack(alignment: .leading) {
+                Text("Email")
+                    .bold()
+                    .font(.caption)
+                    .padding(.bottom, 1)
+                Text(data.email).padding(.bottom, 20).foregroundStyle(.gray)
+            }
+            
             
             VStack(alignment: .leading) {
                 Text("About me")
@@ -278,10 +285,10 @@ struct ProfileForm_Previews: PreviewProvider {
      return ProfileForm(data: data)*/
     static var previews: some View {
         NavigationStack {
-                //Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], image: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), status: .online, rating: 3.61, price: 23.99))
-                UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [], favorites: [], availability: []), loggedOut: $isLoggedOut)
-            }
-
+            //Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], image: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), status: .online, rating: 3.61, price: 23.99))
+            UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [], favorites: [], availability: []), loggedOut: $isLoggedOut)
+        }
+        
     }
 }
 
