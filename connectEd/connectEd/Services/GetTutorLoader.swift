@@ -15,15 +15,15 @@ class GetTutorLoader {
     enum LoadingState {
         case idle
         case loading
-        case success(data: TutorResponse)
+        case success(data: TutorsResponse)
         case failed(error: Error)
     }
     
     @MainActor
-    func getTutorInfo(email: EmailStruct) async {
+    func getTutorInfo() async {
         self.state = .loading
         do {
-            let response = try await apiClient.getTutorInfo(email: email)
+            let response = try await apiClient.getTutor()
             self.state = .success(data: response)
         } catch {
             self.state = .failed(error: error)
