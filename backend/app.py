@@ -475,6 +475,44 @@ def viewAvailability():
         db.session.rollback()
         return str(e), 500
 
+@app.route('/editProfile', methods=['POST'])
+def editProfile():
+    data = request.get_json()
+    tutor_email = data.get("tutorEmail")
+    newName = data.get("name")
+    newBio = data.get("bio")
+    new_courses = data.get("courses")
+    new_availability = data.get("availability")
+
+    try:
+        tutor = User.query.filter_by(email=tutor_email).first()
+        if tutor:
+            tutor.bio = newBio
+            tutor.name = newName
+        else:
+            return jsonify({"error": "Tutor not found"}), 404
+
+        TutorClass.query.filter_by(email=tutor_email).delete()
+        for course_name in new_courses:
+            new_course = TutorClass(email=tutor_email, className=course_name)
+            db.session.add(new_course)
+        
+        Availability.query.filter_by(tutor_email=tutor_email).delete()
+        for avail in new_availability:
+            new_avail = Availability(
+                tutor_email=tutor_email,
+                day_of_week=avail["day_of_week"],
+                start_time=datetime.strptime(avail["start_time"], "%H:%M").time(),
+                end_time=datetime.strptime(avail["end_time"], "%H:%M").time()
+            )
+            db.session.add(new_avail)
+
+        db.session.commit()
+        return jsonify({"message": "Profile updated successfully"}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == '__main__':
