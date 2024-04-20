@@ -118,9 +118,6 @@ def getTutors():
         users = User.query.all()
         tutor_data = []
         for user in users:
-            # Only include tutors with classes indicating they offer tutoring
-            if not user.tutor_classes:
-                continue
 
             availability_dict = availabilityHelper(user.email)
             reviews = get_reviews(user.email)
@@ -136,9 +133,7 @@ def getTutors():
                 'reviews': reviews,
                 'favorites': favorites,
                 'tutor_classes': [
-                    {
-                        'class_name': tutor_class.className
-                    } for tutor_class in user.tutor_classes
+                    tutor_class.className for tutor_class in user.tutor_classes
                 ]
             }
             tutor_data.append(user_data)
@@ -161,12 +156,10 @@ def get_reviews(tutor_email):
     ]
 
 def get_favorites(tutor_email):
-    favorites = Favorites.query.filter_by(user_email=tutor_email).all()
+    favorites = Favorites.query.filter_by(user_email = tutor_email).all()
     return [
-        {
-            'reviewer_email': favorite.reviewer_email
-        } for favorite in favorites
-    ]
+            favorite.reviewer_email for favorite in favorites
+            ]
 
 
 @app.route('/getTutorReviews', methods=['POST'])
