@@ -14,13 +14,57 @@ struct TutorResponse: Codable {
     let image: String?
     let name: String
     let price: Double
-    let tutor_classes: [String]
+    let tutorClasses: [String]
 
     private enum CodingKeys: String, CodingKey {
-        case availabilities, bio, email, image, name, price, tutor_classes = "tutor_classes"
+        case availabilities, bio, email, image, name, price, tutorClasses = "tutor_classes"
+    }
+    
+    func getInfoTutor() {
+        //var ret = Tutor(name: self.name, email: self.email, courses: [], status: .offline, reviews: [], isFavorite: false, availability: [])
+        
+        // Process image
+        
+        
+        // Process courses
+        var allCourses: [Course] = []
+        for course in tutorClasses {
+            let courseArr = course.components(separatedBy: " ")
+            let subject = Tutor.Subject(rawValue: courseArr[0].lowercased())!
+            allCourses.append(Course(subject: subject, code: courseArr[1]))
+        }
+        
+        // Process status
+        
+        
+        // Process favorites
+        
+        // Calculate rating
+        
+        
+        // Process availability
+//        for day in Availability.Day.allCases {
+//            var day_index = day.rawValue.capitalized(with: nil)
+//            for times in self.availabilities[day_index]! {
+//                // algorithm that goes through the times and creates availability objects for each
+//                //ret.availability.append(Availability(day: <#T##Availability.Day#>, times: <#T##[Date]#>))
+//            }
+//        }
+        //return Tutor(name: name, email: email, bio: bio, courses: allCourses, rating: 0, price: price, status: .offline, reviews: [], isFavorite: false, availability: [])
+        
+        // Process reviews
+        
     }
 }
 
 struct TutorsResponse: Codable {
-    let tutors: [TutorsResponse]
+    let tutors: [TutorResponse]
+    
+    private func getTutors() -> [Tutor] {
+        var ret: [Tutor] = []
+        for tutor in self.tutors {
+            //ret.append(tutor.getTutor())
+        }
+        return ret
+    }
 }

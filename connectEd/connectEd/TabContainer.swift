@@ -31,7 +31,7 @@ struct TabContainer: View {
                 Label("Cipher", systemImage: "brain.head.profile")
             }
             NavigationStack {
-                UserProfile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [], isFavorite: false, availability: []))
+                ProfileView(email: "nlahade@gmail.com")
             }
             .tabItem {
                 Label("Profile", systemImage: "person.fill")

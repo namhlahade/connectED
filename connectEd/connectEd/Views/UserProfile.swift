@@ -7,6 +7,23 @@
 
 import SwiftUI
 
+struct ProfileView: View {
+    let email: String
+    let getTutorInfoLoader = GetTutorInfoLoader()
+    
+    var body: some View {
+    VStack {
+      switch getTutorInfoLoader.state {
+      case .idle: Color.clear
+      case .loading: ProgressView()
+      case .failed(let error): Text("Error \(error.localizedDescription)")
+      case .success(let tutorInformation):
+          UserProfile(user: tutorInformation.getInfoTutor())
+      }
+    }
+    .task { await getTutorInfoLoader.getTutorInfo(email: EmailStruct(tutorEmail: email)) }
+  }
+}
 
 struct UserProfile: View {
     
