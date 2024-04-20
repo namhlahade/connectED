@@ -79,38 +79,6 @@ class Favorites(db.Model):
 def testing():
     return jsonify({'message': 'API itself is working'}), 200
 
-@app.route('/addTutor', methods=['POST'])
-def addTutor():
-    data = request.get_json()
-    name = data.get('name')
-    email = data.get('email')
-
-    bio = None
-    if 'bio' in data:
-        bio = data.get('bio')
-
-    image = None
-    if 'image' in data:
-        image = data.get('image')
-
-    price = None
-    if 'price' in data:
-        price = data.get('price')
-    
-    try:
-        existing_tutor = User.query.filter_by(email=email).first()
-        if existing_tutor:
-            return jsonify({"error": "Email already exists"}), 400
-
-        tutor = User(name=name, email=email, bio=bio, image=image, price=price)
-        db.session.add(tutor)
-        db.session.commit()
-        return jsonify({"message": "User added successfully"}), 201
-    
-    except Exception as e:
-        db.session.rollback()
-        return str(e), 500
-
 
 @app.route('/getTutors', methods=['GET'])
 def getTutors():
@@ -470,6 +438,54 @@ def viewAvailability():
     try:
         availabilityDict = availabilityHelper(tutor_email)
         return jsonify(availabilityDict)
+    
+    except Exception as e:
+        db.session.rollback()
+        return str(e), 500
+    
+@app.route('/addTutor', methods=['POST'])
+def addTutor():
+    data = request.get_json()
+    name = data.get('name')
+    email = data.get('email')
+    courses = data.get("courses")
+    availability = data.get("availability")
+
+    bio = None
+    if 'bio' in data:
+        bio = data.get('bio')
+
+    image = None
+    if 'image' in data:
+        image = data.get('image')
+
+    price = None
+    if 'price' in data:
+        price = data.get('price')
+    
+    try:
+        existing_tutor = User.query.filter_by(email=email).first()
+        if existing_tutor:
+            return jsonify({"error": "Email already exists"}), 400
+
+        tutor = User(name=name, email=email, bio=bio, image=image, price=price)
+        db.session.add(tutor)
+
+        for course_name in courses:
+            new_course = TutorClass(email=email, className=course_name)
+            db.session.add(new_course)
+
+        for avail in availability:
+            new_avail = Availability(
+                tutor_email=email,
+                day_of_week=avail["day_of_week"],
+                start_time=datetime.strptime(avail["start_time"], "%H:%M").time(),
+                end_time=datetime.strptime(avail["end_time"], "%H:%M").time()
+            )
+            db.session.add(new_avail)
+
+        db.session.commit()
+        return jsonify({"message": "User added successfully"}), 201
     
     except Exception as e:
         db.session.rollback()

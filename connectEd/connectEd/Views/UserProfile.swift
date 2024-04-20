@@ -10,6 +10,7 @@ import SwiftUI
 struct ProfileView: View {
     let email: String
     let getTutorLoader = GetTutorLoader()
+    
     @Binding var isLoggedOut: Bool
     var body: some View {
     VStack {
