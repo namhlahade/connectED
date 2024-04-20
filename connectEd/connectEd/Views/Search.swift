@@ -4,17 +4,14 @@ import SwiftData
 struct Search: View {
     @State private var searchText: String = ""
     @State private var advancedSearch: Bool = false
-    @State private var rating: Double = 0.0
-    @State private var price: Int = 40
-    @State private var availableOnly: Bool = false
+    @State var rating: Double = 0.0
+    @State var price: Int = 40
+    @State var availableOnly: Bool = false
     @State var tutors: [Tutor]
     
-    let ratingScale = ["Poor", "Fair", "Average", "Good", "Excellent"]
-    let starColor = HexStringToColor(hex: "#3498eb").color
-    
-//    var availableTutors: [Tutor] {
-//        tutors.filter {$0.status == Status.online}
-//    }
+    //    var availableTutors: [Tutor] {
+    //        tutors.filter {$0.status == Status.online}
+    //    }
     
     var body: some View {
         var searchTutors: [Tutor] {
@@ -31,26 +28,8 @@ struct Search: View {
         }
         
         Form {
-            //                    Picker(selection: $tutors.courses, label: Text("Courses").modifier(FormLabel())) {
-            //                        ForEach(courses) {
-            //                            course in Text(course.rawValue)
-            //                        }
-            //                    }
-            //                    .pickerStyle(.menu)
-
-            Section(header: Text("Filter by rating")) {
-                RatingSlider(value: $rating, scale: ratingScale, color: starColor)
-            }
-            Section(header: Text("Filter by price")) {
-                Picker(selection: $price, label: Text("Price")) {
-                    ForEach(0..<50) {
-                        index in Text("\(index)")
-                    }
-                }
-                .pickerStyle(.menu)
-            }
             Section(header: Text("Tutors")) {
-                List(searchTutors) { tutor in
+                List(availableOnly ? searchTutors.filter {$0.status == Status.online} : searchTutors) { tutor in
                     NavigationLink(destination: TutorProfile(tutor: tutor)){
                         TutorRow(tutor: tutor)
                     }
@@ -59,13 +38,29 @@ struct Search: View {
         }
         .navigationTitle("Your Saviors")
         .searchable(text: $searchText, prompt: "Search for Name")
-//        .toolbar {
-//            ToolbarItem(placement: .topBarLeading) {
-//                Button(availableOnly ? "All Tutors": "Only Available Tutors") {
-//                    availableOnly.toggle()
-//                }
-//            }
-//        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Add Filters") {
+                    advancedSearch.toggle()
+                }
+            }
+        }
+        .sheet(isPresented: $advancedSearch) {
+            NavigationStack {
+                AdvancedSearchForm(rating: $rating, price: $price, availableOnly: $availableOnly)
+                    .toolbar {
+                        ToolbarItem(placement: .principal) {
+                            Text("Advanced Search").bold()
+                        }
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button("Apply Filters") {
+                                advancedSearch.toggle()
+                            }
+                        }
+                    }
+            }
+            
+        }
     }
 }
 
