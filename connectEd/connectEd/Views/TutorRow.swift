@@ -32,12 +32,12 @@ struct TutorRow: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(maxWidth: 65, maxHeight: 65)
                     .overlay(alignment: .bottomTrailing) {
-                            Image(systemName: "circle.fill")
+                        Image(systemName: "circle.fill")
                             .resizable()
                             .frame(maxWidth: 15, maxHeight: 15)
                             .foregroundStyle(tutor.status == .online ? Color.green : Color.red)
                     }
-
+                
                 
             }
             else {
@@ -46,7 +46,7 @@ struct TutorRow: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(maxWidth: 65, maxHeight: 65)
                     .overlay(alignment: .bottomTrailing) {
-                            Image(systemName: "circle.fill")
+                        Image(systemName: "circle.fill")
                             .resizable()
                             .frame(maxWidth: 15, maxHeight: 15)
                             .foregroundStyle(tutor.status == .online ? Color.green : Color.red)
@@ -67,7 +67,7 @@ struct TutorRow: View {
                 HStack {
                     Text(String(format: "$%.2f / hr", tutor.price))
                 }
-
+                
                 HStack {
                     if tutor.courses.isEmpty == false {
                         Text(getCourselist(courses: tutor.courses))

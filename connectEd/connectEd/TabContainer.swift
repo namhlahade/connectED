@@ -8,39 +8,40 @@
 import SwiftUI
 
 struct TabContainer: View {
-    
+    @State private var isLoggedOut = false
     @State var tutors: [Tutor]
     
     var body: some View {
-        TabView {
-            NavigationStack {
-                ParentSearch(user: Tutor.previewData[0])
-            }
-            .tabItem {
-                Label("Browse", systemImage: "house.fill")
-            }
-            NavigationStack {
-                ParentFavorites(user: Tutor.previewData[0])
-            }
-            .tabItem {
-                Label("Favorites", systemImage: "star.fill")
-            }
-            NavigationStack {
-                AITutor()
-            }
-            .tabItem {
-                Label("Cipher", systemImage: "brain.head.profile")
-            }
-            NavigationStack {
-                ProfileView(email: Tutor.previewData[0].email)
-            }
-            .tabItem {
-                Label("Profile", systemImage: "person.fill")
+        if isLoggedOut {
+            LoginScreen()
+        } else{
+            
+            TabView {
+                NavigationStack {
+                    ParentSearch(user: Tutor.previewData[0])
+                }
+                .tabItem {
+                    Label("Browse", systemImage: "house.fill")
+                }
+                NavigationStack {
+                    ParentFavorites(user: Tutor.previewData[0])
+                }
+                .tabItem {
+                    Label("Favorites", systemImage: "star.fill")
+                }
+                NavigationStack {
+                    AITutor()
+                }
+                .tabItem {
+                    Label("Cipher", systemImage: "brain.head.profile")
+                }
+                NavigationStack {
+                    ProfileView(email: Tutor.previewData[0].email, isLoggedOut: $isLoggedOut)
+                }
+                .tabItem {
+                    Label("Profile", systemImage: "person.fill")
+                }
             }
         }
     }
-}
-
-#Preview {
-    TabContainer(tutors: Tutor.previewData)
 }

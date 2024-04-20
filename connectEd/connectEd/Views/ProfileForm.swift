@@ -11,8 +11,10 @@ import PhotosUI
 
 struct ProfileForm: View {
     
+    
     @State var selectedImage: PhotosPickerItem?
     @State private var imageData: Data? = nil
+    
     
     @Binding var data: Tutor.FormData
     
@@ -92,9 +94,16 @@ struct ProfileForm: View {
             
             
             
-            TextFieldWithLabel(label: "Name", text: $data.name, prompt: "Enter your name")
+            TextFieldWithLabelAlt(label: "Name", text: $data.name, prompt: "Enter your name")
             
-            TextFieldWithLabel(label: "Email", text: $data.email, prompt: "Enter your email")
+            VStack(alignment: .leading) {
+                Text("Email")
+                    .bold()
+                    .font(.caption)
+                    .padding(.bottom, 1)
+                Text(data.email).padding(.bottom, 20).foregroundStyle(.gray)
+            }
+            
             
             VStack(alignment: .leading) {
                 Text("About me")
@@ -263,21 +272,25 @@ func editTime(selectedHour: Int, isAM: Bool) -> Date {
     return dateGetter("\(isAM ? 0 : 12):00")
 }
 
+
 func dateGetter(_ time: String) -> Date {
     let formatter = DateFormatter()
     formatter.dateFormat = "HH:mm"
     return formatter.date(from: time)!
 }
 
-#Preview {
+struct ProfileForm_Previews: PreviewProvider {
+    @State static var isLoggedOut = false
     /*let data = Binding.constant(Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false).dataForForm)
      return ProfileForm(data: data)*/
-    NavigationStack {
-        //Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], image: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), status: .online, rating: 3.61, price: 23.99))
-        UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [], favorites: [], availability: []))
+    static var previews: some View {
+        NavigationStack {
+            //Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], image: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), status: .online, rating: 3.61, price: 23.99))
+            UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [], favorites: [], availability: []), loggedOut: $isLoggedOut)
+        }
+        
     }
 }
-
 
 
 
