@@ -11,45 +11,82 @@ import PhotosUI
 
 struct ProfileForm: View {
     
-    @State var selectedImage: PhotosPickerItem? = nil
+    @State var selectedImage: PhotosPickerItem?
+    @State private var imageData: Data? = nil
     
     @Binding var data: Tutor.FormData
-    
-    
-    //@State private var times: [[Date]] = []
-    //@State private var days: [Days] = []
     
     var body: some View {
         
         Form {
             
-            // TODO: have to get images actually changeable from library
             VStack (alignment: .leading) {
-                AsyncImage(url: URL(string: data.image), content: { image in
-                    image
+                if let imageData = imageData, let uiImage = UIImage(data: imageData) {
+                    Image(uiImage: uiImage)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                }, placeholder: {
-                    if data.image != "" {
-                        ProgressView()
-                    } else {
+                        .overlay(alignment: .bottomTrailing) {
+                            PhotosPicker(selection: $selectedImage,
+                                         matching: .images) {
+                                Image(systemName: "pencil.circle.fill")
+                                    .symbolRenderingMode(.multicolor)
+                                    .font(.system(size: 30))
+                                    .foregroundColor(.accentColor)
+                            }
+                                         .buttonStyle(.borderless)
+                                         .onChange(of: selectedImage) {
+                                             if let newItem = selectedImage {
+                                                 loadPhoto(item: newItem)
+                                             }
+                                         }
+                        }
+                        .frame(maxWidth: 200, maxHeight: 200)
+                        .padding()
+                } else {
+                    if data.image == Data() {
                         Image(systemName: "person.circle")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
+                            .overlay(alignment: .bottomTrailing) {
+                                PhotosPicker(selection: $selectedImage,
+                                             matching: .images) {
+                                    Image(systemName: "pencil.circle.fill")
+                                        .symbolRenderingMode(.multicolor)
+                                        .font(.system(size: 30))
+                                        .foregroundColor(.accentColor)
+                                }
+                                             .buttonStyle(.borderless)
+                                             .onChange(of: selectedImage) {
+                                                 if let newItem = selectedImage {
+                                                     loadPhoto(item: newItem)
+                                                 }
+                                             }
+                            }
+                            .frame(maxWidth: 200, maxHeight: 200)
+                            .padding()
+                    } else {
+                        Image(uiImage: UIImage(data: data.image)!)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .overlay(alignment: .bottomTrailing) {
+                                PhotosPicker(selection: $selectedImage,
+                                             matching: .images) {
+                                    Image(systemName: "pencil.circle.fill")
+                                        .symbolRenderingMode(.multicolor)
+                                        .font(.system(size: 30))
+                                        .foregroundColor(.accentColor)
+                                }
+                                             .buttonStyle(.borderless)
+                                             .onChange(of: selectedImage) {
+                                                 if let newItem = selectedImage {
+                                                     loadPhoto(item: newItem)
+                                                 }
+                                             }
+                            }
+                            .frame(maxWidth: 200, maxHeight: 200)
+                            .padding()
                     }
-                })
-                .overlay(alignment: .bottomTrailing) {
-                    PhotosPicker(selection: $selectedImage,
-                                 matching: .images) {
-                        Image(systemName: "pencil.circle.fill")
-                            .symbolRenderingMode(.multicolor)
-                            .font(.system(size: 30))
-                            .foregroundColor(.accentColor)
-                    }
-                                 .buttonStyle(.borderless)
                 }
-                .frame(maxWidth: 200, maxHeight: 200)
-                .padding()
             }
             .frame(maxWidth: .infinity)
             
@@ -154,6 +191,26 @@ struct ProfileForm: View {
             }
         }
     }
+    
+    private func loadPhoto(item: PhotosPickerItem) {
+        // Request the image data
+        item.loadTransferable(type: Data.self) { result in
+            switch result {
+            case .success(let data):
+                if let data = data {
+                    // Update the image data to be displayed
+                    imageData = data
+                    self.data.image = data
+                } else {
+                    // Handle the case where no image data is found
+                    print("Failed to load image data.")
+                }
+            case .failure(let error):
+                // Handle errors
+                print("Error loading image: \(error.localizedDescription)")
+            }
+        }
+    }
 }
 
 func dateGetter(_ time: String) -> Date {
@@ -170,3 +227,79 @@ func dateGetter(_ time: String) -> Date {
         UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [], isFavorite: false, availability: []))
     }
 }
+
+
+
+
+
+
+
+
+/*
+ 
+ if let imageData = imageData, let uiImage = UIImage(data: imageData) {
+ Image(uiImage: uiImage)
+ .resizable()
+ .aspectRatio(contentMode: .fit)
+ .overlay(alignment: .bottomTrailing) {
+ PhotosPicker(selection: $selectedImage,
+ matching: .images) {
+ Image(systemName: "pencil.circle.fill")
+ .symbolRenderingMode(.multicolor)
+ .font(.system(size: 30))
+ .foregroundColor(.accentColor)
+ }
+ .buttonStyle(.borderless)
+ .onChange(of: selectedImage) {
+ if let newItem = selectedImage {
+ loadPhoto(item: newItem)
+ }
+ }
+ }
+ .frame(maxWidth: 200, maxHeight: 200)
+ .padding()
+ } else {
+ if data.image == Data() {
+ Image(systemName: "person.circle")
+ .resizable()
+ .aspectRatio(contentMode: .fit)
+ .overlay(alignment: .bottomTrailing) {
+ PhotosPicker(selection: $selectedImage,
+ matching: .images) {
+ Image(systemName: "pencil.circle.fill")
+ .symbolRenderingMode(.multicolor)
+ .font(.system(size: 30))
+ .foregroundColor(.accentColor)
+ }
+ .buttonStyle(.borderless)
+ .onChange(of: selectedImage) {
+ if let newItem = selectedImage {
+ loadPhoto(item: newItem)
+ }
+ }
+ }
+ } else {
+ Image(uiImage: UIImage(data: data.image)!)
+ .resizable()
+ .aspectRatio(contentMode: .fit)
+ .overlay(alignment: .bottomTrailing) {
+ PhotosPicker(selection: $selectedImage,
+ matching: .images) {
+ Image(systemName: "pencil.circle.fill")
+ .symbolRenderingMode(.multicolor)
+ .font(.system(size: 30))
+ .foregroundColor(.accentColor)
+ }
+ .buttonStyle(.borderless)
+ .onChange(of: selectedImage) {
+ if let newItem = selectedImage {
+ loadPhoto(item: newItem)
+ }
+ }
+ }
+ }
+ }
+ 
+ 
+ 
+ */

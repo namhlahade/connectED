@@ -16,7 +16,7 @@ class Tutor: Identifiable, Codable {
     var email: String
     var bio: String?
     var courses: [Course]
-    var image: String?
+    var image: Data?
     var status: Status // computed in the frontend
     var rating: Double
     var price: Double
@@ -24,7 +24,7 @@ class Tutor: Identifiable, Codable {
     var isFavorite: Bool
     var availability: [Availability]
     
-    init(id: UUID = UUID(), name: String, email: String, bio: String? = nil, courses: [Course], image: String? = nil, status: Status, rating: Double = 0.0, price: Double = 15.00, reviews: [Review], isFavorite: Bool, availability: [Availability]) {
+    init(id: UUID = UUID(), name: String, email: String, bio: String? = nil, courses: [Course], image: Data? = nil, status: Status, rating: Double = 0.0, price: Double = 15.00, reviews: [Review], isFavorite: Bool, availability: [Availability]) {
         self.id = id
         self.name = name
         self.email = email
@@ -55,8 +55,7 @@ extension Tutor {
         var email: String = ""
         var bio: String = ""
         var courses: [Course] = []
-        var image: String = ""
-        var status: Status = .online
+        var image: Data = Data()
         var price: Double = 0.0
         var availability: [Availability] = []
     }
@@ -68,15 +67,14 @@ extension Tutor {
             email: email,
             bio: bio ?? "",
             courses: courses,
-            image: image ?? "",
-            status: status,
+            image: image ?? Data(),
             price: price,
             availability: availability
         )
     }
     
     static func create(from formData: FormData) {
-        let tutor = Tutor(name: formData.name, email: formData.email, courses: formData.courses, status: formData.status, reviews: [], isFavorite: false, availability: formData.availability)
+        let tutor = Tutor(name: formData.name, email: formData.email, courses: formData.courses, status: .online, reviews: [], isFavorite: false, availability: formData.availability)
         Tutor.update(tutor, from: formData)
     }
     
@@ -85,8 +83,7 @@ extension Tutor {
         tutor.email = formData.email
         tutor.bio = formData.bio.isEmpty ? nil : formData.bio
         tutor.courses = formData.courses
-        tutor.image = formData.image.isEmpty ? nil : formData.image
-        tutor.status = formData.status
+        tutor.image = formData.image
         tutor.price = formData.price
         tutor.availability = formData.availability
     }

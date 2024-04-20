@@ -118,18 +118,22 @@ def getTutors():
         users = User.query.all()
         tutor_data = []
         for user in users:
-            availabilityDict = availabilityHelper(user.email)
+
+            availability_dict = availabilityHelper(user.email)
+            reviews = get_reviews(user.email)
+            favorites = get_favorites(user.email)
+
             user_data = {
                 'email': user.email,
                 'name': user.name,
                 'bio': user.bio,
                 'image': user.image,
                 'price': user.price,
-                'availabilities': availabilityDict,
+                'availabilities': availability_dict,
+                'reviews': reviews,
+                'favorites': favorites,
                 'tutor_classes': [
-                    {
-                        'class_name': tutor_class.className
-                    } for tutor_class in user.tutor_classes
+                    tutor_class.className for tutor_class in user.tutor_classes
                 ]
             }
             tutor_data.append(user_data)
@@ -139,6 +143,23 @@ def getTutors():
     except Exception as e:
         db.session.rollback()
         return str(e), 500
+
+def get_reviews(tutor_email):
+    reviews = Review.query.filter_by(email=tutor_email).all()
+    return [
+        {
+            'clarity': review.clarity,
+            'prep': review.prep,
+            'review': review.review,
+            'rating': review.rating
+        } for review in reviews
+    ]
+
+def get_favorites(tutor_email):
+    favorites = Favorites.query.filter_by(user_email = tutor_email).all()
+    return [
+            favorite.reviewer_email for favorite in favorites
+            ]
 
 
 @app.route('/getTutorReviews', methods=['POST'])
@@ -275,32 +296,40 @@ def deleteFavorite():
     except Exception as e:
         db.session.rollback()
         return str(e), 500
+    
+@app.route('/addClass', methods=['POST'])
+def addClass():
+    try:
+        data = request.get_json()
+        tutor_email = data.get('tutorEmail')
+        className = data.get('className')
+
+        classRelationship = TutorClass(email=tutor_email, className=className)
+        db.session.add(classRelationship)
+        db.session.commit()
+
+        return jsonify({"message": "User added successfully"}), 201
+
+    except Exception as e:
+        db.session.rollback()
+        return str(e), 500
+
 
 @app.route('/getTutorInfo', methods=['POST'])
 def getTutorInfo():
-    data = request.get_json()
-    tutor_email = data.get('tutorEmail')
-
-    if not tutor_email:
-        return jsonify({'error': 'Missing tutorEmail parameter'}), 400
-
     try:
+        data = request.get_json()
+        tutor_email = data.get('tutorEmail')
+        if not tutor_email:
+            return jsonify({"error": "Missing tutorEmail parameter"}), 400
+
         tutor = User.query.filter_by(email=tutor_email).first()
         if not tutor:
-            return jsonify({'error': 'Tutor not found'}), 404
-        
-        availabilityDict = availabilityHelper(tutor.email)
-        count = 0
-        totalRating, totalClarity, totalPrep = 0, 0, 0
-        for review in tutor.reviews:
-            totalRating += review.rating
-            totalClarity += review.clarity
-            totalPrep += review.prep
+            return jsonify({"error": "Tutor not found"}), 404
 
-            count += 1
-
-        if count == 0:
-            count = 1
+        availability_dict = availabilityHelper(tutor_email)
+        reviews = get_reviews(tutor_email)
+        favorites = get_favorites(tutor_email)
 
         tutor_data = {
             'email': tutor.email,
@@ -308,22 +337,18 @@ def getTutorInfo():
             'bio': tutor.bio,
             'image': tutor.image,
             'price': tutor.price,
-            'availabilities': availabilityDict,
-            'avgRating': totalRating/count,
-            'avgClarity': totalClarity/count,
-            'avgPrep': totalPrep/count,
+            'availabilities': availability_dict,
+            'reviews': reviews,
+            'favorites': favorites,
             'tutor_classes': [
                 {
                     'class_name': tutor_class.className
                 } for tutor_class in tutor.tutor_classes
-            ],
-            'reviews': [
-                    review.review
-                    for review in tutor.reviews
             ]
         }
-        return jsonify(tutor_data)
-    
+
+        return jsonify(tutor_data), 200
+
     except Exception as e:
         db.session.rollback()
         return str(e), 500
