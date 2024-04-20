@@ -44,6 +44,9 @@ struct TutorInfo: Codable {
         let availability: [Availability] = convertAvailability(dictionary: availabilities)
         print(availability)
         
+        let status: Status = isPersonAvailable(availability: availability)
+        print(status)
+        
         var totalRating: Double = 0
         var numReviews: Double = 0
         
@@ -54,10 +57,10 @@ struct TutorInfo: Codable {
         
         let avgRatings: Double = totalRating/numReviews
         if numReviews > 0 {
-            return Tutor(name: name, email: email, bio: bio, courses: allCourses, status: .offline, rating: avgRatings, reviews: allReviews, favorites: favorites, availability: availability)
+            return Tutor(name: name, email: email, bio: bio, courses: allCourses, status: status, rating: avgRatings, reviews: allReviews, favorites: favorites, availability: availability)
         }
         else{
-            return Tutor(name: name, email: email, bio: bio, courses: allCourses, status: .offline, reviews: allReviews, favorites: favorites, availability: availability)
+            return Tutor(name: name, email: email, bio: bio, courses: allCourses, status: status, reviews: allReviews, favorites: favorites, availability: availability)
         }
 
     }
@@ -125,7 +128,7 @@ func convertAvailability(dictionary: [String: [Int]]) -> [Availability] {
                 var newTimes: [Date] = []
                 newTimes.append(startDate)
                 newTimes.append(endDate)
-                let availability = Availability(day: day, times:newTimes)
+                let availability = Availability(day: day, times: newTimes)
                 availabilities.append(availability)
             }
         }
@@ -134,3 +137,27 @@ func convertAvailability(dictionary: [String: [Int]]) -> [Availability] {
     return availabilities
 }
 
+func isPersonAvailable(availability: [Availability]) -> Status {
+    
+    let now = Date()
+    let formatter = DateFormatter()
+    let calendar = Calendar.current
+    formatter.dateFormat = "HH:mm"
+    let current_time = dateGetter(formatter.string(from: now))
+    let current_weekday: Int = calendar.component(.weekday, from: now)
+    
+    for availability in availability {
+        /*print(Availability.Day.allCases)
+        print(Availability.Day.allCases[current_weekday - 1])
+        print(availability.day)
+        print(Availability.Day.allCases[current_weekday - 1] == availability.day)*/
+        if (Availability.Day.allCases[current_weekday - 1] == availability.day) {
+            if (current_time >= availability.times[0] && current_time <= availability.times[1]) {
+                //print("current: \(formatter.string(from: current_time)), \(formatter.string(from: availability.times[0])) - \(formatter.string(from: availability.times[1])) = online")
+                return .online
+            }
+        }
+    }
+    return .offline
+    
+}

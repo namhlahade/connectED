@@ -22,13 +22,3 @@ struct ViewAvailabilityResponse: Codable {
         }
     }
 }
-
-func isPersonAvailable(availability: ViewAvailabilityResponse) -> Bool {
-    let now = Date()
-    let calendar = Calendar.current
-    let hour = calendar.component(.hour, from: now)
-    let weekday = calendar.component(.weekday, from: now)
-    
-    let availableHoursToday = availability.hoursFor(dayOfWeek: weekday)
-    return availableHoursToday.contains(hour)
-}

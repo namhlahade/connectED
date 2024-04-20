@@ -37,6 +37,15 @@ struct TutorProfile: View {
                         .padding()
                 }
                 
+                HStack (alignment: .center) {
+                    Image(systemName: "circle.fill")
+                        .resizable()
+                        .frame(maxWidth: 15, maxHeight: 15)
+                        .foregroundStyle(tutor.status == .online ? Color.green : Color.red)
+                    Text(tutor.status == .online ? "Available" : "Unavailable")
+                    
+                }
+                
                 
                 HStack (alignment: .center) {
                     Text("Rating:")
