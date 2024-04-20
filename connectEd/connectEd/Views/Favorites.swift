@@ -15,6 +15,7 @@ struct ParentFavorites: View {
           Favorites(user: user, tutors: allTutorInfo.getTutors())
       }
     }
+    .navigationTitle("Favorite Tutors")
     .task { await getTutorLoader.getAllTutorInfo() }
   }
 }
@@ -50,7 +51,6 @@ struct Favorites: View {
                 }
             }
         }
-        .navigationTitle("Favorite Tutors")
         
     }
     func removeFavorite(at offsets: IndexSet) {

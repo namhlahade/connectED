@@ -6,17 +6,18 @@ struct ParentSearch: View {
     var user: Tutor
     
     var body: some View {
-    VStack {
-      switch getTutorLoader.state {
-      case .idle: Color.clear
-      case .loading: ProgressView()
-      case .failed(let error): Text("Error \(error.localizedDescription)")
-      case .success(let allTutorInfo):
-          Search(user: user, tutors: allTutorInfo.getTutors())
-      }
+        VStack {
+            switch getTutorLoader.state {
+            case .idle: Color.clear
+            case .loading: ProgressView()
+            case .failed(let error): Text("Error \(error.localizedDescription)")
+            case .success(let allTutorInfo):
+                Search(user: user, tutors: allTutorInfo.getTutors())
+            }
+        }
+        .task { await getTutorLoader.getAllTutorInfo() }
+        .navigationTitle("Get ConnectED")
     }
-    .task { await getTutorLoader.getAllTutorInfo() }
-  }
 }
 
 struct Search: View {
@@ -48,7 +49,6 @@ struct Search: View {
                 TutorRow(tutor: tutor)
             }
         }
-        .navigationTitle("Get ConnectED")
         .searchable(text: $searchText, prompt: "Search for Name")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -71,13 +71,6 @@ struct Search: View {
                         }
                     }
             }
-            
         }
-    }
-}
-
-#Preview {
-    NavigationStack {
-        Search(user: Tutor.previewData[0], tutors: Tutor.previewData)
     }
 }

@@ -38,7 +38,6 @@ struct TabContainer: View {
                 Label("Profile", systemImage: "person.fill")
             }
         }
-        
     }
 }
 

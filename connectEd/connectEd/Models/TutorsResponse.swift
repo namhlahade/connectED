@@ -29,7 +29,10 @@ struct TutorInfo: Codable {
         var allCourses: [Course] = []
         for course in tutorClasses {
             let courseArr = course.components(separatedBy: " ")
+            print(courseArr[0])
             let subject = Tutor.Subject(rawValue: courseArr[0].lowercased())!
+            print(subject)
+            print(courseArr[1])
             allCourses.append(Course(subject: subject, code: courseArr[1]))
         }
         
