@@ -15,7 +15,7 @@ struct UserProfile: View {
     @State private var isPresentingEditForm: Bool = false
     @State private var editTutorFormData: Tutor.FormData = Tutor.FormData()
     
-    
+    @State var loggedOut: Bool = false
     var body: some View {
         
         Form {
@@ -68,6 +68,12 @@ struct UserProfile: View {
         }
         .navigationTitle("My Profile")
         .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button("Logout") {
+                    authenticationService.logout()
+                    loggedOut = true
+                }
+            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Edit") {
                     editTutorFormData = user.dataForForm
@@ -88,6 +94,9 @@ struct UserProfile: View {
                         ToolbarItem(placement: .principal) {
                             Text("Edit Profile").fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                         }
+                        ToolbarItem(placement: .principal) {
+                            Text("Logout").fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                        }
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button("Save") {
                                 Tutor.update(user, from: editTutorFormData)
@@ -96,9 +105,6 @@ struct UserProfile: View {
                         }
                     }
             }
-        }
-        Button("Logout"){
-            authenticationService.logout()
         }
     }
 }
