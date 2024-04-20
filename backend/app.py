@@ -299,29 +299,19 @@ def deleteFavorite():
 
 @app.route('/getTutorInfo', methods=['POST'])
 def getTutorInfo():
-    data = request.get_json()
-    tutor_email = data.get('tutorEmail')
-
-    if not tutor_email:
-        return jsonify({'error': 'Missing tutorEmail parameter'}), 400
-
     try:
+        data = request.get_json()
+        tutor_email = data.get('tutorEmail')
+        if not tutor_email:
+            return jsonify({"error": "Missing tutorEmail parameter"}), 400
+
         tutor = User.query.filter_by(email=tutor_email).first()
         if not tutor:
-            return jsonify({'error': 'Tutor not found'}), 404
-        
-        availabilityDict = availabilityHelper(tutor.email)
-        count = 0
-        totalRating, totalClarity, totalPrep = 0, 0, 0
-        for review in tutor.reviews:
-            totalRating += review.rating
-            totalClarity += review.clarity
-            totalPrep += review.prep
+            return jsonify({"error": "Tutor not found"}), 404
 
-            count += 1
-
-        if count == 0:
-            count = 1
+        availability_dict = availabilityHelper(tutor_email)
+        reviews = get_reviews(tutor_email)
+        favorites = get_favorites(tutor_email)
 
         tutor_data = {
             'email': tutor.email,
@@ -329,22 +319,18 @@ def getTutorInfo():
             'bio': tutor.bio,
             'image': tutor.image,
             'price': tutor.price,
-            'availabilities': availabilityDict,
-            'avgRating': totalRating/count,
-            'avgClarity': totalClarity/count,
-            'avgPrep': totalPrep/count,
+            'availabilities': availability_dict,
+            'reviews': reviews,
+            'favorites': favorites,
             'tutor_classes': [
                 {
                     'class_name': tutor_class.className
                 } for tutor_class in tutor.tutor_classes
-            ],
-            'reviews': [
-                    review.review
-                    for review in tutor.reviews
             ]
         }
-        return jsonify(tutor_data)
-    
+
+        return jsonify(tutor_data), 200
+
     except Exception as e:
         db.session.rollback()
         return str(e), 500
