@@ -11,45 +11,69 @@ import PhotosUI
 
 struct ProfileForm: View {
     
-    @State var selectedImage: PhotosPickerItem? = nil
+    @State var selectedImage: PhotosPickerItem?
+    @State private var imageData: Data? = nil
     
     @Binding var data: Tutor.FormData
-    
-    
-    //@State private var times: [[Date]] = []
-    //@State private var days: [Days] = []
     
     var body: some View {
         
         Form {
             
-            // TODO: have to get images actually changeable from library
             VStack (alignment: .leading) {
-                AsyncImage(url: URL(string: data.image), content: { image in
-                    image
+                if let imageData = imageData, let uiImage = UIImage(data: imageData) {
+                    Image(uiImage: uiImage)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                }, placeholder: {
-                    if data.image != "" {
-                        ProgressView()
-                    } else {
-                        Image(systemName: "person.circle")
+                        .overlay(alignment: .bottomTrailing) {
+                            PhotosPicker(selection: $selectedImage,
+                                         matching: .images) {
+                                Image(systemName: "pencil.circle.fill")
+                                    .symbolRenderingMode(.multicolor)
+                                    .font(.system(size: 30))
+                                    .foregroundColor(.accentColor)
+                            }
+                                         .buttonStyle(.borderless)
+                                         .onChange(of: selectedImage) {
+                                             if let newItem = selectedImage {
+                                                 loadPhoto(item: newItem)
+                                             }
+                                         }
+                        }
+                        .frame(maxWidth: 200, maxHeight: 200)
+                        .padding()
+                } else {
+                    AsyncImage(url: URL(string: data.image), content: { image in
+                        image
                             .resizable()
                             .aspectRatio(contentMode: .fit)
+                    }, placeholder: {
+                        if data.image == "" {
+                            Image(systemName: "person.circle")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        } else {
+                            ProgressView()
+                        }
+                    })
+                    .overlay(alignment: .bottomTrailing) {
+                        PhotosPicker(selection: $selectedImage,
+                                     matching: .images) {
+                            Image(systemName: "pencil.circle.fill")
+                                .symbolRenderingMode(.multicolor)
+                                .font(.system(size: 30))
+                                .foregroundColor(.accentColor)
+                        }
+                                     .buttonStyle(.borderless)
+                                     .onChange(of: selectedImage) {
+                                         if let newItem = selectedImage {
+                                             loadPhoto(item: newItem)
+                                         }
+                                     }
                     }
-                })
-                .overlay(alignment: .bottomTrailing) {
-                    PhotosPicker(selection: $selectedImage,
-                                 matching: .images) {
-                        Image(systemName: "pencil.circle.fill")
-                            .symbolRenderingMode(.multicolor)
-                            .font(.system(size: 30))
-                            .foregroundColor(.accentColor)
-                    }
-                                 .buttonStyle(.borderless)
+                    .frame(maxWidth: 200, maxHeight: 200)
+                    .padding()
                 }
-                .frame(maxWidth: 200, maxHeight: 200)
-                .padding()
             }
             .frame(maxWidth: .infinity)
             
@@ -151,6 +175,25 @@ struct ProfileForm: View {
                     Text("$")
                     TextField("Price per hour", value: $data.price, formatter: NumberFormatter(), prompt: Text("Enter your hourly rate")).keyboardType(.decimalPad)
                 }.padding(.bottom, 20)
+            }
+        }
+    }
+    
+    private func loadPhoto(item: PhotosPickerItem) {
+        // Request the image data
+        item.loadTransferable(type: Data.self) { result in
+            switch result {
+            case .success(let data):
+                if let data = data {
+                    // Update the image data to be displayed
+                    imageData = data
+                } else {
+                    // Handle the case where no image data is found
+                    print("Failed to load image data.")
+                }
+            case .failure(let error):
+                // Handle errors
+                print("Error loading image: \(error.localizedDescription)")
             }
         }
     }
