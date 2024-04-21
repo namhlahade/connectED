@@ -145,14 +145,22 @@ func isPersonAvailable(availability: [Availability]) -> Status {
     let calendar = Calendar.current
     formatter.dateFormat = "HH:mm"
     let current_time = dateGetter(formatter.string(from: now))
-    let current_weekday: Int = calendar.component(.weekday, from: now)
+    var current_weekday: Int = calendar.component(.weekday, from: now)
+    
+    if current_weekday == 1 {
+        current_weekday = 6
+    }
+    else {
+        current_weekday -= 2
+    }
     
     for availability in availability {
         /*print(Availability.Day.allCases)
         print(Availability.Day.allCases[current_weekday - 1])
         print(availability.day)
         print(Availability.Day.allCases[current_weekday - 1] == availability.day)*/
-        if (Availability.Day.allCases[current_weekday - 1] == availability.day) {
+        print("Current day: \(current_weekday) \(Availability.Day.allCases[current_weekday]), Comparison day: \(availability.day)")
+        if (Availability.Day.allCases[current_weekday] == availability.day) {
             if (current_time >= availability.times[0] && current_time <= availability.times[1]) {
                 //print("current: \(formatter.string(from: current_time)), \(formatter.string(from: availability.times[0])) - \(formatter.string(from: availability.times[1])) = online")
                 return .online
