@@ -489,6 +489,7 @@ def addTutor():
     
     except Exception as e:
         db.session.rollback()
+        print(e)
         return str(e), 500
 
 @app.route('/editProfile', methods=['POST'])
