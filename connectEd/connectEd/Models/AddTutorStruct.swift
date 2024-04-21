@@ -5,7 +5,7 @@ struct AddTutorStruct: Codable {
     var email: String
     var bio: String
     var price: Double
-    var image: Data?
+    var image: String
     var courses: [String]
     var availability: [AvailabilityObject]
 }

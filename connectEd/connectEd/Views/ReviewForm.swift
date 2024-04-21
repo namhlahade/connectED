@@ -3,7 +3,7 @@ import SwiftUI
 struct ReviewForm: View {
     
     @Bindable var tutor: Tutor
-
+    
     @Environment(\.presentationMode) var presentationMode
     
     @State private var review: Review = Review(email: "", rating: 0, clarity: 0, prep: 0, review: "")
@@ -50,21 +50,26 @@ struct ReviewForm: View {
                     .frame(height: 100)
             }
             
-            Button(action: {
-                print(review)
-                review.email = tutor.email
-                tutor.reviews.append(review)
-                Task {
-                    await addTutorReviewLoader.addTutorReview(tutorReviewInput: TutorReviewInputStruct(rating: Int(review.rating), clarity: Int(review.clarity), prep: Int(review.prep), review: review.review, tutorEmail: tutor.email))
-                }
-            }) {
-                Text("Submit Review").fontWeight(.bold)
-            }
-            .frame(maxWidth: .infinity)
         }
         .navigationBarTitle("Leave a Review")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss() 
+                    Task {
+                        review.email = tutor.email
+                        tutor.reviews.append(review)
+                        await addTutorReviewLoader.addTutorReview(tutorReviewInput: TutorReviewInputStruct(rating: Int(review.rating), clarity: Int(review.clarity), prep: Int(review.prep), review: review.review, tutorEmail: tutor.email))
+                    }
+                }) {
+                    Text("Submit Review")
+                }
+                .frame(maxWidth: .infinity)
+                
+            }
+        }
     }
-
+    
 }
 
 func getStarImageName(for index: Int, review: Review) -> String {
@@ -80,10 +85,10 @@ struct RatingSlider: View {
     @Binding var value: Double
     let scale: [String]
     let color: Color
-
+    
     var body: some View {
         VStack {
-            Text("\(scale[Int(value)])") 
+            Text("\(scale[Int(value)])")
                 .font(.headline)
                 .foregroundColor(color)
                 .padding(.bottom, 2)

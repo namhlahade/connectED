@@ -19,7 +19,6 @@ class AddFavoriteTutorAPI: APIClient {
         let encoder = JSONEncoder()
         let jsonData = try encoder.encode(favoriteInput)
         let response: AddAPIResponse = try await performPostRequest(url: url, data: jsonData)
-        print(response)
         return response
     }
 }

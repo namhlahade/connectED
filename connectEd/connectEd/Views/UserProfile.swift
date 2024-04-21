@@ -49,21 +49,21 @@ struct UserProfile: View {
         Form {
             
             VStack (alignment: .center) {
-                if (user.image == Data() || user.image == nil) {
-                    Image(systemName: "person.circle")
+                AsyncImage(url: URL(string: user.image), content: { image in
+                    image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 200, maxHeight: 200)
-                        .padding()
-                    
-                }
-                else {
-                    Image(uiImage: UIImage(data: user.image!)!)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 200, maxHeight: 200)
-                        .padding()
-                }
+                }, placeholder: {
+                    if user.image != "" {
+                        ProgressView()
+                    } else {
+                        Image(systemName: "person.circle")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    }
+                })
+                .frame(maxWidth: 200, maxHeight: 200)
+                .padding()
                 
                 HStack (alignment: .center) {
                     Image(systemName: "circle.fill")
@@ -109,10 +109,7 @@ struct UserProfile: View {
                     authenticationService.logout()
                     loggedOut = true
                 }) {
-                    HStack {
-                        Image(systemName: "rectangle.portrait.and.arrow.left")
-                            .font(.system(size: 18))
-                    }
+                    Text("Log Out")
                     
                 }
             }
@@ -218,10 +215,10 @@ struct UserProfile_Previews: PreviewProvider {
     @State var cop: Int = 0
     
     static var previews: some View {
-        /*NavigationStack {
-         UserProfile(count: $cop, user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, price: 0, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], favorites: [], availability: []), loggedOut: $isLoggedOut)
-         }*/
-        Text("")
+        NavigationStack {
+         UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, price: 0, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], favorites: [], availability: []), loggedOut: $isLoggedOut)
+         }
         
     }
 }
+

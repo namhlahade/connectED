@@ -7,7 +7,7 @@
 
 import SwiftUI
 import SwiftData
-
+import Firebase
 @main
 struct connectEdApp: App {
     
@@ -38,5 +38,8 @@ struct connectEdApp: App {
         }
         .modelContainer(sharedModelContainer)
         .environment(authenticationService)
+    }
+    init() {
+        FirebaseApp.configure()
     }
 }
