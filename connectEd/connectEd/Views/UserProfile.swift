@@ -11,7 +11,6 @@ struct ProfileView: View {
     let email: String
     @Environment(FakeAuthenticationService.self) var authenticationService
     let getTutorLoader = GetTutorLoader()
-    
     @Binding var isLoggedOut: Bool
     var body: some View {
     VStack {
@@ -38,7 +37,7 @@ struct ProfileView: View {
 struct UserProfile: View {
     
     let editProfileLoader = EditProfileLoader()
-    @Bindable var user: Tutor
+    @State var user: Tutor
     let authenticationService = FakeAuthenticationService()
     @State private var isPresentingEditForm: Bool = false
     @State private var editTutorFormData: Tutor.FormData = Tutor.FormData()
@@ -209,10 +208,13 @@ struct ProfileSection: View {
 
 struct UserProfile_Previews: PreviewProvider {
     @State static var isLoggedOut = false
+    @State var cop: Int = 0
+    
     static var previews: some View {
-        NavigationStack {
-            UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, price: 0, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], favorites: [], availability: []), loggedOut: $isLoggedOut)
-        }
+        /*NavigationStack {
+            UserProfile(count: $cop, user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, price: 0, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], favorites: [], availability: []), loggedOut: $isLoggedOut)
+        }*/
+        Text("")
         
     }
 }

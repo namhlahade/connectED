@@ -5,6 +5,7 @@ import EventKit
 import CoreLocation
 
 struct TutorBookingScreen: View {
+    @Environment(\.presentationMode) var presentationMode
     @Bindable var tutor: Tutor
     @State private var sessionDuration = 1
     @State var selectedCourse: String = ""
@@ -36,8 +37,6 @@ struct TutorBookingScreen: View {
                 }
             }
             
-            //            ProfileSection(title: "Meeting Times", sectionLabels: ["\(tutor.name)'s Availability"], sectionData: [tutor.availability.count == 0 ? "No availability provided" : printAvailability(availability: tutor.availability)])
-            
             Section(header: Text("Pick a Time")) {
                 Text("\(tutor.name)'s Availability").bold().font(.title3)
                 if tutor.availability.isEmpty {
@@ -66,7 +65,9 @@ struct TutorBookingScreen: View {
             }
             .disabled(selectedCourse == "" || selectedMeetingTime == "")
         }
-        .navigationTitle("Meet with \(tutor.name)!").navigationBarTitleDisplayMode(.inline).frame(alignment: .center)
+        .navigationTitle("Meet with \(tutor.name)!")
+        .navigationBarTitleDisplayMode(.inline).frame(alignment: .center)
+
         .sheet(isPresented: $isPresentingNavigator){
             
             NavigationStack {

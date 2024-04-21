@@ -9,8 +9,9 @@ import SwiftUI
 import PhotosUI
 
 
+
+
 struct TutorProfile: View {
-    
     
     @State var user: Tutor
     @Bindable var tutor: Tutor
