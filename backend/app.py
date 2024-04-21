@@ -502,6 +502,7 @@ def editProfile():
     tutor_email = data.get("tutorEmail")
     newName = data.get("name")
     newBio = data.get("bio")
+    price = data.get("price")
     new_courses = data.get("courses")
     new_availability = data.get("availability")
 
@@ -510,6 +511,7 @@ def editProfile():
         if tutor:
             tutor.bio = newBio
             tutor.name = newName
+            tutor.price = price
         else:
             return jsonify({"error": "Tutor not found"}), 404
 

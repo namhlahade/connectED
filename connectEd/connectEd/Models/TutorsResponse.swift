@@ -35,14 +35,15 @@ struct TutorInfo: Codable {
             print(courseArr[1])
             allCourses.append(Course(subject: subject, code: courseArr[1]))
         }
-        
+        print("Testing 1")
         var allReviews: [Review] = []
         for newReview in reviews {
             allReviews.append(Review(email: email, rating: Double(newReview.rating), clarity: Double(newReview.clarity), prep: Double(newReview.prep), review: newReview.review))
         }
-        
+        print("Testing2")
         let availability: [Availability] = convertAvailability(dictionary: availabilities)
         print(availability)
+        print("Testing3")
         
         let status: Status = isPersonAvailable(availability: availability)
         print(status)
