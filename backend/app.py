@@ -25,7 +25,7 @@ class User(db.Model):
     email = db.Column(db.Text, unique=True, nullable=False, primary_key=True)
     name = db.Column(db.Text, nullable=False)
     bio = db.Column(db.Text)
-    image = db.Column(db.Text)
+    image = db.Column(db.LargeBinary)
     price = db.Column(db.Float, nullable=False)
 
     #Relationships
