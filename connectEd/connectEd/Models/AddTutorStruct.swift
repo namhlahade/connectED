@@ -6,7 +6,7 @@ struct AddTutorStruct: Codable {
     var bio: String
     var price: Double
     var image: Data?
-//    var courses: [String]
+    var courses: [String]
 //    var availability: [AvailabilityObject]
 }
 
