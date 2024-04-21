@@ -45,7 +45,7 @@ struct Search: View {
         }
         
         List(availableOnly ? searchTutors.filter {$0.status == Status.online} : searchTutors) { tutor in
-            NavigationLink(destination: TutorProfile(user: Tutor.previewData[0], tutor: tutor)){
+            NavigationLink(destination: TutorProfile(user: user, tutor: tutor)){
                 TutorRow(user: user, tutor: tutor)
             }
         }

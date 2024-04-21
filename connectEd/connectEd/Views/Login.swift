@@ -21,7 +21,8 @@ struct LoginScreen: View {
             TabContainer(tutors: Tutor.previewData, email: $email)
         }
         else {
-            ScrollView {
+            VStack {
+                Spacer()
                 TextFieldWithLabel(label: "Email", hint: "Make sure to include an @ in your email!", text: $email, validationStatus: $validationStatus, validationMessage: "You currently do not have an @ sign in your email") { email.contains("@") }
                 Button("Login") {
                     authenticationService.login(email: email, modelContext: modelContext)
@@ -29,6 +30,7 @@ struct LoginScreen: View {
                     isPresentingProfileForm.toggle()
                 }
                 .buttonStyle(.borderedProminent)
+                Spacer()
                 if let errorMessage = authenticationService.errorMessage {
                     Text(errorMessage)
                         .font(.headline)

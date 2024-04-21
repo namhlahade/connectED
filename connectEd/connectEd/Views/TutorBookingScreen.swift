@@ -18,11 +18,9 @@ struct TutorBookingScreen: View {
     @State private var selectedMeetingTime: String = ""
     
     @State var eventService = EventService()
-    let addMeetingLoader = AddMeetingLoader()
     
     var body: some View {
         Form {
-            
             Section(header: Text("Select a Course:")) {
                 if tutor.courses.isEmpty {
                     Text("No available courses to select")
@@ -75,40 +73,6 @@ struct TutorBookingScreen: View {
             }
         }
     }
-    
-    //    private func convertDateToString(selectedMeetingTime: String) -> [String] {
-    //        let meetingString = selectedMeetingTime.split(separator: " ")
-    //        let date = meetingString[0]
-    //        let startTimeString = meetingString[1].split(separator: ":")
-    //        let endTimeString = meetingString[4].split(separator: ":")
-    //        var startTime = String(meetingString[1])
-    //        var endTime = String(meetingString[4])
-    //        if meetingString[2] == "PM" && startTimeString[0] != "12" {
-    //            let hour = (Int(startTimeString[0]) ?? 0) + 12
-    //            startTime = "\(hour):\(startTimeString[1])"
-    //        }
-    //        else if startTimeString[0] == "12"{
-    //            startTime = "0:\(startTimeString[1])"
-    //        }
-    //        if meetingString[5] == "PM" && endTimeString[0] != "12" {
-    //            let hour = (Int(endTimeString[0]) ?? 0) + 12
-    //            endTime = "\(hour):\(endTimeString[1])"
-    //        }
-    //        else if endTimeString[0] == "12"{
-    //            endTime = "0:\(endTimeString[1])"
-    //        }
-    //        return [String(date), startTime, endTime]
-    //    }
-    
-    //    private func submit(email: String, date: String, startTime: String, endTime: String) {
-    //        print(date)
-    //        print(startTime)
-    //        print(endTime)
-    //        Task {
-    //            await addMeetingLoader.addUserMeeting(addMeetingInput: AddMeetingInput(user_email: email, meeting_date: String(date), start_time: startTime, end_time: endTime))
-    //        }
-    //    }
-    //
     func dateDisplay(for event: EKEvent) -> String {
         DateFormatters.mediumDate(event.startDate)
     }
