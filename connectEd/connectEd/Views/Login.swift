@@ -18,7 +18,7 @@ struct LoginScreen: View {
     
     var body: some View {
         if authorized {
-            TabContainer(tutors: Tutor.previewData, email: $email)
+            ParentTabContainer(email: $email)
         }
         else {
             VStack {
@@ -54,10 +54,10 @@ struct LoginScreen: View {
                             ToolbarItem(placement: .navigationBarTrailing) {
                                 Button("Complete") {
                                     Tutor.update(user, from: editTutorFormData)
-                                    authorized = true
                                     isPresentingProfileForm.toggle()
                                     Task{
                                         await addTutorLoader.addTutorInfo(tutor: AddTutorStruct(name: user.name, email: user.email, bio: user.bio ?? "", price: user.price, courses: getCourseStrings(courses: user.courses), availability: castAvailability(availability: user.availability)))
+                                        authorized = true
                                     }
                                 }
                             }
