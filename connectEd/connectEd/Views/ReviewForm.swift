@@ -3,10 +3,16 @@ import SwiftUI
 struct ReviewForm: View {
     
     @Bindable var tutor: Tutor
-    
+
+    @Environment(\.presentationMode) var presentationMode
+    /*@State private var course: Course = Course(subject: .ece, code: "101")
+    @State private var rating: Int = 0
+    @State private var clarityRating: Double = 0
+    @State private var understandingRating: Double = 0
+    @State private var additionalComments: String = ""*/
     
     @State private var review: Review = Review(email: "", rating: 0, clarity: 0, prep: 0, review: "")
-    
+    let addTutorReviewLoader = AddTutorReviewLoader()
     let ratingScale = ["Poor", "Fair", "Average", "Good", "Excellent"]
     let starColor = HexStringToColor(hex: "#3498eb").color
     
@@ -53,12 +59,24 @@ struct ReviewForm: View {
                 print(review)
                 review.email = tutor.email
                 // TODO: submit review to user here through API
+                self.presentationMode.wrappedValue.dismiss()
+                Task {
+                    await addTutorReviewLoader.addTutorReview(tutorReviewInput: TutorReviewInputStruct(rating: Int(review.rating), clarity: Int(review.clarity), prep: Int(review.prep), review: review.review, tutorEmail: tutor.email))
+                }
             }) {
                 Text("Submit Review").fontWeight(.bold)
             }
             .frame(maxWidth: .infinity)
         }
         .navigationBarTitle("Leave a Review")
+//        switch addTutorReviewLoader.state {
+//            case .idle: Color.clear
+//            case .loading: ProgressView()
+//            case .failed(let error): ScrollView { Text("Error \(error.localizedDescription)") }
+//            case .success(let message):
+//                ReviewForm(tutor: tutor)
+//            
+//        }
     }
 
 }

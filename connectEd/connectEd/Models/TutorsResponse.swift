@@ -7,8 +7,6 @@
 
 import Foundation
 
-import Foundation
-
 struct TutorInfo: Codable {
     let availabilities: [String: [Int]]
     let bio: String
