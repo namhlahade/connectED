@@ -4,6 +4,7 @@ import AuthenticationServices
 
 
 struct LoginScreen: View {
+    let addTutorLoader = AddTutorLoader()
     @Environment(FakeAuthenticationService.self) var authenticationService
     @Environment(\.modelContext) private var modelContext
     @State var email: String = ""
@@ -12,9 +13,10 @@ struct LoginScreen: View {
     @State var isPresentingProfileForm: Bool = false
     @State var editTutorFormData: Tutor.FormData = Tutor.FormData()
     @State var authorized: Bool = false
+    
     var body: some View {
         if authorized {
-            TabContainer(tutors: Tutor.previewData)
+            TabContainer(tutors: Tutor.previewData, email: $email)
         }
         else {
             ScrollView {
@@ -49,6 +51,9 @@ struct LoginScreen: View {
                                 Button("Complete") {
                                     authorized = true
                                     isPresentingProfileForm.toggle()
+                                    Task{
+                                        await addTutorLoader.addTutorInfo(tutor: AddTutorStruct(name: editTutorFormData.name, email: editTutorFormData.email, bio: editTutorFormData.bio, price: editTutorFormData.price, image: editTutorFormData.image))
+                                    }
                                 }
                             }
                         }

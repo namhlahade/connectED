@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProfileView: View {
     let email: String
+    @Environment(FakeAuthenticationService.self) var authenticationService
     let getTutorLoader = GetTutorLoader()
     
     @Binding var isLoggedOut: Bool
@@ -19,7 +20,15 @@ struct ProfileView: View {
       case .loading: ProgressView()
       case .failed(let error): Text("Error \(error.localizedDescription)")
       case .success(let tutorInformation):
-          UserProfile(user: tutorInformation.getTutors().filter { $0.email == email }[0], loggedOut: $isLoggedOut)
+          if let tutor = tutorInformation.getTutors().filter({ $0.email == email }).first {
+                     UserProfile(user: tutor, loggedOut: $isLoggedOut)
+                 } else {
+                     Text("No tutor found with email: \(email)")
+                     
+                     Button("Logout") {
+                         authenticationService.logout()
+                     }
+                 }
       }
     }
     .task { await getTutorLoader.getAllTutorInfo() }
@@ -187,7 +196,7 @@ struct UserProfile_Previews: PreviewProvider {
     @State static var isLoggedOut = false
     static var previews: some View {
         NavigationStack {
-            UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], favorites: [], availability: []), loggedOut: $isLoggedOut)
+            UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, price: 0, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], favorites: [], availability: []), loggedOut: $isLoggedOut)
         }
         
     }

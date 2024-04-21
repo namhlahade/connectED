@@ -26,9 +26,10 @@ struct connectEdApp: App {
                 fatalError("Could not create ModelContainer: \(error)")
             }
         }()
+        @State var userEmail = authenticationService.maybeLoginSavedUser(modelContext: sharedModelContainer.mainContext)
         WindowGroup {
-            if (authenticationService.maybeLoginSavedUser(modelContext: sharedModelContainer.mainContext)){
-                TabContainer(tutors: Tutor.previewData)
+            if (userEmail != ""){
+                TabContainer(tutors: Tutor.previewData, email: $userEmail)
             } else{
                 LoginScreen()
                     .onAppear { authenticationService.maybeLoginSavedUser(modelContext: sharedModelContainer.mainContext) }

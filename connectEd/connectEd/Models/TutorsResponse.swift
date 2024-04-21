@@ -57,10 +57,10 @@ struct TutorInfo: Codable {
         
         let avgRatings: Double = totalRating/numReviews
         if numReviews > 0 {
-            return Tutor(name: name, email: email, bio: bio, courses: allCourses, status: status, rating: avgRatings, reviews: allReviews, favorites: favorites, availability: availability)
+            return Tutor(name: name, email: email, bio: bio, courses: allCourses, status: status, rating: avgRatings, price: 0, reviews: allReviews, favorites: favorites, availability: availability)
         }
         else{
-            return Tutor(name: name, email: email, bio: bio, courses: allCourses, status: status, reviews: allReviews, favorites: favorites, availability: availability)
+            return Tutor(name: name, email: email, bio: bio, courses: allCourses, status: status, price: 0, reviews: allReviews, favorites: favorites, availability: availability)
         }
 
     }
