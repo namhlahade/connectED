@@ -12,7 +12,7 @@ struct TutorInfo: Codable {
     let bio: String
     let email: String
     let favorites: [String]
-    let image: String?
+    let image: Data?
     let name: String
     let price: Double
     let reviews: [Rev]
