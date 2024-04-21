@@ -507,6 +507,9 @@ def editProfile():
     new_courses = data.get("courses")
     new_availability = data.get("availability")
 
+    print(price)
+    print(image)
+
     try:
         tutor = User.query.filter_by(email=tutor_email).first()
         if tutor:
