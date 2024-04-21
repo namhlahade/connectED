@@ -25,7 +25,7 @@ class User(db.Model):
     email = db.Column(db.Text, unique=True, nullable=False, primary_key=True)
     name = db.Column(db.Text, nullable=False)
     bio = db.Column(db.Text)
-    image = db.Column(db.Text)
+    image = db.Column(db.LargeBinary)
     price = db.Column(db.Float, nullable=False)
 
     #Relationships
@@ -462,6 +462,9 @@ def addTutor():
     price = None
     if 'price' in data:
         price = data.get('price')
+
+    print(availability)
+    print(price)
     
     try:
         existing_tutor = User.query.filter_by(email=email).first()
@@ -489,6 +492,7 @@ def addTutor():
     
     except Exception as e:
         db.session.rollback()
+        print(e)
         return str(e), 500
 
 @app.route('/editProfile', methods=['POST'])
