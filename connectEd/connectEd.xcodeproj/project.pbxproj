@@ -496,7 +496,6 @@
 				4C14A32E2BD371D20051FDA8 /* AddMeetingLoader.swift in Sources */,
 				4C14A3122BD32B400051FDA8 /* FavoritesResponseStruct.swift in Sources */,
 				4C14A32C2BD371670051FDA8 /* AddMeetingEndpoint.swift in Sources */,
-				97385D9B2BBAD62F00BB8C8A /* Signup.swift in Sources */,
 				4C14A3262BD36B750051FDA8 /* ViewAvailabilityEndpoint.swift in Sources */,
 				4C14A2F92BD312E00051FDA8 /* AddFavoriteEndpoint.swift in Sources */,
 				4C14A3082BD3196D0051FDA8 /* AddAvailabilityEndpoint.swift in Sources */,

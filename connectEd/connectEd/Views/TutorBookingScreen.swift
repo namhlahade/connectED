@@ -6,14 +6,17 @@ import CoreLocation
 
 struct TutorBookingScreen: View {
     @Bindable var tutor: Tutor
-    @State private var selectedCourse = ""
     @State private var sessionDuration = 1
+    @State var selectedCourse: String = ""
     @State private var price = 0.0
     @State private var selectedLocation: CLLocationCoordinate2D?
     @State var searchResults: [MKMapItem] = []
     @State private var visibleRegion: MKCoordinateRegion = .duke
     @State private var selectedOptionIndex = 0
     @State private var isPresentingNavigator: Bool = false
+    @State private var selectedMeetingTime: String = ""
+    
+    let addMeetingLoader = AddMeetingLoader()
     
     var body: some View {
         Form {
@@ -25,14 +28,30 @@ struct TutorBookingScreen: View {
                 else {
                     Picker(selection: $selectedCourse, label: Text("")) {
                         ForEach(tutor.courses) { course in
-                            Text("\(course.subject.rawValue.uppercased()) \(course.code)").frame(maxWidth: .infinity, alignment: .center)
+                            Text("\(course.subject.rawValue.uppercased()) \(course.code)").frame(maxWidth: .infinity, alignment: .center).tag("\(course.subject.rawValue.uppercased()) \(course.code)")
                             
                         }
                     }.labelsHidden()
                 }
             }
             
-            ProfileSection(title: "Meeting Time", sectionLabels: ["\(tutor.name)'s Availability"], sectionData: [tutor.availability.count == 0 ? "No availability provided" : printAvailability(availability: tutor.availability)])
+//            ProfileSection(title: "Meeting Times", sectionLabels: ["\(tutor.name)'s Availability"], sectionData: [tutor.availability.count == 0 ? "No availability provided" : printAvailability(availability: tutor.availability)])
+            
+            Section(header: Text("Pick a Time")) {
+                Text("\(tutor.name)'s Availability").bold().font(.title3)
+                if tutor.availability.isEmpty {
+                    Text("No availability provided")
+                }
+                else {
+                    Picker(selection: $selectedMeetingTime, label: Text("")) {
+                        ForEach(tutor.availability) { time in
+                            Text(printAvailability(availability: [time])).tag(printAvailability(availability: [time]))
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    .labelsHidden()
+                }
+            }
             
             
             Section(header: Text("Meeting Location")) {
@@ -58,8 +77,22 @@ struct TutorBookingScreen: View {
         }
     }
     
+    struct AddMeetingInput: Codable {
+        let user_email: String
+        let meeting_date: String
+        let start_time: String
+        let end_time: String
+    }
+    
     private func submit() {
-        // TODO: submit meeting form
+//        var email: String
+//        var date: String
+//        var start_time: String
+//        var end_time: String
+//        // TODO: submit meeting form
+//        Task {
+//            await addMeetingLoader.addUserMeeting(addMeetingInput: AddMeetingInput())
+//        }
     }
     
     func dateDisplay(for event: EKEvent) -> String {
@@ -72,5 +105,5 @@ struct TutorBookingScreen: View {
 }
 
 #Preview {
-    TutorBookingScreen(tutor: Tutor.previewData[3])
+    TutorBookingScreen(tutor: Tutor.previewData[4])
 }
