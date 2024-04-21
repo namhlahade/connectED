@@ -62,6 +62,22 @@ struct LoginScreen: View {
         }
     }
     
+    func stringDateGetter(_ time: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter.string(from: time)
+    }
+    
+    func getCourseStrings(courses: [Course]) -> [String] {
+        if courses.count == 0 {
+            return []
+        }
+        var courseList: [String] = []
+        for i in courses {
+            courseList.append("\(i.subject.rawValue.uppercased()) \(i.code)")
+        }
+        return courseList
+    }
     
     func handleFailedAppleAuthorization(_ error: Error) {
         print("Authorization Failed \(error)")
