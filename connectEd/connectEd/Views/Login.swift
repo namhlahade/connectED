@@ -14,6 +14,8 @@ struct LoginScreen: View {
     @State var editTutorFormData: Tutor.FormData = Tutor.FormData()
     @State var authorized: Bool = false
     
+    @State var user: Tutor = Tutor(id: UUID(), name: "", email: "", bio: "", courses: [], image: Data(), status: .offline, rating: 0.0, price: 0, reviews: [], favorites: [], availability: [])
+    
     var body: some View {
         if authorized {
             TabContainer(tutors: Tutor.previewData, email: $email)
@@ -49,6 +51,7 @@ struct LoginScreen: View {
                             }
                             ToolbarItem(placement: .navigationBarTrailing) {
                                 Button("Complete") {
+                                    Tutor.update(user, from: editTutorFormData)
                                     authorized = true
                                     isPresentingProfileForm.toggle()
                                     Task{
@@ -66,17 +69,17 @@ struct LoginScreen: View {
     func handleFailedAppleAuthorization(_ error: Error) {
         print("Authorization Failed \(error)")
     }
+}
+
+func castAvailability(availability: [Availability]) -> [AvailabilityObject] {
+    var ret: [AvailabilityObject] = []
     
-    func castAvailability(availability: [Availability]) -> [AvailabilityObject] {
-        var ret: [AvailabilityObject] = []
-        
-        
-        for avail in availability {
-            ret.append(AvailabilityObject(day_of_week: Availability.Day.allCases.firstIndex(of: avail.day)!, start_time: stringDateGetter(avail.times[0]), end_time: stringDateGetter(avail.times[1])))
-            print(stringDateGetter(avail.times[0]))
-            print(stringDateGetter(avail.times[1]))
-        }
-        
-        return ret
+    
+    for avail in availability {
+        ret.append(AvailabilityObject(day_of_week: Availability.Day.allCases.firstIndex(of: avail.day)!, start_time: stringDateGetter(avail.times[0]), end_time: stringDateGetter(avail.times[1])))
+        print(stringDateGetter(avail.times[0]))
+        print(stringDateGetter(avail.times[1]))
     }
+    
+    return ret
 }

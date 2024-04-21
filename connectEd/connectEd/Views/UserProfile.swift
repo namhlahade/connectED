@@ -37,6 +37,7 @@ struct ProfileView: View {
 
 struct UserProfile: View {
     
+    let editProfileLoader = EditProfileLoader()
     @Bindable var user: Tutor
     let authenticationService = FakeAuthenticationService()
     @State private var isPresentingEditForm: Bool = false
@@ -136,7 +137,9 @@ struct UserProfile: View {
                             Button("Save") {
                                 Tutor.update(user, from: editTutorFormData)
                                 isPresentingEditForm.toggle()
-                                // TODO: make API call to edit profile
+                                Task {
+                                    await editProfileLoader.editProfile(editProfileInput: EditTutorInput(tutorEmail: user.email, name: user.name, bio: user.bio ?? "", courses: getCourseStrings(courses: user.courses), availability: castAvailability(availability: user.availability)))
+                                }
                             }
                         }
                     }
