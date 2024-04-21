@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Symbols
 
 struct ProfileView: View {
     let email: String
@@ -13,25 +14,25 @@ struct ProfileView: View {
     let getTutorLoader = GetTutorLoader()
     @Binding var isLoggedOut: Bool
     var body: some View {
-    VStack {
-      switch getTutorLoader.state {
-      case .idle: Color.clear
-      case .loading: ProgressView()
-      case .failed(let error): Text("Error \(error.localizedDescription)")
-      case .success(let tutorInformation):
-          if let tutor = tutorInformation.getTutors().filter({ $0.email == email }).first {
-                     UserProfile(user: tutor, loggedOut: $isLoggedOut)
-                 } else {
-                     Text("No tutor found with email: \(email)")
-                     
-                     Button("Logout") {
-                         authenticationService.logout()
-                     }
-                 }
-      }
+        VStack {
+            switch getTutorLoader.state {
+            case .idle: Color.clear
+            case .loading: ProgressView()
+            case .failed(let error): Text("Error \(error.localizedDescription)")
+            case .success(let tutorInformation):
+                if let tutor = tutorInformation.getTutors().filter({ $0.email == email }).first {
+                    UserProfile(user: tutor, loggedOut: $isLoggedOut)
+                } else {
+                    Text("No tutor found with email: \(email)")
+                    
+                    Button("Logout") {
+                        authenticationService.logout()
+                    }
+                }
+            }
+        }
+        .task { await getTutorLoader.getAllTutorInfo() }
     }
-    .task { await getTutorLoader.getAllTutorInfo() }
-  }
 }
 
 struct UserProfile: View {
@@ -104,9 +105,15 @@ struct UserProfile: View {
         .navigationTitle("My Profile")
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                Button("Logout") {
+                Button(action: {
                     authenticationService.logout()
                     loggedOut = true
+                }) {
+                    HStack {
+                        Image(systemName: "rectangle.portrait.and.arrow.left")
+                            .font(.system(size: 18))
+                    }
+                    
                 }
             }
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -212,8 +219,8 @@ struct UserProfile_Previews: PreviewProvider {
     
     static var previews: some View {
         /*NavigationStack {
-            UserProfile(count: $cop, user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, price: 0, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], favorites: [], availability: []), loggedOut: $isLoggedOut)
-        }*/
+         UserProfile(count: $cop, user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, price: 0, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], favorites: [], availability: []), loggedOut: $isLoggedOut)
+         }*/
         Text("")
         
     }
