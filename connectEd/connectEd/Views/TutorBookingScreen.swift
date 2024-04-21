@@ -5,6 +5,7 @@ import EventKit
 import CoreLocation
 
 struct TutorBookingScreen: View {
+    @Environment(\.presentationMode) var presentationMode
     @Bindable var tutor: Tutor
     @State private var sessionDuration = 1
     @State var selectedCourse: String = ""
@@ -35,8 +36,6 @@ struct TutorBookingScreen: View {
                 }
             }
             
-            //            ProfileSection(title: "Meeting Times", sectionLabels: ["\(tutor.name)'s Availability"], sectionData: [tutor.availability.count == 0 ? "No availability provided" : printAvailability(availability: tutor.availability)])
-            
             Section(header: Text("Pick a Time")) {
                 Text("\(tutor.name)'s Availability").bold().font(.title3)
                 if tutor.availability.isEmpty {
@@ -61,15 +60,20 @@ struct TutorBookingScreen: View {
             }
             
             Button(action: {
+                self.presentationMode.wrappedValue.dismiss()
                 let meetingTimeString = convertDateToString(selectedMeetingTime: selectedMeetingTime)
+                print(selectedMeetingTime)
                 self.submit(email: tutor.email, date: meetingTimeString[0], startTime: meetingTimeString[1], endTime: meetingTimeString[2])
+                
             }) {
                 Text("Submit").frame(maxWidth: .infinity, alignment: .center)
                 
             }
             //            .disabled(selectedCourse.isEmpty) /*|| selectedLocation == nil)*/
         }
-        .navigationTitle("Meet with \(tutor.name)!").navigationBarTitleDisplayMode(.inline).frame(alignment: .center)
+        .navigationTitle("Meet with \(tutor.name)!")
+        .navigationBarTitleDisplayMode(.inline).frame(alignment: .center)
+
         .sheet(isPresented: $isPresentingNavigator){
             
             NavigationStack {
@@ -79,7 +83,9 @@ struct TutorBookingScreen: View {
     }
     
     private func convertDateToString(selectedMeetingTime: String) -> [String] {
+        
         let meetingString = selectedMeetingTime.split(separator: " ")
+        print("meeting string: \(selectedMeetingTime)")
         let date = meetingString[0]
         let startTimeString = meetingString[1].split(separator: ":")
         let endTimeString = meetingString[4].split(separator: ":")
@@ -103,9 +109,6 @@ struct TutorBookingScreen: View {
     }
     
     private func submit(email: String, date: String, startTime: String, endTime: String) {
-//        print(date)
-//        print(startTime)
-//        print(endTime)
         Task {
             await addMeetingLoader.addUserMeeting(addMeetingInput: AddMeetingInput(user_email: email, meeting_date: String(date), start_time: startTime, end_time: endTime))
         }

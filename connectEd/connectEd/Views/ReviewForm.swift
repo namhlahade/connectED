@@ -4,11 +4,6 @@ struct ReviewForm: View {
     
     @Bindable var tutor: Tutor
     
-    /*@State private var course: Course = Course(subject: .ece, code: "101")
-    @State private var rating: Int = 0
-    @State private var clarityRating: Double = 0
-    @State private var understandingRating: Double = 0
-    @State private var additionalComments: String = ""*/
     
     @State private var review: Review = Review(email: "", rating: 0, clarity: 0, prep: 0, review: "")
     
@@ -59,7 +54,7 @@ struct ReviewForm: View {
                 review.email = tutor.email
                 // TODO: submit review to user here through API
             }) {
-                Text("Submit Review")
+                Text("Submit Review").fontWeight(.bold)
             }
             .frame(maxWidth: .infinity)
         }
@@ -76,31 +71,34 @@ func getStarImageName(for index: Int, review: Review) -> String {
     }
 }
 
+
 struct RatingSlider: View {
     @Binding var value: Double
     let scale: [String]
     let color: Color
-    
+
     var body: some View {
         VStack {
-            HStack {
-                Spacer()
-                Slider(value: $value, in: 0...Double(scale.count - 1), step: 1)
-                    .accentColor(color)
-                Spacer()
-            }
-            HStack(spacing: 0) {
-                ForEach(scale, id: \.self) { label in
-                    Spacer()
-                    Text(label)
-                        .font(.footnote)
-                        .foregroundColor(.gray)
-                    Spacer()
+            Text("\(scale[Int(value)])") 
+                .font(.headline)
+                .foregroundColor(color)
+                .padding(.bottom, 2)
+            
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    Slider(value: $value, in: 0...Double(scale.count - 1), step: 1)
+                        .accentColor(color)
+                        .accessibilityLabel("Rating Slider")
                 }
             }
+            .frame(height: 30) // Providing enough space for tick marks
         }
     }
 }
+
+
+
+
 
 struct ReviewForm_Previews: PreviewProvider {
     static var previews: some View {
