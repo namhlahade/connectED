@@ -462,6 +462,9 @@ def addTutor():
     price = None
     if 'price' in data:
         price = data.get('price')
+
+    print(availability)
+    print(price)
     
     try:
         existing_tutor = User.query.filter_by(email=email).first()
