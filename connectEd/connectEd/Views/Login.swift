@@ -52,8 +52,7 @@ struct LoginScreen: View {
                                     authorized = true
                                     isPresentingProfileForm.toggle()
                                     Task{
-                                        await addTutorLoader.addTutorInfo(tutor: AddTutorStruct(name: editTutorFormData.name, email: editTutorFormData.email, bio: editTutorFormData.bio, price: editTutorFormData.price, image: editTutorFormData.image, courses: getCourseStrings(courses: editTutorFormData.courses)))
-                                        
+                                        await addTutorLoader.addTutorInfo(tutor: AddTutorStruct(name: editTutorFormData.name, email: editTutorFormData.email, bio: editTutorFormData.bio, price: editTutorFormData.price, image: editTutorFormData.image))
                                     }
                                 }
                             }
