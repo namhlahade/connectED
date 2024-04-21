@@ -34,7 +34,7 @@ struct Search: View {
         var searchTutors: [Tutor] {
             if searchText == "" {
                 tutors.filter
-                {tutor in (tutor.rating >= rating || tutor.rating == 0.0) &&
+                {tutor in (tutor.rating > rating || tutor.rating == 0.0) &&
                     tutor.price <= Double(price) && courses.allSatisfy {tutorCourse in tutor.courses.contains {$0.code == tutorCourse.code && $0.subject == tutorCourse.subject}}}
             }
             else {
