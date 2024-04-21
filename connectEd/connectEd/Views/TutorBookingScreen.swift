@@ -36,7 +36,6 @@ struct TutorBookingScreen: View {
             }
             
             Section(header: Text("Pick a Time")) {
-                Text("\(tutor.name)'s Availability").bold().font(.title3)
                 if tutor.availability.isEmpty {
                     Text("No availability provided")
                 }

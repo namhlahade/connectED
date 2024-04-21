@@ -14,7 +14,7 @@ struct LoginScreen: View {
     @State var isPresentingProfileForm: Bool = false
     @State var editTutorFormData: Tutor.FormData = Tutor.FormData()
     @State var authorized: Bool = false
-    
+    @State var warningVisisble: Bool = false
     @State var user: Tutor = Tutor(id: UUID(), name: "", email: "", bio: "", courses: [], image: Data(), status: .offline, rating: 0.0, price: 0, reviews: [], favorites: [], availability: [])
     let backgroundColor = HexStringToColor(hex: "#3498eb").color
     var body: some View {
@@ -32,22 +32,26 @@ struct LoginScreen: View {
                 TextField("Enter Email", text: $email)
                     .multilineTextAlignment(.center)
                     .background(Color.clear)
+                    .onChange(of: email) {
+                        if (!isValidEmail(email)) { warningVisisble = true }
+                        else{
+                            warningVisisble = false
+                        }
+                    }
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(backgroundColor, lineWidth: 1.5)
                     )                    .textFieldStyle(.roundedBorder)
-                    .onChange(of: email) { newValue in
-                        isEmailValid = newValue.contains("@") && newValue.contains(".")
-                    }
                     .frame(height: 50)
                     .padding(30)
+                warningVisisble ? Text("Must Enter Valid Email").font(.caption).foregroundColor(Color.red) : Text(" ").font(.caption)
                 Button("Login") {
                     authenticationService.login(email: email, modelContext: modelContext)
                     editTutorFormData = Tutor(name: "", email: email, courses: [], status: .offline, reviews: [], favorites: [], availability: []).dataForForm
                     isPresentingProfileForm.toggle()
                 }
                 .buttonStyle(.bordered)
-                .disabled(!isEmailValid)
+                .disabled(!isValidEmail(email))
                 Spacer()
                 }.fontWeight(.bold)
                 .foregroundColor(backgroundColor)
@@ -123,4 +127,11 @@ func castAvailability(availability: [Availability]) -> [AvailabilityObject] {
     }
     
     return ret
+}
+
+func isValidEmail(_ email: String) -> Bool {
+    let pattern = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+    let regex = try! NSRegularExpression(pattern: pattern, options: [])
+    let range = NSRange(location: 0, length: email.utf16.count)
+    return regex.firstMatch(in: email, options: [], range: range) != nil
 }
