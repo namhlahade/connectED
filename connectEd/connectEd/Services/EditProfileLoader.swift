@@ -13,7 +13,7 @@ class EditProfileLoader {
     }
     
     @MainActor
-    func addUserMeeting(editProfileInput: EditTutorInput) async {
+    func editProfile(editProfileInput: EditTutorInput) async {
         self.state = .loading
         do {
             let response = try await apiClient.editProfile(editProfileInput: editProfileInput)
