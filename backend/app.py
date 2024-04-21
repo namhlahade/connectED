@@ -25,7 +25,7 @@ class User(db.Model):
     email = db.Column(db.Text, unique=True, nullable=False, primary_key=True)
     name = db.Column(db.Text, nullable=False)
     bio = db.Column(db.Text)
-    image = db.Column(db.Text)
+    image = db.Column(db.LargeBinary)
     price = db.Column(db.Float, nullable=False)
 
     #Relationships
@@ -503,6 +503,7 @@ def editProfile():
     newName = data.get("name")
     newBio = data.get("bio")
     price = data.get("price")
+    image = data.get("image")
     new_courses = data.get("courses")
     new_availability = data.get("availability")
 
@@ -512,6 +513,7 @@ def editProfile():
             tutor.bio = newBio
             tutor.name = newName
             tutor.price = price
+            tutor.image = image
         else:
             return jsonify({"error": "Tutor not found"}), 404
 
