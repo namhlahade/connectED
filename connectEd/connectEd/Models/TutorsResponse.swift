@@ -9,10 +9,10 @@ import Foundation
 
 struct TutorInfo: Codable {
     let availabilities: [String: [Int]]
-    let bio: String
+    let bio: String?
     let email: String
     let favorites: [String]
-    let image: Data?
+    let image: String
     let name: String
     let price: Double
     let reviews: [Rev]

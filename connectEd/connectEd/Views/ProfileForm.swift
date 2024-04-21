@@ -45,8 +45,8 @@ struct ProfileForm: View {
                         .frame(maxWidth: 200, maxHeight: 200)
                         .padding()
                 } else {
-                    if data.image == Data() {
-                        Image(systemName: "person.circle")
+                    AsyncImage(url: URL(string: data.image), content: { image in
+                        image
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .overlay(alignment: .bottomTrailing) {
@@ -64,30 +64,32 @@ struct ProfileForm: View {
                                                  }
                                              }
                             }
-                            .frame(maxWidth: 200, maxHeight: 200)
-                            .padding()
-                    } else {
-                        Image(uiImage: UIImage(data: data.image)!)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .overlay(alignment: .bottomTrailing) {
-                                PhotosPicker(selection: $selectedImage,
-                                             matching: .images) {
-                                    Image(systemName: "pencil.circle.fill")
-                                        .symbolRenderingMode(.multicolor)
-                                        .font(.system(size: 30))
-                                        .foregroundColor(.accentColor)
-                                }
-                                             .buttonStyle(.borderless)
-                                             .onChange(of: selectedImage) {
-                                                 if let newItem = selectedImage {
-                                                     loadPhoto(item: newItem)
+                    }, placeholder: {
+                        if data.image != "" {
+                            ProgressView()
+                        } else {
+                            Image(systemName: "person.circle")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .overlay(alignment: .bottomTrailing) {
+                                    PhotosPicker(selection: $selectedImage,
+                                                 matching: .images) {
+                                        Image(systemName: "pencil.circle.fill")
+                                            .symbolRenderingMode(.multicolor)
+                                            .font(.system(size: 30))
+                                            .foregroundColor(.accentColor)
+                                    }
+                                                 .buttonStyle(.borderless)
+                                                 .onChange(of: selectedImage) {
+                                                     if let newItem = selectedImage {
+                                                         loadPhoto(item: newItem)
+                                                     }
                                                  }
-                                             }
-                            }
-                            .frame(maxWidth: 200, maxHeight: 200)
-                            .padding()
-                    }
+                                }
+                                .frame(maxWidth: 200, maxHeight: 200)
+                                .padding()
+                        }
+                    }).frame(maxWidth: 200, maxHeight: 200)
                 }
             }
             .frame(maxWidth: .infinity)
@@ -228,7 +230,7 @@ struct ProfileForm: View {
                     }
                     
                 }
-                                
+                
                 Button(action: {
                     data.availability.append(Availability(day: .sunday, times: [dateGetter("00:00"), dateGetter("00:00")]))
                     data.selectedHours.append([6, 6])
@@ -266,7 +268,6 @@ struct ProfileForm: View {
                 if let data = data {
                     // Update the image data to be displayed
                     imageData = data
-                    self.data.image = data
                 } else {
                     // Handle the case where no image data is found
                     print("Failed to load image data.")
@@ -317,8 +318,8 @@ struct ProfileForm_Previews: PreviewProvider {
      return ProfileForm(data: data)*/
     static var previews: some View {
         NavigationStack {
-//            Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], image: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), status: .online, rating: 3.61, price: 23.99))
-//            UserProfile(count: $count, user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, price: 0, reviews: [], favorites: [], availability: []), loggedOut: $isLoggedOut)
+            //            Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], image: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), status: .online, rating: 3.61, price: 23.99))
+                        UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, price: 0, reviews: [], favorites: [], availability: []), loggedOut: $isLoggedOut)
         }
         
     }

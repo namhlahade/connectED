@@ -15,7 +15,7 @@ struct LoginScreen: View {
     @State var editTutorFormData: Tutor.FormData = Tutor.FormData()
     @State var authorized: Bool = false
     
-    @State var user: Tutor = Tutor(id: UUID(), name: "", email: "", bio: "", courses: [], image: Data(), status: .offline, rating: 0.0, price: 0, reviews: [], favorites: [], availability: [])
+    @State var user: Tutor = Tutor(id: UUID(), name: "", email: "", bio: "", courses: [], image: "", status: .offline, rating: 0.0, price: 0, reviews: [], favorites: [], availability: [])
     let backgroundColor = HexStringToColor(hex: "#3498eb").color
     var body: some View {
         if authorized {
@@ -80,7 +80,7 @@ struct LoginScreen: View {
                                     authorized = true
                                     isPresentingProfileForm.toggle()
                                     Task{
-                                        await addTutorLoader.addTutorInfo(tutor: AddTutorStruct(name: user.name, email: user.email, bio: user.bio ?? "", price: user.price, courses: getCourseStrings(courses: user.courses), availability: castAvailability(availability: user.availability)))
+                                        await addTutorLoader.addTutorInfo(tutor: AddTutorStruct(name: user.name, email: user.email, bio: user.bio ?? "", price: user.price, image: "", courses: getCourseStrings(courses: user.courses), availability: castAvailability(availability: user.availability)))
                                     }
                                 }
                             }

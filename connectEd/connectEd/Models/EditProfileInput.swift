@@ -2,7 +2,7 @@ import Foundation
 
 struct EditTutorInput: Codable {
     var tutorEmail: String
-    var image: Data?
+    var image: String
     var name: String
     var bio: String
     var courses: [String]
@@ -21,9 +21,9 @@ struct EditTutorInput: Codable {
         try container.encode(courses, forKey: .courses)
         try container.encode(price, forKey: .price)
         try container.encode(availability, forKey: .availability)
-        if let imageData = image {
+        /*if let imageData = image {
             let base64String = imageData.base64EncodedString()
             try container.encode(base64String, forKey: .image)
-        }
+        }*/
     }
 }
