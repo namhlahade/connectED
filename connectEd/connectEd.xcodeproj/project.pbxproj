@@ -61,6 +61,9 @@
 		4CA470C32BD47FEC0046FE67 /* EditProfileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA470C22BD47FEC0046FE67 /* EditProfileLoader.swift */; };
 		4CE71C5B2BCA14BA003043AE /* AITutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE71C5A2BCA14BA003043AE /* AITutor.swift */; };
 		4CE71C5D2BCA1739003043AE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE71C5C2BCA1739003043AE /* Message.swift */; };
+		4CF93CCD2BD558F80057A35B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF93CCC2BD558F80057A35B /* GoogleService-Info.plist */; };
+		4CF93CD02BD55A060057A35B /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 4CF93CCF2BD55A060057A35B /* FirebaseFirestore */; };
+		4CF93CD22BD55A060057A35B /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 4CF93CD12BD55A060057A35B /* FirebaseStorage */; };
 		5B097E782BBE7DE40074CFB4 /* Tutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B097E772BBE7DE40074CFB4 /* Tutor.swift */; };
 		5B097E7A2BBE7F7D0074CFB4 /* TutorRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B097E792BBE7F7D0074CFB4 /* TutorRow.swift */; };
 		5B097E7C2BC4E20C0074CFB4 /* PreviewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B097E7B2BC4E20C0074CFB4 /* PreviewContainer.swift */; };
@@ -137,6 +140,7 @@
 		4CA470C22BD47FEC0046FE67 /* EditProfileLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileLoader.swift; sourceTree = "<group>"; };
 		4CE71C5A2BCA14BA003043AE /* AITutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AITutor.swift; sourceTree = "<group>"; };
 		4CE71C5C2BCA1739003043AE /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		4CF93CCC2BD558F80057A35B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5B097E772BBE7DE40074CFB4 /* Tutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutor.swift; sourceTree = "<group>"; };
 		5B097E792BBE7F7D0074CFB4 /* TutorRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorRow.swift; sourceTree = "<group>"; };
 		5B097E7B2BC4E20C0074CFB4 /* PreviewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContainer.swift; sourceTree = "<group>"; };
@@ -165,6 +169,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C2804222BCDDAEC00312524 /* OpenAI in Frameworks */,
+				4CF93CD02BD55A060057A35B /* FirebaseFirestore in Frameworks */,
+				4CF93CD22BD55A060057A35B /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,6 +328,7 @@
 		977FA7A82BB1144A006CF4C2 /* connectEd */ = {
 			isa = PBXGroup;
 			children = (
+				4CF93CCC2BD558F80057A35B /* GoogleService-Info.plist */,
 				45F533302BD207730009ED9E /* Resources */,
 				4C2804232BCDDEFA00312524 /* API */,
 				453FADB92BCA1C9C00A63F7B /* Info.plist */,
@@ -373,6 +380,8 @@
 			name = connectEd;
 			packageProductDependencies = (
 				4C2804212BCDDAEC00312524 /* OpenAI */,
+				4CF93CCF2BD55A060057A35B /* FirebaseFirestore */,
+				4CF93CD12BD55A060057A35B /* FirebaseStorage */,
 			);
 			productName = connectEd;
 			productReference = 977FA7A62BB1144A006CF4C2 /* connectEd.app */;
@@ -404,6 +413,7 @@
 			mainGroup = 977FA79D2BB1144A006CF4C2;
 			packageReferences = (
 				4C2804202BCDDAEC00312524 /* XCRemoteSwiftPackageReference "OpenAI" */,
+				4CF93CCE2BD55A050057A35B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 977FA7A72BB1144A006CF4C2 /* Products */;
 			projectDirPath = "";
@@ -420,6 +430,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				977FA7B12BB1144C006CF4C2 /* Preview Assets.xcassets in Resources */,
+				4CF93CCD2BD558F80057A35B /* GoogleService-Info.plist in Resources */,
 				45F533332BD207DE0009ED9E /* korinna-regular-bt.ttf in Resources */,
 				977FA7AE2BB1144C006CF4C2 /* Assets.xcassets in Resources */,
 			);
@@ -723,6 +734,14 @@
 				minimumVersion = 0.2.7;
 			};
 		};
+		4CF93CCE2BD55A050057A35B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.24.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -730,6 +749,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4C2804202BCDDAEC00312524 /* XCRemoteSwiftPackageReference "OpenAI" */;
 			productName = OpenAI;
+		};
+		4CF93CCF2BD55A060057A35B /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4CF93CCE2BD55A050057A35B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		4CF93CD12BD55A060057A35B /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4CF93CCE2BD55A050057A35B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

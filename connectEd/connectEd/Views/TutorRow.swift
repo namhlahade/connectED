@@ -26,32 +26,32 @@ struct TutorRow: View {
     @State var tutor: Tutor
     var body: some View {
         HStack (alignment: .center) {
-            if (tutor.image == Data() || tutor.image == nil) {
-                Image(systemName: "person.circle")
+            AsyncImage(url: URL(string: tutor.image), content: { image in
+                image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 65, maxHeight: 65)
                     .overlay(alignment: .bottomTrailing) {
                         Image(systemName: "circle.fill")
                             .resizable()
                             .frame(maxWidth: 15, maxHeight: 15)
                             .foregroundStyle(tutor.status == .online ? Color.green : Color.red)
                     }
-                
-                
-            }
-            else {
-                Image(uiImage: UIImage(data: tutor.image!)!)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 65, maxHeight: 65)
-                    .overlay(alignment: .bottomTrailing) {
-                        Image(systemName: "circle.fill")
-                            .resizable()
-                            .frame(maxWidth: 15, maxHeight: 15)
-                            .foregroundStyle(tutor.status == .online ? Color.green : Color.red)
-                    }
-            }
+            }, placeholder: {
+                if tutor.image != "" {
+                    ProgressView()
+                } else {
+                    Image(systemName: "person.circle")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .overlay(alignment: .bottomTrailing) {
+                            Image(systemName: "circle.fill")
+                                .resizable()
+                                .frame(maxWidth: 15, maxHeight: 15)
+                                .foregroundStyle(tutor.status == .online ? Color.green : Color.red)
+                        }
+                }
+            })
+            .frame(maxWidth: 65, maxHeight: 65)
             VStack (alignment: .leading) {
                 HStack {
                     Text(tutor.name).bold().font(.title2)

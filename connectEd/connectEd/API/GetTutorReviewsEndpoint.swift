@@ -19,7 +19,6 @@ class GetTutorReviewAPI: APIClient {
         let encoder = JSONEncoder()
         let jsonData = try encoder.encode(email)
         let response: ReviewResponse = try await performPostRequest(url: url, data: jsonData)
-        print(response)
         return response
     }
 }

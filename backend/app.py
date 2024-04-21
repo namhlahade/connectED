@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import time
 from datetime import datetime
 import os
+import base64
 
 app = Flask(__name__)
 
@@ -25,7 +26,7 @@ class User(db.Model):
     email = db.Column(db.Text, unique=True, nullable=False, primary_key=True)
     name = db.Column(db.Text, nullable=False)
     bio = db.Column(db.Text)
-    image = db.Column(db.LargeBinary)
+    image = db.Column(db.Text)
     price = db.Column(db.Float, nullable=False)
 
     #Relationships
@@ -91,11 +92,15 @@ def getTutors():
             reviews = get_reviews(user.email)
             favorites = get_favorites(user.email)
 
+            imageUrl = user.image
+            if not imageUrl:
+                imageUrl = ""
+
             user_data = {
                 'email': user.email,
                 'name': user.name,
                 'bio': user.bio,
-                'image': user.image,
+                'image': imageUrl,
                 'price': user.price,
                 'availabilities': availability_dict,
                 'reviews': reviews,
@@ -331,7 +336,7 @@ def addTutorReview():
     review_text = data.get("review")
     tutor_email = data.get("tutorEmail")
 
-    if not all([rating, clarity, prep, review_text, tutor_email]):
+    if not all([rating, clarity, prep, tutor_email]):
         return jsonify({'error': 'Missing one or more required fields'}), 400
 
     try:
@@ -503,37 +508,35 @@ def editProfile():
     newName = data.get("name")
     newBio = data.get("bio")
     price = data.get("price")
-    image = data.get("image")
+    image_data = data.get("image")
     new_courses = data.get("courses")
     new_availability = data.get("availability")
 
-    print(price)
-    print(image)
+    print(image_data)
 
     try:
         tutor = User.query.filter_by(email=tutor_email).first()
         if tutor:
-            tutor.bio = newBio
             tutor.name = newName
+            tutor.bio = newBio
             tutor.price = price
-            tutor.image = image
+            if image_data:
+                tutor.image = base64.b64decode(image_data)  # Decode Base64 to binary
         else:
             return jsonify({"error": "Tutor not found"}), 404
 
         TutorClass.query.filter_by(email=tutor_email).delete()
         for course_name in new_courses:
-            new_course = TutorClass(email=tutor_email, className=course_name)
-            db.session.add(new_course)
+            db.session.add(TutorClass(email=tutor_email, className=course_name))
         
         Availability.query.filter_by(tutor_email=tutor_email).delete()
         for avail in new_availability:
-            new_avail = Availability(
+            db.session.add(Availability(
                 tutor_email=tutor_email,
                 day_of_week=avail["day_of_week"],
                 start_time=datetime.strptime(avail["start_time"], "%H:%M").time(),
                 end_time=datetime.strptime(avail["end_time"], "%H:%M").time()
-            )
-            db.session.add(new_avail)
+            ))
 
         db.session.commit()
         return jsonify({"message": "Profile updated successfully"}), 200

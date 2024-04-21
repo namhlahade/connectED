@@ -16,7 +16,7 @@ class Tutor: Identifiable, Codable {
     var email: String
     var bio: String?
     var courses: [Course]
-    var image: Data?
+    var image: String
     var status: Status // computed in the frontend
     var rating: Double // computed in the frontend
     var price: Double
@@ -25,7 +25,7 @@ class Tutor: Identifiable, Codable {
     var availability: [Availability]
     
 
-    init(id: UUID = UUID(), name: String, email: String, bio: String? = nil, courses: [Course], image: Data? = nil, status: Status, rating: Double = 0.0, price: Double = 0.0, reviews: [Review], favorites: [String], availability: [Availability]) {
+    init(id: UUID = UUID(), name: String, email: String, bio: String? = nil, courses: [Course], image: String = "", status: Status, rating: Double = 0.0, price: Double = 0.0, reviews: [Review], favorites: [String], availability: [Availability]) {
         self.id = id
         self.name = name
         self.email = email
@@ -56,7 +56,7 @@ extension Tutor {
         var email: String = ""
         var bio: String = ""
         var courses: [Course] = []
-        var image: Data = Data()
+        var image: String = ""
         var price: Double = 0.0
         var availability: [Availability] = []
         var selectedHours: [[Int]] = []
@@ -70,7 +70,7 @@ extension Tutor {
             email: email,
             bio: bio ?? "",
             courses: courses,
-            image: image ?? Data(),
+            image: image,
             price: price,
             availability: availability,
             selectedHours: Tutor.getSelectedHours(availability: availability),
@@ -127,7 +127,6 @@ extension Tutor {
         tutor.courses = formData.courses
         tutor.image = formData.image
         tutor.price = formData.price
-        print("Current Price: \(tutor.price)")
         tutor.availability = getAvailability(existingAvailability: formData.availability, selectedHours: formData.selectedHours, areAM: formData.areAM)
     }
 }

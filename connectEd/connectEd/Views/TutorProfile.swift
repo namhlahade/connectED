@@ -25,21 +25,20 @@ struct TutorProfile: View {
         Form {
             
             VStack (alignment: .center) {
-                if (tutor.image == Data() || tutor.image == nil) {
-                    Image(systemName: "person.circle")
+                AsyncImage(url: URL(string: user.image), content: { image in
+                    image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 200, maxHeight: 200)
-                        .padding()
-                    
-                }
-                else {
-                    Image(uiImage: UIImage(data: tutor.image!)!)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 200, maxHeight: 200)
-                        .padding()
-                }
+                }, placeholder: {
+                    if user.image != "" {
+                        ProgressView()
+                    } else {
+                        Image(systemName: "person.circle")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    }
+                })
+                .frame(maxWidth: 200, maxHeight: 200).padding()
                 
                 HStack (alignment: .center) {
                     Image(systemName: "circle.fill")
