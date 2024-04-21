@@ -295,6 +295,12 @@ func dateGetter(_ time: String) -> Date {
     return formatter.date(from: time)!
 }
 
+func stringDateGetter(_ time: Date) -> String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "HH:mm"
+    return formatter.string(from: time)
+}
+
 struct ProfileForm_Previews: PreviewProvider {
     @State static var isLoggedOut = false
     /*let data = Binding.constant(Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false).dataForForm)
