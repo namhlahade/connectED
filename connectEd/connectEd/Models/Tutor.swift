@@ -61,6 +61,7 @@ extension Tutor {
         var availability: [Availability] = []
         var selectedHours: [[Int]] = []
         var areAM: [[Bool]] = []
+        var imageData: Data? = Data()
     }
     
     var dataForForm: FormData {
@@ -74,7 +75,8 @@ extension Tutor {
             price: price,
             availability: availability,
             selectedHours: Tutor.getSelectedHours(availability: availability),
-            areAM: Tutor.getAreAM(availability: availability)
+            areAM: Tutor.getAreAM(availability: availability),
+            imageData: Data()
         )
     }
     

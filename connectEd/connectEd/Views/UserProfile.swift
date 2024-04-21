@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Symbols
+import FirebaseStorage
 
 struct ProfileView: View {
     let email: String
@@ -55,6 +56,7 @@ struct UserProfile: View {
                         .aspectRatio(contentMode: .fit)
                 }, placeholder: {
                     if user.image != "" {
+                        Text(user.image)
                         ProgressView()
                     } else {
                         Image(systemName: "person.circle")
@@ -128,7 +130,6 @@ struct UserProfile: View {
                             Button("Cancel") {
                                 isPresentingEditForm.toggle()
                             }
-                            
                         }
                         ToolbarItem(placement: .principal) {
                             Text("Edit Profile").fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
@@ -143,13 +144,19 @@ struct UserProfile: View {
                                 Task {
                                     await editProfileLoader.editProfile(editProfileInput: EditTutorInput(tutorEmail: user.email, image: user.image, name: user.name, bio: user.bio ?? "", courses: getCourseStrings(courses: user.courses), price: user.price, availability: castAvailability(availability: user.availability)))
                                 }
+                                
+
                             }
                         }
                     }
             }
         }
+        
     }
+
 }
+
+
 
 func getCourselist(courses: [Course]) -> String {
     if courses.count == 0 {
@@ -216,8 +223,8 @@ struct UserProfile_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationStack {
-         UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, price: 0, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], favorites: [], availability: []), loggedOut: $isLoggedOut)
-         }
+            UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, price: 0, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], favorites: [], availability: []), loggedOut: $isLoggedOut)
+        }
         
     }
 }

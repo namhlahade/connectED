@@ -7,13 +7,14 @@
 
 import SwiftUI
 import PhotosUI
+import FirebaseStorage
 
 
 struct ProfileForm: View {
     
     
     @State var selectedImage: PhotosPickerItem?
-    @State private var imageData: Data? = nil
+    //@State private var imageData: Data? = nil
     
     
     @Binding var data: Tutor.FormData
@@ -23,7 +24,7 @@ struct ProfileForm: View {
         Form {
             
             VStack (alignment: .leading) {
-                if let imageData = imageData, let uiImage = UIImage(data: imageData) {
+                if let imageData = data.imageData, let uiImage = UIImage(data: data.imageData!) {
                     Image(uiImage: uiImage)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -37,8 +38,9 @@ struct ProfileForm: View {
                             }
                                          .buttonStyle(.borderless)
                                          .onChange(of: selectedImage) {
+                                             print("print 1: \(data.imageData)")
                                              if let newItem = selectedImage {
-                                                 loadPhoto(item: newItem)
+                                                 loadPhoto(item: newItem, imageToUpload: uiImage)
                                              }
                                          }
                         }
@@ -59,8 +61,9 @@ struct ProfileForm: View {
                                 }
                                              .buttonStyle(.borderless)
                                              .onChange(of: selectedImage) {
+                                                 print("print 2: \(data.imageData)")
                                                  if let newItem = selectedImage {
-                                                     loadPhoto(item: newItem)
+                                                     loadPhoto(item: newItem, imageToUpload: UIImage(data: data.imageData!))
                                                  }
                                              }
                             }
@@ -81,8 +84,9 @@ struct ProfileForm: View {
                                     }
                                                  .buttonStyle(.borderless)
                                                  .onChange(of: selectedImage) {
+                                                     print("print 3: \(data.imageData)")
                                                      if let newItem = selectedImage {
-                                                         loadPhoto(item: newItem)
+                                                         loadPhoto(item: newItem, imageToUpload: UIImage(data: data.imageData!))
                                                      }
                                                  }
                                 }
@@ -260,14 +264,36 @@ struct ProfileForm: View {
         }
     }
     
-    private func loadPhoto(item: PhotosPickerItem) {
+    private func loadPhoto(item: PhotosPickerItem, imageToUpload: UIImage?) {
+        print("loadPhoto is getting hit")
         // Request the image data
         item.loadTransferable(type: Data.self) { result in
             switch result {
-            case .success(let data):
-                if let data = data {
+            case .success(let data_):
+                if let data_ = data_ {
                     // Update the image data to be displayed
-                    imageData = data
+                    data.imageData = data_
+                    print("cool beans")
+                    print("Hello dude")
+                    if imageToUpload != nil {
+                        let storageRef = Storage.storage().reference()
+                        let imageData_ = imageToUpload!.jpegData(compressionQuality: 0.8)
+                        
+                        guard imageData_ != nil else {
+                            return
+                        }
+                        let path = "Images/\(UUID().uuidString).jpg"
+                        print("Image Path: \(path)")
+                        let fileRef = storageRef.child(path)
+                        let uploadTask = fileRef.putData(imageData_!, metadata: nil) {metadata, error in
+                            if error == nil && metadata != nil {
+                                
+                            }
+                        }
+                    }
+                    else {
+                        print("Image was nil")
+                    }
                 } else {
                     // Handle the case where no image data is found
                     print("Failed to load image data.")
@@ -276,6 +302,26 @@ struct ProfileForm: View {
                 // Handle errors
                 print("Error loading image: \(error.localizedDescription)")
             }
+        }
+    }
+    
+    
+}
+
+func uploadPhoto(imageToUpload: UIImage) -> Void {
+    print("Hello dude")
+    let storageRef = Storage.storage().reference()
+    let imageData_ = imageToUpload.jpegData(compressionQuality: 0.8)
+    
+    guard imageData_ != nil else {
+        return
+    }
+    let path = "Images/\(UUID().uuidString).jpg"
+    print(path)
+    let fileRef = storageRef.child(path)
+    let uploadTask = fileRef.putData(imageData_!, metadata: nil) {metadata, error in
+        if error == nil && metadata != nil {
+            
         }
     }
 }
