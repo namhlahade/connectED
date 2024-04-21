@@ -14,7 +14,7 @@ struct LoginScreen: View {
     @State var editTutorFormData: Tutor.FormData = Tutor.FormData()
     @State var authorized: Bool = false
     
-    @State var user: Tutor = Tutor(id: UUID(), name: "", email: "", bio: "", courses: [], image: Data(), status: .offline, rating: 0.0, price: 0, reviews: [], favorites: [], availability: [])
+    @State var user: Tutor = Tutor(id: UUID(), name: "", email: "", bio: "", courses: [], image: Data(), status: .offline, rating: 0.0, price: 3, reviews: [], favorites: [], availability: [])
     
     var body: some View {
         if authorized {

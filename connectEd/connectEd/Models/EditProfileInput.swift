@@ -5,5 +5,6 @@ struct EditTutorInput: Codable {
     var name: String
     var bio: String
     var courses: [String]
+    var price: Double
     var availability: [AvailabilityObject]
 }
