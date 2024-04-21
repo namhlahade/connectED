@@ -12,7 +12,7 @@ struct ParentSearch: View {
             case .loading: ProgressView()
             case .failed(let error): Text("Error \(error.localizedDescription)")
             case .success(let allTutorInfo):
-                Search(user: user, tutors: allTutorInfo.getTutors())
+                Search(user: user, tutors: allTutorInfo.getTutors().filter {$0.email != user.email})
             }
         }
         .task { await getTutorLoader.getAllTutorInfo() }
