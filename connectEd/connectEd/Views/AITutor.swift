@@ -10,11 +10,12 @@ import OpenAI
 
 struct MessageCell: View {
     let message: Message
+    let backgroundColor = HexStringToColor(hex: "#3498eb").color
     var body: some View {
         Text(message.messageContent)
                     .padding(10)
                     .foregroundColor(message.isCurrentUser ? Color.white : Color.black)
-                    .background(message.isCurrentUser ? Color.purple : Color(UIColor.systemGray6 ))
+                    .background(message.isCurrentUser ? backgroundColor : Color(UIColor.systemGray6 ))
                     .cornerRadius(10)
 
     }
