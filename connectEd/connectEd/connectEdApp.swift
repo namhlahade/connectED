@@ -8,7 +8,6 @@
 import SwiftUI
 import SwiftData
 import Firebase
-
 @main
 struct connectEdApp: App {
     

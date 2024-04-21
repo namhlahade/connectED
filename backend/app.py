@@ -92,11 +92,15 @@ def getTutors():
             reviews = get_reviews(user.email)
             favorites = get_favorites(user.email)
 
+            imageUrl = user.image
+            if not imageUrl:
+                imageUrl = ""
+
             user_data = {
                 'email': user.email,
                 'name': user.name,
                 'bio': user.bio,
-                'image': user.image,
+                'image': imageUrl,
                 'price': user.price,
                 'availabilities': availability_dict,
                 'reviews': reviews,
