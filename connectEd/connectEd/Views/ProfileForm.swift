@@ -296,9 +296,18 @@ func dateGetter(_ time: String) -> Date {
 }
 
 func stringDateGetter(_ time: Date) -> String {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "HH:mm"
-    return formatter.string(from: time)
+    // Static instance of DateFormatter to improve performance
+    struct Static {
+        static let formatter: DateFormatter = {
+            let fmt = DateFormatter()
+            fmt.dateFormat = "HH:mm"
+            fmt.locale = Locale(identifier: "en_US_POSIX") // Use a POSIX locale for fixed formats
+            fmt.timeZone = TimeZone(identifier: "America/New_York") // Optional: Set to GMT or another specific timezone if needed
+            return fmt
+        }()
+    }
+    
+    return Static.formatter.string(from: time)
 }
 
 struct ProfileForm_Previews: PreviewProvider {

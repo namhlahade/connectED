@@ -52,8 +52,7 @@ struct LoginScreen: View {
                                     authorized = true
                                     isPresentingProfileForm.toggle()
                                     Task{
-                                        await addTutorLoader.addTutorInfo(tutor: AddTutorStruct(name: editTutorFormData.name, email: editTutorFormData.email, bio: editTutorFormData.bio, price: editTutorFormData.price, image: editTutorFormData.image, courses: getCourseStrings(courses: editTutorFormData.courses)))
-                                        
+                                        await addTutorLoader.addTutorInfo(tutor: AddTutorStruct(name: editTutorFormData.name, email: editTutorFormData.email, bio: editTutorFormData.bio, price: editTutorFormData.price, courses: getCourseStrings(courses: editTutorFormData.courses), availability: castAvailability(availability: editTutorFormData.availability)))
                                     }
                                 }
                             }
@@ -66,5 +65,18 @@ struct LoginScreen: View {
     
     func handleFailedAppleAuthorization(_ error: Error) {
         print("Authorization Failed \(error)")
+    }
+    
+    func castAvailability(availability: [Availability]) -> [AvailabilityObject] {
+        var ret: [AvailabilityObject] = []
+        
+        
+        for avail in availability {
+            ret.append(AvailabilityObject(day_of_week: Availability.Day.allCases.firstIndex(of: avail.day)!, start_time: stringDateGetter(avail.times[0]), end_time: stringDateGetter(avail.times[1])))
+            print(stringDateGetter(avail.times[0]))
+            print(stringDateGetter(avail.times[1]))
+        }
+        
+        return ret
     }
 }

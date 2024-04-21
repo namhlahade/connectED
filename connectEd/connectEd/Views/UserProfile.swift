@@ -164,9 +164,9 @@ func getCourseStrings(courses: [Course]) -> [String] {
     for i in courses {
         courseList.append("\(i.subject.rawValue.uppercased()) \(i.code)")
     }
-    print(courseList)
     return courseList
 }
+
 
 func printAvailability(availability: [Availability]) -> String {
     if availability.count == 0 {
