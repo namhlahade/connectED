@@ -8,6 +8,7 @@ struct LoginScreen: View {
     @Environment(FakeAuthenticationService.self) var authenticationService
     @Environment(\.modelContext) private var modelContext
     @State var email: String = ""
+    @State private var isEmailValid = false
     @State var validationStatus: Bool = false
     @State var loginError: String = ""
     @State var isPresentingProfileForm: Bool = false
@@ -15,28 +16,50 @@ struct LoginScreen: View {
     @State var authorized: Bool = false
     
     @State var user: Tutor = Tutor(id: UUID(), name: "", email: "", bio: "", courses: [], image: Data(), status: .offline, rating: 0.0, price: 0, reviews: [], favorites: [], availability: [])
-    
+    let backgroundColor = HexStringToColor(hex: "#3498eb").color
     var body: some View {
         if authorized {
             TabContainer(tutors: Tutor.previewData, email: $email)
         }
         else {
-            VStack {
-                Spacer()
-                TextFieldWithLabel(label: "Email", hint: "Make sure to include an @ in your email!", text: $email, validationStatus: $validationStatus, validationMessage: "You currently do not have an @ sign in your email") { email.contains("@") }
+        VStack {
+            ScrollView {
+                Text("Welcome To ConnectED!")
+                                    .font(.largeTitle)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(backgroundColor)
+                                    .padding(.top, 50)
+                TextField("Enter Email", text: $email)
+                    .multilineTextAlignment(.center)
+                    .background(Color.clear)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(backgroundColor, lineWidth: 1.5)
+                    )                    .textFieldStyle(.roundedBorder)
+                    .onChange(of: email) { newValue in
+                        isEmailValid = newValue.contains("@") && newValue.contains(".")
+                    }
+                    .frame(height: 50)
+                    .padding(30)
                 Button("Login") {
                     authenticationService.login(email: email, modelContext: modelContext)
                     editTutorFormData = Tutor(name: "", email: email, courses: [], status: .offline, reviews: [], favorites: [], availability: []).dataForForm
                     isPresentingProfileForm.toggle()
                 }
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(.bordered)
+                .disabled(!isEmailValid)
                 Spacer()
+                }.fontWeight(.bold)
+                .foregroundColor(backgroundColor)
+                .padding(30)
+                .buttonStyle(.bordered).frame(maxWidth: .infinity)
                 if let errorMessage = authenticationService.errorMessage {
                     Text(errorMessage)
                         .font(.headline)
-                        .foregroundStyle(.red)
+                        .foregroundStyle(.red).frame(maxWidth: .infinity, alignment: .center)
                 }
-            }
+            }.background(Color("#3498eb"))
+                .edgesIgnoringSafeArea(.all)
             .navigationTitle("Login")
             .padding().sheet(isPresented: $isPresentingProfileForm) {
                 NavigationStack {

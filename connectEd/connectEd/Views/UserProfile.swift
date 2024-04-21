@@ -109,10 +109,7 @@ struct UserProfile: View {
                     authenticationService.logout()
                     loggedOut = true
                 }) {
-                    HStack {
-                        Image(systemName: "rectangle.portrait.and.arrow.left")
-                            .font(.system(size: 18))
-                    }
+                    Text("Log Out")
                     
                 }
             }
