@@ -25,10 +25,11 @@ struct MessageView: View {
     var body: some View {
         HStack(alignment: .bottom, spacing: 10) {
             if !currentMessage.isCurrentUser {
-                Image(systemName: "person.circle.fill")
+                Image("CipherProfilePic")
                     .resizable()
                     .frame(width: 40, height: 40, alignment: .center)
                     .cornerRadius(20)
+                
             } else {
                 Spacer()
             }
