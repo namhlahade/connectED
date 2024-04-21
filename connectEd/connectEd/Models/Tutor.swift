@@ -23,9 +23,10 @@ class Tutor: Identifiable, Codable {
     var reviews: [Review]
     var favorites: [String]
     var availability: [Availability]
+    var imageData: Data?
     
 
-    init(id: UUID = UUID(), name: String, email: String, bio: String? = nil, courses: [Course], image: String = "", status: Status, rating: Double = 0.0, price: Double = 0.0, reviews: [Review], favorites: [String], availability: [Availability]) {
+    init(id: UUID = UUID(), name: String, email: String, bio: String? = nil, courses: [Course], image: String = "", status: Status, rating: Double = 0.0, price: Double = 0.0, reviews: [Review], favorites: [String], availability: [Availability], imageData: Data? = nil) {
         self.id = id
         self.name = name
         self.email = email
@@ -38,6 +39,7 @@ class Tutor: Identifiable, Codable {
         self.reviews = reviews
         self.favorites = favorites
         self.availability = availability
+        self.imageData = imageData
     }
     
 }
@@ -61,6 +63,7 @@ extension Tutor {
         var availability: [Availability] = []
         var selectedHours: [[Int]] = []
         var areAM: [[Bool]] = []
+        var imageData: Data? = Data()
     }
     
     var dataForForm: FormData {
@@ -74,7 +77,8 @@ extension Tutor {
             price: price,
             availability: availability,
             selectedHours: Tutor.getSelectedHours(availability: availability),
-            areAM: Tutor.getAreAM(availability: availability)
+            areAM: Tutor.getAreAM(availability: availability),
+            imageData: imageData ?? Data()
         )
     }
     
@@ -128,6 +132,7 @@ extension Tutor {
         tutor.image = formData.image
         tutor.price = formData.price
         tutor.availability = getAvailability(existingAvailability: formData.availability, selectedHours: formData.selectedHours, areAM: formData.areAM)
+        tutor.imageData = formData.imageData
     }
 }
 

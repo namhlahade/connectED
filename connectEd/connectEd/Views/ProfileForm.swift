@@ -13,7 +13,7 @@ struct ProfileForm: View {
     
     
     @State var selectedImage: PhotosPickerItem?
-    @State private var imageData: Data? = nil
+    //@State private var imageData: Data? = nil
     
     
     @Binding var data: Tutor.FormData
@@ -23,8 +23,9 @@ struct ProfileForm: View {
         Form {
             
             VStack (alignment: .leading) {
-                if let imageData = imageData, let uiImage = UIImage(data: imageData) {
-                    Image(uiImage: uiImage)
+                // if ImageData is not nil/empty (have already selected a photo), then display what is in ImageData
+                if data.imageData != Data() && data.imageData != nil {
+                    Image(uiImage: UIImage(data: data.imageData!)!)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .overlay(alignment: .bottomTrailing) {
@@ -45,6 +46,7 @@ struct ProfileForm: View {
                         .frame(maxWidth: 200, maxHeight: 200)
                         .padding()
                 } else {
+                    // Else: user hasn't selected a photo already, display their chosen profile picture (or the default person.circle if they have no profile pic [data.image == ""])
                     AsyncImage(url: URL(string: data.image), content: { image in
                         image
                             .resizable()
@@ -264,10 +266,10 @@ struct ProfileForm: View {
         // Request the image data
         item.loadTransferable(type: Data.self) { result in
             switch result {
-            case .success(let data):
-                if let data = data {
+            case .success(let success_data):
+                if let data_ = success_data {
                     // Update the image data to be displayed
-                    imageData = data
+                    data.imageData = data_
                 } else {
                     // Handle the case where no image data is found
                     print("Failed to load image data.")
