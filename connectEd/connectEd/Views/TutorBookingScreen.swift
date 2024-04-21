@@ -20,7 +20,7 @@ struct TutorBookingScreen: View {
     
     var body: some View {
         Form {
-        
+            
             Section(header: Text("Select a Course:")) {
                 if tutor.courses.isEmpty {
                     Text("No available courses to select")
@@ -35,7 +35,7 @@ struct TutorBookingScreen: View {
                 }
             }
             
-//            ProfileSection(title: "Meeting Times", sectionLabels: ["\(tutor.name)'s Availability"], sectionData: [tutor.availability.count == 0 ? "No availability provided" : printAvailability(availability: tutor.availability)])
+            //            ProfileSection(title: "Meeting Times", sectionLabels: ["\(tutor.name)'s Availability"], sectionData: [tutor.availability.count == 0 ? "No availability provided" : printAvailability(availability: tutor.availability)])
             
             Section(header: Text("Pick a Time")) {
                 Text("\(tutor.name)'s Availability").bold().font(.title3)
@@ -61,12 +61,13 @@ struct TutorBookingScreen: View {
             }
             
             Button(action: {
-                self.submit()
+                let meetingTimeString = convertDateToString(selectedMeetingTime: selectedMeetingTime)
+                self.submit(email: tutor.email, date: meetingTimeString[0], startTime: meetingTimeString[1], endTime: meetingTimeString[2])
             }) {
                 Text("Submit").frame(maxWidth: .infinity, alignment: .center)
                 
             }
-            .disabled(selectedCourse.isEmpty) /*|| selectedLocation == nil)*/
+            //            .disabled(selectedCourse.isEmpty) /*|| selectedLocation == nil)*/
         }
         .navigationTitle("Meet with \(tutor.name)!").navigationBarTitleDisplayMode(.inline).frame(alignment: .center)
         .sheet(isPresented: $isPresentingNavigator){
@@ -77,22 +78,37 @@ struct TutorBookingScreen: View {
         }
     }
     
-    struct AddMeetingInput: Codable {
-        let user_email: String
-        let meeting_date: String
-        let start_time: String
-        let end_time: String
+    private func convertDateToString(selectedMeetingTime: String) -> [String] {
+        let meetingString = selectedMeetingTime.split(separator: " ")
+        let date = meetingString[0]
+        let startTimeString = meetingString[1].split(separator: ":")
+        let endTimeString = meetingString[4].split(separator: ":")
+        var startTime = String(meetingString[1])
+        var endTime = String(meetingString[4])
+        if meetingString[2] == "PM" && startTimeString[0] != "12" {
+            let hour = (Int(startTimeString[0]) ?? 0) + 12
+            startTime = "\(hour):\(startTimeString[1])"
+        }
+        else if startTimeString[0] == "12"{
+            startTime = "0:\(startTimeString[1])"
+        }
+        if meetingString[5] == "PM" && endTimeString[0] != "12" {
+            let hour = (Int(endTimeString[0]) ?? 0) + 12
+            endTime = "\(hour):\(endTimeString[1])"
+        }
+        else if endTimeString[0] == "12"{
+            endTime = "0:\(endTimeString[1])"
+        }
+        return [String(date), startTime, endTime]
     }
     
-    private func submit() {
-//        var email: String
-//        var date: String
-//        var start_time: String
-//        var end_time: String
-//        // TODO: submit meeting form
-//        Task {
-//            await addMeetingLoader.addUserMeeting(addMeetingInput: AddMeetingInput())
-//        }
+    private func submit(email: String, date: String, startTime: String, endTime: String) {
+//        print(date)
+//        print(startTime)
+//        print(endTime)
+        Task {
+            await addMeetingLoader.addUserMeeting(addMeetingInput: AddMeetingInput(user_email: email, meeting_date: String(date), start_time: startTime, end_time: endTime))
+        }
     }
     
     func dateDisplay(for event: EKEvent) -> String {
