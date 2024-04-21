@@ -1,9 +1,6 @@
 import Foundation
 import SwiftData
 
-// This is not how authentication is done in the real world!
-// The code below relies on you having a User model
-
 @Observable
 class FakeAuthenticationService {
     var currentUser: Email?

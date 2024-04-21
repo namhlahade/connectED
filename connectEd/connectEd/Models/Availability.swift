@@ -25,12 +25,12 @@ class Availability: Identifiable, Codable {
 extension Availability {
     enum Day: String, Codable, CaseIterable, Identifiable {
         var id: Self { self }
-        case sunday
         case monday
         case tuesday
         case wednesday
         case thursday
         case friday
         case saturday
+        case sunday
     }
 }
