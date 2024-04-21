@@ -65,7 +65,7 @@ struct TutorRow: View {
                     Text(tutor.rating == 0 ? "--/5.0" : String(format: "%.1f/5.0", tutor.rating)).foregroundStyle(Color.gray)
                 }
                 HStack {
-                    Text(String(format: "$%.2f / hr", tutor.price))
+                    Text(String(format: "$%.2f /hr", tutor.price))
                 }
                 
                 HStack {

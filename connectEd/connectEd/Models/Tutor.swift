@@ -115,8 +115,8 @@ extension Tutor {
     }
     
     static func create(from formData: FormData) {
-        var avail: [Availability] = getAvailability(existingAvailability: formData.availability, selectedHours: formData.selectedHours, areAM: formData.areAM)
-        let tutor = Tutor(name: formData.name, email: formData.email, courses: formData.courses, status: .online, price: 12.0, reviews: [], favorites: [], availability: avail)
+        let avail: [Availability] = getAvailability(existingAvailability: formData.availability, selectedHours: formData.selectedHours, areAM: formData.areAM)
+        let tutor = Tutor(name: formData.name, email: formData.email, courses: formData.courses, status: .online, price: formData.price, reviews: [], favorites: [], availability: avail)
         Tutor.update(tutor, from: formData)
     }
     
@@ -127,6 +127,7 @@ extension Tutor {
         tutor.courses = formData.courses
         tutor.image = formData.image
         tutor.price = formData.price
+        print("Current Price: \(tutor.price)")
         tutor.availability = getAvailability(existingAvailability: formData.availability, selectedHours: formData.selectedHours, areAM: formData.areAM)
     }
 }
