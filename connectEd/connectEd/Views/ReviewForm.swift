@@ -53,8 +53,9 @@ struct ReviewForm: View {
             Button(action: {
                 print(review)
                 review.email = tutor.email
+                tutor.reviews.append(review)
                 Task {
-                    await addTutorReviewLoader.addTutorReview(tutorReviewInput: TutorReviewInputStruct(rating: Int(review.rating), clarity: Int(review.clarity) + 1, prep: Int(review.prep) + 1, review: review.review, tutorEmail: tutor.email))
+                    await addTutorReviewLoader.addTutorReview(tutorReviewInput: TutorReviewInputStruct(rating: Int(review.rating), clarity: Int(review.clarity), prep: Int(review.prep), review: review.review, tutorEmail: tutor.email))
                 }
             }) {
                 Text("Submit Review").fontWeight(.bold)

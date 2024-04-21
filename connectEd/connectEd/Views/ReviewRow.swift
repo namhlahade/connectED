@@ -26,7 +26,7 @@ struct ReviewRow: View {
                 }
             }.padding([.bottom], 5)
             
-            Text("Clarity: \(Int(review.clarity))/5   Understanding: \(Int(review.prep))/5").padding([.bottom], 5)
+            Text("Clarity: \(Int(review.clarity + 1))/5   Understanding: \(Int(review.prep + 1))/5").padding([.bottom], 5)
             
             //Text("Comments").fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
             Text("\"\(review.review)\"").padding([.bottom], 5)
