@@ -89,26 +89,30 @@ struct Navigator: View {
             .onMapCameraChange { context in
                 visibleRegion = context.region
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
-                        scale = scale * 1.5
-                        visibleRegion.span = MKCoordinateSpan(latitudeDelta: scale, longitudeDelta: scale)
-                        position = .region(visibleRegion)
+            .overlay(alignment: .bottomTrailing) {
+                Button(action: {
+                    scale = scale / 1.5
+                    visibleRegion.span = MKCoordinateSpan(latitudeDelta: scale, longitudeDelta: scale)
+                    position = .region(visibleRegion)
+                    
+                }) {
+                    Image(systemName: "plus.square.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit).foregroundColor(.green)
                         
-                    }) {
-                        Image(systemName: "minus").bold()
-                    }                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        scale = scale / 1.5
-                        visibleRegion.span = MKCoordinateSpan(latitudeDelta: scale, longitudeDelta: scale)
-                        position = .region(visibleRegion)
-                        
-                    }) {
-                        Image(systemName: "plus").bold()
-                    }
-                }
+                }.padding([.top], -100).frame(maxWidth: 50, maxHeight: 50).padding([.trailing], 10)
+                
+                Button(action: {
+                    scale = scale * 1.5
+                    visibleRegion.span = MKCoordinateSpan(latitudeDelta: scale, longitudeDelta: scale)
+                    position = .region(visibleRegion)
+                    
+                }) {
+                    Image(systemName: "minus.square.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(.red)
+                }.padding([.top], 0).frame(maxWidth: 50, maxHeight: 50).padding([.trailing, .bottom], 10)
             }
             .mapControls {
                 MapUserLocationButton()
