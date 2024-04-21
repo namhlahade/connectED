@@ -144,7 +144,7 @@ struct UserProfile: View {
                                 Tutor.update(user, from: editTutorFormData)
                                 isPresentingEditForm.toggle()
                                 Task {
-                                    await editProfileLoader.editProfile(editProfileInput: EditTutorInput(tutorEmail: user.email, image: user.image, name: user.name, bio: user.bio ?? "", courses: getCourseStrings(courses: user.courses), price: user.price, availability: castAvailability(availability: user.availability)))
+                                    await editProfileLoader.editProfile(editProfileInput: EditTutorInput(tutorEmail: user.email, image: user.image ?? nil, name: user.name, bio: user.bio ?? "", courses: getCourseStrings(courses: user.courses), price: user.price, availability: castAvailability(availability: user.availability)))
                                 }
                             }
                         }
@@ -225,3 +225,4 @@ struct UserProfile_Previews: PreviewProvider {
         
     }
 }
+
