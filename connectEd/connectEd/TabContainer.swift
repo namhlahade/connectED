@@ -46,6 +46,9 @@ struct TabContainer: View {
     }
 }
 
-#Preview {
-    TabContainer(tutors: Tutor.previewData)
+struct TabContainer_Previews: PreviewProvider {
+    @State static var email = ""
+    static var previews: some View {
+        TabContainer(tutors: Tutor.previewData, email: $email)
+    }
 }
