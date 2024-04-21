@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct TabContainer: View {
+    
     @State private var isLoggedOut = false
     @State var tutors: [Tutor]
-    
+    @Binding var email: String
     var body: some View {
         if isLoggedOut {
             LoginScreen()
         } else{
-            
             TabView {
                 NavigationStack {
                     ParentSearch(user: Tutor.previewData[0])
@@ -36,7 +36,7 @@ struct TabContainer: View {
                     Label("Cipher", systemImage: "brain.head.profile")
                 }
                 NavigationStack {
-                    ProfileView(email: Tutor.previewData[0].email, isLoggedOut: $isLoggedOut)
+                    ProfileView(email: email, isLoggedOut: $isLoggedOut)
                 }
                 .tabItem {
                     Label("Profile", systemImage: "person.fill")

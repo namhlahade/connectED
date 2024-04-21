@@ -12,8 +12,8 @@ class FakeAuthenticationService {
     
     func login(email: String, modelContext: ModelContext) {
         let ws = CharacterSet.whitespacesAndNewlines
-        modelContext.insert(Email(id: UUID(), userEmail: email.trimmingCharacters(in: ws).lowercased()))
-        if let user = try? fetchUser(email.trimmingCharacters(in: ws).lowercased(), modelContext: modelContext) {
+        modelContext.insert(Email(id: UUID(), userEmail: email))
+        if let user = try? fetchUser(email, modelContext: modelContext) {
             errorMessage = nil
             loginUser(user)
         } else {
@@ -40,13 +40,14 @@ class FakeAuthenticationService {
         return try modelContext.fetch(userFetch).first
     }
     
-    func maybeLoginSavedUser(modelContext: ModelContext) -> Bool {
+    func maybeLoginSavedUser(modelContext: ModelContext) -> String {
         let email = UserDefaults.standard.string(forKey: currentUserKey)
         if let email,
            let user = try? fetchUser(email, modelContext: modelContext) {
             loginUser(user)
-            return true
+            return user.userEmail
         }
-        return false
+        return ""
     }
+    
 }
