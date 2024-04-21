@@ -72,6 +72,7 @@ struct LoginScreen: View {
                                  ToolbarItem(placement: .navigationBarLeading) {
                                      Button("Cancel") {
                                          isPresentingProfileForm.toggle()
+                                         authenticationService.logout()
                                      }
                                      
                                  }
