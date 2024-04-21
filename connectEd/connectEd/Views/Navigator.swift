@@ -62,10 +62,10 @@ struct Navigator: View {
     @State private var visibleRegion: MKCoordinateRegion = .duke
     @State private var selectedMapItem: MKMapItem?
     @State private var route: MKRoute?
+    @State private var scale: Double = 0.02
     
     var body: some View {
-        VStack{
-            
+        NavigationStack{
             Map(position: $position, selection: $selectedMapItem) {
                 ForEach(searchResults, id: \.self) { mapItem in
                     Marker(item: mapItem)
@@ -89,13 +89,34 @@ struct Navigator: View {
             .onMapCameraChange { context in
                 visibleRegion = context.region
             }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        scale = scale * 1.5
+                        visibleRegion.span = MKCoordinateSpan(latitudeDelta: scale, longitudeDelta: scale)
+                        position = .region(visibleRegion)
+                        
+                    }) {
+                        Image(systemName: "minus").bold()
+                    }                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        scale = scale / 1.5
+                        visibleRegion.span = MKCoordinateSpan(latitudeDelta: scale, longitudeDelta: scale)
+                        position = .region(visibleRegion)
+                        
+                    }) {
+                        Image(systemName: "plus").bold()
+                    }
+                }
+            }
             .mapControls {
                 MapUserLocationButton()
             }.cornerRadius(20)
                 .safeAreaInset(edge: .top) {
                     HStack {
                         Spacer()
-                        SearchQuery(searchResults: $searchResults, region: visibleRegion)
+                        SearchQuery(searchResults: $searchResults, region: $visibleRegion)
                         Spacer()
                     }
                     .background(.white)
@@ -140,7 +161,7 @@ struct Navigator: View {
 
 struct SearchQuery: View {
     @Binding var searchResults: [MKMapItem]
-    let region: MKCoordinateRegion
+    @Binding var region: MKCoordinateRegion
     @State var query: String = ""
     
     func search() {

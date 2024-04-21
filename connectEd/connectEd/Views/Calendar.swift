@@ -11,7 +11,6 @@ struct CalendarView: View {
   var body: some View {
     VStack {
       if eventService.eventStoreAccessDenied {
-        Text("Hey dummy. You rejected us. Now you have to fix us in settings.")
         Button("Go to Settings") {
           openSettings()
         }

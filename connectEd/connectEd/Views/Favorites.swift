@@ -60,29 +60,9 @@ struct Favorites: View {
                 await deleteFavoritesLoader.deleteFavoriteInfo(favoriteInput: FavoriteInputStruct(userEmail: user.email, tutorEmail: favoriteTutors[offset].email))
             }
             user.favorites.remove(at: user.favorites.firstIndex(of: favoriteTutors[offset].email)!)
-            print(user.favorites)
         }
     }
 }
-
-
-/*struct AddFavoritesScreen: View {
- @State var tutors: [Tutor]
- var body: some View {
- List(tutors) { tutor in
- HStack {
- TutorRow(tutor: tutor)
- Spacer()
- Button("Add") {
- tutor.isFavorite.toggle()
- }
- Image(systemName: tutor.isFavorite ?  "checkmark.circle.fill": "circle")
- .foregroundStyle(tutor.isFavorite ? Color.green: Color.black)
- }
- .navigationTitle("Add to Favorites")
- }
- }
- }*/
 
 #Preview {
     return NavigationStack {
