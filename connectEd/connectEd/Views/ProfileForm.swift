@@ -14,7 +14,6 @@ struct ProfileForm: View {
     
     
     @State var selectedImage: PhotosPickerItem?
-    //@State private var imageData: Data? = nil
     
     
     @Binding var data: Tutor.FormData

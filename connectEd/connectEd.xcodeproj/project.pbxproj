@@ -17,7 +17,6 @@
 		4549BFFE2BC9F25E00C35577 /* HexStringToColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFFD2BC9F25E00C35577 /* HexStringToColor.swift */; };
 		45F5332F2BD1FCF60009ED9E /* TutorProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5332E2BD1FCF60009ED9E /* TutorProfile.swift */; };
 		45F533332BD207DE0009ED9E /* korinna-regular-bt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 45F533322BD207DE0009ED9E /* korinna-regular-bt.ttf */; };
-		45F533352BD21C620009ED9E /* HourPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F533342BD21C620009ED9E /* HourPicker.swift */; };
 		45F5333D2BD3CE340009ED9E /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5333C2BD3CE340009ED9E /* AuthenticationService.swift */; };
 		45F5333F2BD3CF1F0009ED9E /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5333E2BD3CF1F0009ED9E /* Login.swift */; };
 		45F533412BD3CFE70009ED9E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F533402BD3CFE70009ED9E /* User.swift */; };
@@ -97,7 +96,6 @@
 		4549BFFD2BC9F25E00C35577 /* HexStringToColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexStringToColor.swift; sourceTree = "<group>"; };
 		45F5332E2BD1FCF60009ED9E /* TutorProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorProfile.swift; sourceTree = "<group>"; };
 		45F533322BD207DE0009ED9E /* korinna-regular-bt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "korinna-regular-bt.ttf"; sourceTree = "<group>"; };
-		45F533342BD21C620009ED9E /* HourPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourPicker.swift; sourceTree = "<group>"; };
 		45F5333C2BD3CE340009ED9E /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
 		45F5333E2BD3CF1F0009ED9E /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		45F533402BD3CFE70009ED9E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -304,7 +302,6 @@
 				4549BFF92BC9F00C00C35577 /* Calendar.swift */,
 				4CE71C5A2BCA14BA003043AE /* AITutor.swift */,
 				45F5332E2BD1FCF60009ED9E /* TutorProfile.swift */,
-				45F533342BD21C620009ED9E /* HourPicker.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -494,7 +491,6 @@
 				4C25DB592BD070C50089496B /* AddAPIResponse.swift in Sources */,
 				4C14A3042BD317920051FDA8 /* GetTutorReviewLoader.swift in Sources */,
 				4C28042A2BCDE84B00312524 /* APIClient.swift in Sources */,
-				45F533352BD21C620009ED9E /* HourPicker.swift in Sources */,
 				4CE71C5D2BCA1739003043AE /* Message.swift in Sources */,
 				97385D952BBAD59200BB8C8A /* Favorites.swift in Sources */,
 				977FA7AA2BB1144A006CF4C2 /* connectEdApp.swift in Sources */,
