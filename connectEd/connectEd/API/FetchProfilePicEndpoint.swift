@@ -17,8 +17,9 @@ class FetchProfilePicEndpoint {
     
     func getThePhoto(path: String) async throws -> UIImage? {
         print("Got to getThePhoto")
-        let image: UIImage? = try await getPhoto(path: path)
+        /*let image: UIImage? = try await getPhoto(path: path)
         print("Got the image optional")
-        return image
+        return image*/
+        return nil
     }
 }

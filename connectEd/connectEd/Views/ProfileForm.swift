@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PhotosUI
+import FirebaseStorage
 
 
 struct ProfileForm: View {
@@ -16,6 +17,8 @@ struct ProfileForm: View {
     
     
     @Binding var data: Tutor.FormData
+    
+    @State var profilePic: UIImage? = nil
     
     var body: some View {
         
@@ -47,27 +50,33 @@ struct ProfileForm: View {
                 } else {
                     // Else: user hasn't selected a photo already, display their chosen profile picture (or the default person.circle if they have no profile pic [data.image == ""])
                     if data.image != "" {
-                        Image(uiImage: UIImage(data: Data())!)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .overlay(alignment: .bottomTrailing) {
-                                PhotosPicker(selection: $selectedImage,
-                                             matching: .images) {
-                                    Image(systemName: "pencil.circle.fill")
-                                        .symbolRenderingMode(.multicolor)
-                                        .font(.system(size: 30))
-                                        .foregroundColor(.accentColor)
-                                }
-                                             .buttonStyle(.borderless)
-                                             .onChange(of: selectedImage) {
-                                                 if let newItem = selectedImage {
-                                                     loadPhoto(item: newItem)
+                        if profilePic == nil {
+                            ProgressView()
+                        }
+                        else {
+                            Image(uiImage: profilePic!)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .overlay(alignment: .bottomTrailing) {
+                                    PhotosPicker(selection: $selectedImage,
+                                                 matching: .images) {
+                                        Image(systemName: "pencil.circle.fill")
+                                            .symbolRenderingMode(.multicolor)
+                                            .font(.system(size: 30))
+                                            .foregroundColor(.accentColor)
+                                    }
+                                                 .buttonStyle(.borderless)
+                                                 .onChange(of: selectedImage) {
+                                                     if let newItem = selectedImage {
+                                                         loadPhoto(item: newItem)
+                                                     }
                                                  }
-                                             }
-                            }
-                            .frame(maxWidth: 200, maxHeight: 200)
-                            .padding()
-                    } else {
+                                }
+                                .frame(maxWidth: 200, maxHeight: 200)
+                                .padding()
+                        }
+                    }
+                    else {
                         Image(systemName: "person.circle")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -89,9 +98,17 @@ struct ProfileForm: View {
                             .frame(maxWidth: 200, maxHeight: 200)
                             .padding()
                     }
+             
+                   
                 }
             }
             .frame(maxWidth: .infinity)
+            .onAppear {
+                if data.image != "" {
+                    getPhoto(path: data.image)
+                    print("Getting profile pic on Appear")
+                }
+            }
             
             
             
@@ -277,6 +294,23 @@ struct ProfileForm: View {
             }
         }
     }
+    
+    func getPhoto(path: String) {
+        let storageRef = Storage.storage().reference()
+        let fileRef = storageRef.child(path)
+        fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
+            if error == nil && data != nil {
+                let image = UIImage(data: data!)
+                DispatchQueue.main.async {
+                    // what variable gets updated?
+                    profilePic = image
+                }
+            }
+            else {
+                print(error)
+            }
+        }
+    }
 }
 
 
@@ -314,6 +348,7 @@ func stringDateGetter(_ time: Date) -> String {
 struct ProfileForm_Previews: PreviewProvider {
     @State static var isLoggedOut = false
     @State var count = 0
+    @State static var profilePic: UIImage? = nil
     /*let data = Binding.constant(Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false).dataForForm)
      return ProfileForm(data: data)*/
     static var previews: some View {

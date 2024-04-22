@@ -14,6 +14,7 @@ struct ProfileView: View {
     @Environment(FakeAuthenticationService.self) var authenticationService
     let getTutorLoader = GetTutorLoader()
     @Binding var isLoggedOut: Bool
+    
     var body: some View {
         VStack {
             switch getTutorLoader.state {
@@ -22,8 +23,8 @@ struct ProfileView: View {
             case .failed(let error): Text("Error \(error.localizedDescription)")
             case .success(let tutorInformation):
                 if let tutor = tutorInformation.getTutors().filter({ $0.email == email }).first {
-                    //UserProfile(user: tutor, loggedOut: $isLoggedOut)
-                    ParentProfilePic(user: tutor, loggedOut: $isLoggedOut)
+                    UserProfile(user: tutor, loggedOut: $isLoggedOut)
+                    //ParentProfilePic(user: tutor, loggedOut: $isLoggedOut)
                 } else {
                     Text("No tutor found with email: \(email)")
                     
@@ -36,35 +37,6 @@ struct ProfileView: View {
         .task { await getTutorLoader.getAllTutorInfo() }
     }
 }
-
-
-
-struct ParentProfilePic: View {
-    let getProfilePicLoader_ = getProfilePicLoader()
-    
-    @State var user: Tutor
-    @Binding var loggedOut: Bool
-    
-    var body: some View {
-        if user.image == "" {
-            UserProfile(user: user, loggedOut: $loggedOut)
-        }
-        else {
-            VStack {
-                switch getProfilePicLoader_.state {
-                case .idle: Color.clear
-                case .loading: ProgressView()
-                case .failed(let error): Text("Error \(error.localizedDescription)")
-                case .success(let image):
-                    UserProfile(user: user, loggedOut: $loggedOut, profilePic: image)
-                }
-            }
-            .task { await getProfilePicLoader_.getProfilePic(path: user.image) }
-        }
-    }
-}
-
-
 
 struct UserProfile: View {
     
@@ -83,14 +55,19 @@ struct UserProfile: View {
         Form {
             
             VStack (alignment: .center) {
-                if user.image != "" && profilePic != nil {
+                if user.image != "" {
+                    if profilePic == nil {
+                        ProgressView()
+                    }
+                    else {
                         Image(uiImage: profilePic!)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(maxWidth: 200, maxHeight: 200)
                             .padding()
-                    
-                } else {
+                    }
+                }
+                else {
                     Image(systemName: "person.circle")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -114,17 +91,16 @@ struct UserProfile: View {
             }
             .frame(maxWidth: .infinity, alignment: .center)
             .padding()
-            /*.onAppear {
-                print("")
-                print("")
-                print("User.image: \(user.image)")
-                print(profilePic)
+            .onAppear {
+                if user.image != "" {
+                    getPhoto(path: user.image)
+                    print("Getting profile pic on Appear")
+                }
+            }
+            .onChange(of: user.image) {
                 getPhoto(path: user.image)
-                print("User.image: \(user.image)")
-                print(profilePic)
-                print("")
-                print("")
-            }*/
+                print("Getting profile pic on user.image change")
+            }
             
             
             
@@ -195,6 +171,23 @@ struct UserProfile: View {
         }
     }
     
+    func getPhoto(path: String) {
+        let storageRef = Storage.storage().reference()
+        let fileRef = storageRef.child(path)
+        fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
+            if error == nil && data != nil {
+                let image = UIImage(data: data!)
+                DispatchQueue.main.async {
+                    // what variable gets updated?
+                    profilePic = image
+                }
+            }
+            else {
+                print(error)
+            }
+        }
+    }
+    
     func uploadPhoto(imageToUpload: UIImage) async -> Void {
         print("Hello dude")
         let storageRef = Storage.storage().reference()
@@ -210,51 +203,13 @@ struct UserProfile: View {
         let fileRef = storageRef.child(path)
         let uploadTask = fileRef.putData(imageData_!, metadata: nil) {metadata, error in
             if error == nil && metadata != nil {
-                // handle upload error
+                getPhoto(path: user.image)
             }
         }
+        
+        
         
         await editProfileLoader.editProfile(editProfileInput: EditTutorInput(tutorEmail: user.email, image: user.image, name: user.name, bio: user.bio ?? "", courses: getCourseStrings(courses: user.courses), price: user.price, availability: castAvailability(availability: user.availability)))
-    }
-}
-
-/*func getPhoto(path: String) {
-    
-    let storageRef = Storage.storage().reference()
-    let fileRef = storageRef.child(path)
-    
-    fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
-        
-        if error == nil && data != nil {
-            let image = UIImage(data: data!)
-            DispatchQueue.main.async {
-                // what variable gets updated?
-                
-            }
-        }
-        else {
-            print(error)
-        }
-    }
-}*/
-
-func getPhoto(path: String) async throws -> UIImage? {
-    let storageRef = Storage.storage().reference()
-    let fileRef = storageRef.child(path)
-    
-    return try await withCheckedThrowingContinuation { continuation in
-        fileRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-            if let error = error {
-                continuation.resume(throwing: error)
-                print(error)
-            } else if let data = data, let image = UIImage(data: data) {
-                continuation.resume(returning: image)
-                print(data)
-                print(image)
-            } else {
-                continuation.resume(returning: nil)
-            }
-        }
     }
 }
 
@@ -321,6 +276,7 @@ struct ProfileSection: View {
 struct UserProfile_Previews: PreviewProvider {
     @State static var isLoggedOut = false
     @State var cop: Int = 0
+    @State static var profilePic: UIImage? = nil
     
     static var previews: some View {
         NavigationStack {
@@ -329,4 +285,3 @@ struct UserProfile_Previews: PreviewProvider {
         
     }
 }
-

@@ -1,4 +1,5 @@
 import SwiftUI
+import FirebaseStorage
 
 struct ParentStruct_TutorRow: View {
     
@@ -24,10 +25,12 @@ struct ParentStruct_TutorRow: View {
 struct TutorRow: View {
     var user: Tutor
     @State var tutor: Tutor
+    @State var profilePic: UIImage? = nil
+    
     var body: some View {
         HStack (alignment: .center) {
             
-            if tutor.image != "" {
+            /*if tutor.image != "" {
                 Image(uiImage: UIImage(data: Data())!)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -49,6 +52,44 @@ struct TutorRow: View {
                             .foregroundStyle(tutor.status == .online ? Color.green : Color.red)
                     }
                     .frame(maxWidth: 65, maxHeight: 65)
+            }*/
+            
+            VStack {
+                if tutor.image != "" {
+                    if profilePic == nil {
+                        ProgressView()
+                    }
+                    else {
+                        Image(uiImage: profilePic!)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .overlay(alignment: .bottomTrailing) {
+                                Image(systemName: "circle.fill")
+                                    .resizable()
+                                    .frame(maxWidth: 15, maxHeight: 15)
+                                    .foregroundStyle(tutor.status == .online ? Color.green : Color.red)
+                            }
+                            .frame(maxWidth: 65, maxHeight: 65)
+                    }
+                }
+                else {
+                    Image(systemName: "person.circle")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .overlay(alignment: .bottomTrailing) {
+                            Image(systemName: "circle.fill")
+                                .resizable()
+                                .frame(maxWidth: 15, maxHeight: 15)
+                                .foregroundStyle(tutor.status == .online ? Color.green : Color.red)
+                        }
+                        .frame(maxWidth: 65, maxHeight: 65)
+                }
+            }
+            .onAppear {
+                if tutor.image != "" {
+                    getPhoto(path: tutor.image)
+                    print("Getting profile pic on Appear")
+                }
             }
             
             
@@ -80,6 +121,22 @@ struct TutorRow: View {
             }
         }
         
+    }
+    func getPhoto(path: String) {
+        let storageRef = Storage.storage().reference()
+        let fileRef = storageRef.child(path)
+        fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
+            if error == nil && data != nil {
+                let image = UIImage(data: data!)
+                DispatchQueue.main.async {
+                    // what variable gets updated?
+                    profilePic = image
+                }
+            }
+            else {
+                print(error)
+            }
+        }
     }
 }
 
