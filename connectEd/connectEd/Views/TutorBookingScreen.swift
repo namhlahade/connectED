@@ -16,29 +16,30 @@ struct TutorBookingScreen: View {
     @State private var selectedOptionIndex = 0
     @State private var isPresentingNavigator: Bool = false
     @State private var selectedMeetingTime: String = ""
-    
+    @State var currentLocation: String = "Lily"
     @State var eventService = EventService()
     
     var body: some View {
         Form {
             Section(header: Text("Select a Course:")) {
                 if tutor.courses.isEmpty {
-                    Text("No available courses to select")
+                    Text("No available courses to select").frame(maxWidth: .infinity, alignment: .center)
                 }
                 else {
-                    Picker(selection: $selectedCourse, label: Text("")) {
+                    Picker(selection: $selectedCourse, label: Text("").frame(maxWidth: .infinity, alignment: .center)) {
                         ForEach(tutor.courses) { course in
-                            Text("\(course.subject.rawValue.uppercased()) \(course.code)").frame(maxWidth: .infinity, alignment: .center).tag("\(course.subject.rawValue.uppercased()) \(course.code)")
+                            Text("\(course.subject.rawValue.uppercased()) \(course.code)").frame(maxWidth: .infinity, alignment: .center).tag("\(course.subject.rawValue.uppercased()) \(course.code)").foregroundColor(Color.blue)
+                            
                             
                         }
-                    }.labelsHidden()
+                    }.labelsHidden().frame(maxWidth: .infinity, alignment: .center).labelsHidden()
                 }
             }
             
             Section(header: Text("Pick a Time")) {
-                Text("\(tutor.name)'s Availability").bold().font(.title3)
                 if tutor.availability.isEmpty {
-                    Text("No availability provided")
+                    Text("No tutor availability provided").frame(maxWidth: .infinity, alignment: .center)
+                    
                 }
                 else {
                     Picker(selection: $selectedMeetingTime, label: Text("")) {
@@ -48,14 +49,17 @@ struct TutorBookingScreen: View {
                     }
                     .pickerStyle(.menu)
                     .labelsHidden()
+                    .multilineTextAlignment(.center)
                 }
             }
             
-            
+//            Map(position: .lily, selection: $selectedMapItem){
+//
+//            }
             Section(header: Text("Meeting Location")) {
-                Button("Edit") {
+                Button("Current Location: \(currentLocation)") {
                     isPresentingNavigator.toggle()
-                }
+                }.frame(maxWidth: .infinity, alignment: .center)
             }
             
             NavigationLink(destination: EventEditView(eventService: eventService, event: nil)) {
@@ -69,9 +73,10 @@ struct TutorBookingScreen: View {
         .sheet(isPresented: $isPresentingNavigator){
             
             NavigationStack {
-                Navigator()
+                Navigator(currentLocation: $currentLocation)
+                Text("Current Location: \(currentLocation)")
             }
-        }
+        }.frame(maxWidth: .infinity, alignment: .center)
     }
     func dateDisplay(for event: EKEvent) -> String {
         DateFormatters.mediumDate(event.startDate)
@@ -82,6 +87,9 @@ struct TutorBookingScreen: View {
     }
 }
 
-#Preview {
-    TutorBookingScreen(tutor: Tutor.previewData[4])
+struct TutorBookingScreen_Previews: PreviewProvider {
+    @State var currentLocation: String = "Lily"
+    static var previews: some View {
+        TutorBookingScreen(tutor: Tutor.previewData[4])
+    }
 }

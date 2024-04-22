@@ -56,6 +56,7 @@ struct Location: Identifiable {
 }
 
 struct Navigator: View {
+    @Binding var currentLocation: String
     let locationManager = CLLocationManager()
     @State var position: MapCameraPosition = .userLocation(fallback: .automatic)
     @State var searchResults: [MKMapItem] = []
@@ -133,7 +134,7 @@ struct Navigator: View {
                         }
                         HStack {
                             Spacer()
-                            RegionButtons(position: $position)
+                            RegionButtons(position: $position, currentLocation: $currentLocation)
                                 .padding(.top)
                             Spacer()
                         }
@@ -194,6 +195,7 @@ struct SearchQuery: View {
 
 struct RegionButtons: View {
     @Binding var position: MapCameraPosition
+    @Binding var currentLocation: String
     @State private var selectedLocationIndex = 0
     let locations = [LocationCoordinate.lily, LocationCoordinate.perkins, LocationCoordinate.twinnies, LocationCoordinate.wu]
 
@@ -208,14 +210,9 @@ struct RegionButtons: View {
             .pickerStyle(SegmentedPickerStyle())
             .onChange(of: selectedLocationIndex) {
                 position = .region(MKCoordinateRegion(center: locations[selectedLocationIndex].coordinate, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)))
+                currentLocation = locations[selectedLocationIndex].name
             }
         }
         .padding()
     }
-}
-
-
-
-#Preview {
-    Navigator()
 }
