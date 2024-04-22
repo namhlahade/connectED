@@ -26,8 +26,9 @@ struct TutorRow: View {
     @State var tutor: Tutor
     var body: some View {
         HStack (alignment: .center) {
-            AsyncImage(url: URL(string: tutor.image), content: { image in
-                image
+            
+            if tutor.image != "" {
+                Image(uiImage: getPhoto(tutor.image)!)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .overlay(alignment: .bottomTrailing) {
@@ -36,22 +37,22 @@ struct TutorRow: View {
                             .frame(maxWidth: 15, maxHeight: 15)
                             .foregroundStyle(tutor.status == .online ? Color.green : Color.red)
                     }
-            }, placeholder: {
-                if tutor.image != "" {
-                    ProgressView()
-                } else {
-                    Image(systemName: "person.circle")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .overlay(alignment: .bottomTrailing) {
-                            Image(systemName: "circle.fill")
-                                .resizable()
-                                .frame(maxWidth: 15, maxHeight: 15)
-                                .foregroundStyle(tutor.status == .online ? Color.green : Color.red)
-                        }
-                }
-            })
-            .frame(maxWidth: 65, maxHeight: 65)
+                    .frame(maxWidth: 65, maxHeight: 65)
+            } else {
+                Image(systemName: "person.circle")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .overlay(alignment: .bottomTrailing) {
+                        Image(systemName: "circle.fill")
+                            .resizable()
+                            .frame(maxWidth: 15, maxHeight: 15)
+                            .foregroundStyle(tutor.status == .online ? Color.green : Color.red)
+                    }
+                    .frame(maxWidth: 65, maxHeight: 65)
+            }
+            
+            
+            
             VStack (alignment: .leading) {
                 HStack {
                     Text(tutor.name).bold().font(.title2)
