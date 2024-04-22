@@ -22,7 +22,8 @@ struct ProfileView: View {
             case .failed(let error): Text("Error \(error.localizedDescription)")
             case .success(let tutorInformation):
                 if let tutor = tutorInformation.getTutors().filter({ $0.email == email }).first {
-                    UserProfile(user: tutor, loggedOut: $isLoggedOut)
+                    //UserProfile(user: tutor, loggedOut: $isLoggedOut)
+                    ParentProfilePic(user: tutor, loggedOut: $isLoggedOut)
                 } else {
                     Text("No tutor found with email: \(email)")
                     
@@ -36,6 +37,30 @@ struct ProfileView: View {
     }
 }
 
+
+
+struct ParentProfilePic: View {
+    let getProfilePicLoader_ = getProfilePicLoader()
+    
+    @State var user: Tutor
+    @Binding var loggedOut: Bool
+    
+    var body: some View {
+        VStack {
+            switch getProfilePicLoader_.state {
+            case .idle: Color.clear
+            case .loading: ProgressView()
+            case .failed(let error): Text("Error \(error.localizedDescription)")
+            case .success(let image):
+                UserProfile(user: user, loggedOut: $loggedOut, profilePic: image)
+            }
+        }
+        .task { await getProfilePicLoader_.getProfilePic(path: user.image) }
+    }
+}
+
+
+
 struct UserProfile: View {
     
     let editProfileLoader = EditProfileLoader()
@@ -45,17 +70,21 @@ struct UserProfile: View {
     @State private var editTutorFormData: Tutor.FormData = Tutor.FormData()
     
     @Binding var loggedOut: Bool
+    
+    @State var profilePic: UIImage? = nil
+    
     var body: some View {
         
         Form {
             
             VStack (alignment: .center) {
-                if user.image != "" {
-                    Image(uiImage: getPhoto(user.image)!)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 200, maxHeight: 200)
-                        .padding()
+                if user.image != "" && profilePic != nil {
+                        Image(uiImage: profilePic!)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(maxWidth: 200, maxHeight: 200)
+                            .padding()
+                    
                 } else {
                     Image(systemName: "person.circle")
                         .resizable()
@@ -139,7 +168,7 @@ struct UserProfile: View {
                             Button("Save") {
                                 Tutor.update(user, from: editTutorFormData)
                                 isPresentingEditForm.toggle()
-                                uploadPhoto(imageToUpload: UIImage(data: user.imageData!)!) // Upload new profile picture to Firebase
+                                uploadPhoto(tutor: user, imageToUpload: UIImage(data: user.imageData!)!) // Upload new profile picture to Firebase
                                 Task {
                                     await editProfileLoader.editProfile(editProfileInput: EditTutorInput(tutorEmail: user.email, image: user.image, name: user.name, bio: user.bio ?? "", courses: getCourseStrings(courses: user.courses), price: user.price, availability: castAvailability(availability: user.availability)))
                                 }
@@ -151,7 +180,7 @@ struct UserProfile: View {
     }
 }
 
-func uploadPhoto(imageToUpload: UIImage) -> Void {
+func uploadPhoto(tutor: Tutor, imageToUpload: UIImage) -> Void {
     print("Hello dude")
     let storageRef = Storage.storage().reference()
     let imageData_ = imageToUpload.jpegData(compressionQuality: 0.8)
@@ -160,11 +189,32 @@ func uploadPhoto(imageToUpload: UIImage) -> Void {
         return
     }
     let path = "Images/\(UUID().uuidString).jpg"
+    tutor.image = path
     print(path)
     let fileRef = storageRef.child(path)
     let uploadTask = fileRef.putData(imageData_!, metadata: nil) {metadata, error in
         if error == nil && metadata != nil {
             // handle upload error
+        }
+    }
+}
+
+func getPhoto(path: String) async throws -> UIImage? {
+    let storageRef = Storage.storage().reference()
+    let fileRef = storageRef.child(path)
+    
+    return try await withCheckedThrowingContinuation { continuation in
+        fileRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+            if let error = error {
+                continuation.resume(throwing: error)
+                print(error)
+            } else if let data = data, let image = UIImage(data: data) {
+                continuation.resume(returning: image)
+                print(data)
+                print(image)
+            } else {
+                continuation.resume(returning: nil)
+            }
         }
     }
 }
@@ -234,8 +284,8 @@ struct UserProfile_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationStack {
-         UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, price: 0, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], favorites: [], availability: []), loggedOut: $isLoggedOut)
-         }
+            UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, price: 0, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], favorites: [], availability: []), loggedOut: $isLoggedOut)
+        }
         
     }
 }

@@ -26,7 +26,7 @@ struct TutorProfile: View {
             
             VStack (alignment: .center) {
                 if tutor.image != "" {
-                    Image(uiImage: getPhoto(tutor.image)!)
+                    Image(uiImage: UIImage(data: Data())!)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(maxWidth: 200, maxHeight: 200)

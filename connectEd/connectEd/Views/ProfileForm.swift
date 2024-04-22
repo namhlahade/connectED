@@ -47,7 +47,7 @@ struct ProfileForm: View {
                 } else {
                     // Else: user hasn't selected a photo already, display their chosen profile picture (or the default person.circle if they have no profile pic [data.image == ""])
                     if data.image != "" {
-                        Image(uiImage: getPhoto(data.image)!)
+                        Image(uiImage: UIImage(data: Data())!)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .overlay(alignment: .bottomTrailing) {

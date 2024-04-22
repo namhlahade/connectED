@@ -28,7 +28,7 @@ struct TutorRow: View {
         HStack (alignment: .center) {
             
             if tutor.image != "" {
-                Image(uiImage: getPhoto(tutor.image)!)
+                Image(uiImage: UIImage(data: Data())!)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .overlay(alignment: .bottomTrailing) {
