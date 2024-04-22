@@ -120,6 +120,7 @@ struct UserProfile: View {
                 print("User.image: \(user.image)")
                 print(profilePic)
                 getPhoto(path: user.image)
+                print("User.image: \(user.image)")
                 print(profilePic)
                 print("")
                 print("")
