@@ -142,8 +142,16 @@ extension Tutor {
         case ece
         case cs
         case egr
+        case me
+        case bme
+        case cee
         case phys
         case chem
+        case bio
+        case math
+        case sta
+        case econ
+        case psych
     }
 }
 
