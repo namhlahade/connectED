@@ -161,8 +161,15 @@ struct UserProfile: View {
                                 Tutor.update(user, from: editTutorFormData)
                                 isPresentingEditForm.toggle()
                                  // Upload new profile picture to Firebase
-                                Task {
-                                    await uploadPhoto(imageToUpload: UIImage(data: user.imageData!)!)
+                                if user.imageData == nil || user.imageData == Data() {
+                                    Task {
+                                        await editProfileLoader.editProfile(editProfileInput: EditTutorInput(tutorEmail: user.email, image: user.image, name: user.name, bio: user.bio ?? "", courses: getCourseStrings(courses: user.courses), price: user.price, availability: castAvailability(availability: user.availability)))
+                                    }
+                                }
+                                else {
+                                    Task {
+                                        await uploadPhoto(imageToUpload: UIImage(data: user.imageData!)!)
+                                    }
                                 }
                             }
                         }
