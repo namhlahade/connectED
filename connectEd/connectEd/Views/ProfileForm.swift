@@ -271,23 +271,6 @@ struct ProfileForm: View {
                 if let data_ = success_data {
                     // Update the image data to be displayed
                     data.imageData = data_
-                    
-                    let storageRef = Storage.storage().reference()
-                    let imageData_ = UIImage(data: data.imageData!)!.jpegData(compressionQuality: 0.8)
-                    guard imageData_ != nil else {
-                        return
-                    }
-                    
-                    let path = "Images/\(UUID().uuidString).jpg"
-                    print("Image Path: \(path)")
-                    let fileRef = storageRef.child(path)
-                    let uploadTask = fileRef.putData(imageData_!, metadata: nil) {metadata, error in
-                        if error == nil && metadata != nil {
-                            
-                        }
-                    }
-                    
-                    
                 } else {
                     // Handle the case where no image data is found
                     print("Failed to load image data.")
@@ -296,24 +279,6 @@ struct ProfileForm: View {
                 // Handle errors
                 print("Error loading image: \(error.localizedDescription)")
             }
-        }
-    }
-}
-
-func uploadPhoto(imageToUpload: UIImage) -> Void {
-    print("Hello dude")
-    let storageRef = Storage.storage().reference()
-    let imageData_ = imageToUpload.jpegData(compressionQuality: 0.8)
-    
-    guard imageData_ != nil else {
-        return
-    }
-    let path = "Images/\(UUID().uuidString).jpg"
-    print(path)
-    let fileRef = storageRef.child(path)
-    let uploadTask = fileRef.putData(imageData_!, metadata: nil) {metadata, error in
-        if error == nil && metadata != nil {
-            
         }
     }
 }

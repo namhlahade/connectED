@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Symbols
+import FirebaseStorage
 
 struct ProfileView: View {
     let email: String
@@ -140,6 +141,7 @@ struct UserProfile: View {
                             Button("Save") {
                                 Tutor.update(user, from: editTutorFormData)
                                 isPresentingEditForm.toggle()
+                                uploadPhoto(imageToUpload: UIImage(data: user.imageData!)!) // Upload new profile picture to Firebase
                                 Task {
                                     await editProfileLoader.editProfile(editProfileInput: EditTutorInput(tutorEmail: user.email, image: user.image, name: user.name, bio: user.bio ?? "", courses: getCourseStrings(courses: user.courses), price: user.price, availability: castAvailability(availability: user.availability)))
                                 }
@@ -147,6 +149,24 @@ struct UserProfile: View {
                         }
                     }
             }
+        }
+    }
+}
+
+func uploadPhoto(imageToUpload: UIImage) -> Void {
+    print("Hello dude")
+    let storageRef = Storage.storage().reference()
+    let imageData_ = imageToUpload.jpegData(compressionQuality: 0.8)
+    
+    guard imageData_ != nil else {
+        return
+    }
+    let path = "Images/\(UUID().uuidString).jpg"
+    print(path)
+    let fileRef = storageRef.child(path)
+    let uploadTask = fileRef.putData(imageData_!, metadata: nil) {metadata, error in
+        if error == nil && metadata != nil {
+            // handle upload error
         }
     }
 }
