@@ -34,6 +34,7 @@ struct TabContainer: View {
     var body: some View {
         if isLoggedOut {
             LoginScreen()
+            //isLoggedOut = false
         } else{
             TabView {
                 NavigationStack {

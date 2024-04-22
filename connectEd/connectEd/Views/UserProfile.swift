@@ -76,8 +76,7 @@ struct UserProfile: View {
                 }
                 
                 HStack (alignment: .center) {
-                    Text("My rating:")
-                    Text(user.rating == 0 ? "--/5.0" : String(format: "%.1f/5.0", user.rating)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    RatingView(rating: $user.rating).font(.title)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .center)

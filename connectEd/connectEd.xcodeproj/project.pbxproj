@@ -15,6 +15,8 @@
 		4549BFFA2BC9F00C00C35577 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFF92BC9F00C00C35577 /* Calendar.swift */; };
 		4549BFFC2BC9F0A200C35577 /* DateFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFFB2BC9F0A200C35577 /* DateFormatters.swift */; };
 		4549BFFE2BC9F25E00C35577 /* HexStringToColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFFD2BC9F25E00C35577 /* HexStringToColor.swift */; };
+		45CFCD0D2BD5FF0900155A53 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CFCD0C2BD5FF0900155A53 /* RatingView.swift */; };
+		45CFCD0F2BD60BE700155A53 /* PriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CFCD0E2BD60BE700155A53 /* PriceView.swift */; };
 		45F5332F2BD1FCF60009ED9E /* TutorProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5332E2BD1FCF60009ED9E /* TutorProfile.swift */; };
 		45F533332BD207DE0009ED9E /* korinna-regular-bt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 45F533322BD207DE0009ED9E /* korinna-regular-bt.ttf */; };
 		45F533352BD21C620009ED9E /* HourPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F533342BD21C620009ED9E /* HourPicker.swift */; };
@@ -95,6 +97,8 @@
 		4549BFF92BC9F00C00C35577 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
 		4549BFFB2BC9F0A200C35577 /* DateFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatters.swift; sourceTree = "<group>"; };
 		4549BFFD2BC9F25E00C35577 /* HexStringToColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexStringToColor.swift; sourceTree = "<group>"; };
+		45CFCD0C2BD5FF0900155A53 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
+		45CFCD0E2BD60BE700155A53 /* PriceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceView.swift; sourceTree = "<group>"; };
 		45F5332E2BD1FCF60009ED9E /* TutorProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorProfile.swift; sourceTree = "<group>"; };
 		45F533322BD207DE0009ED9E /* korinna-regular-bt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "korinna-regular-bt.ttf"; sourceTree = "<group>"; };
 		45F533342BD21C620009ED9E /* HourPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourPicker.swift; sourceTree = "<group>"; };
@@ -305,6 +309,8 @@
 				4CE71C5A2BCA14BA003043AE /* AITutor.swift */,
 				45F5332E2BD1FCF60009ED9E /* TutorProfile.swift */,
 				45F533342BD21C620009ED9E /* HourPicker.swift */,
+				45CFCD0C2BD5FF0900155A53 /* RatingView.swift */,
+				45CFCD0E2BD60BE700155A53 /* PriceView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -456,6 +462,7 @@
 				4C14A2FC2BD3139B0051FDA8 /* AddFavoriteLoader.swift in Sources */,
 				4C14A3202BD332470051FDA8 /* AddTutorReviewEndpoint.swift in Sources */,
 				4549BFEF2BC9EF7500C35577 /* EventService.swift in Sources */,
+				45CFCD0D2BD5FF0900155A53 /* RatingView.swift in Sources */,
 				4549BFFC2BC9F0A200C35577 /* DateFormatters.swift in Sources */,
 				4C14A30A2BD329710051FDA8 /* AddTutorStruct.swift in Sources */,
 				4C14A2F12BD2ECFB0051FDA8 /* TutorsResponse.swift in Sources */,
@@ -467,6 +474,7 @@
 				97C6B35B2BBE9D55002C8317 /* ProfileForm.swift in Sources */,
 				4C14A3222BD3328E0051FDA8 /* AddTutorReviewLoader.swift in Sources */,
 				4CA470C12BD47DA80046FE67 /* EditProfileEndpoint.swift in Sources */,
+				45CFCD0F2BD60BE700155A53 /* PriceView.swift in Sources */,
 				4C28042C2BCDE86700312524 /* APIError.swift in Sources */,
 				5B097E7C2BC4E20C0074CFB4 /* PreviewContainer.swift in Sources */,
 				4549BFF22BC9EF9200C35577 /* CalendarChooser.swift in Sources */,
