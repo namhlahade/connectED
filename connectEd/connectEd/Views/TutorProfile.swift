@@ -7,7 +7,7 @@
 
 import SwiftUI
 import PhotosUI
-
+import FirebaseStorage
 
 
 
@@ -19,26 +19,39 @@ struct TutorProfile: View {
     let deleteFavoritesLoader = DeleteFavoriteLoader()
     let addFavoritesLoader = AddFavoriteLoader()
     
+    @State var profilePic: UIImage? = nil
+    
     
     var body: some View {
         
         Form {
             
             VStack (alignment: .center) {
-                AsyncImage(url: URL(string: user.image), content: { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                }, placeholder: {
-                    if user.image != "" {
+                
+                if tutor.image != "" {
+                    if profilePic == nil {
                         ProgressView()
-                    } else {
-                        Image(systemName: "person.circle")
+                    }
+                    else {
+                        Image(uiImage: profilePic!)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
+                            .frame(maxWidth: 200, maxHeight: 200)
+                            .padding()
                     }
-                })
-                .frame(maxWidth: 200, maxHeight: 200).padding()
+                }
+                else {
+                    Image(systemName: "person.circle")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: 200, maxHeight: 200)
+                        .padding()
+                }
+                
+                
+   
+            
+            
                 
                 HStack (alignment: .center) {
                     Image(systemName: "circle.fill")
@@ -56,6 +69,12 @@ struct TutorProfile: View {
             }
             .frame(maxWidth: .infinity, alignment: .center)
             .padding()
+            .onAppear {
+                if tutor.image != "" {
+                    getPhoto(path: tutor.image)
+                    print("Getting profile pic on Appear")
+                }
+            }
             
             
             Section(header: Text("Actions")) {
@@ -116,6 +135,23 @@ struct TutorProfile: View {
             }
         }
         Spacer()
+    }
+    
+    func getPhoto(path: String) {
+        let storageRef = Storage.storage().reference()
+        let fileRef = storageRef.child(path)
+        fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
+            if error == nil && data != nil {
+                let image = UIImage(data: data!)
+                DispatchQueue.main.async {
+                    // what variable gets updated?
+                    profilePic = image
+                }
+            }
+            else {
+                print(error)
+            }
+        }
     }
     
 }

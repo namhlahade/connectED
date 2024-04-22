@@ -13,6 +13,7 @@ struct ProfileView: View {
     let email: String
     @Environment(FakeAuthenticationService.self) var authenticationService
     let getTutorLoader = GetTutorLoader()
+
     @Binding var loggedIn: Bool
     var body: some View {
         VStack {
@@ -45,26 +46,32 @@ struct UserProfile: View {
     @State private var editTutorFormData: Tutor.FormData = Tutor.FormData()
     
     @Binding var loggedIn: Bool
+
+    @State var profilePic: UIImage? = nil
     var body: some View {
         
         Form {
             
             VStack (alignment: .center) {
-                AsyncImage(url: URL(string: user.image), content: { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                }, placeholder: {
-                    if user.image != "" {
+                if user.image != "" {
+                    if profilePic == nil {
                         ProgressView()
-                    } else {
-                        Image(systemName: "person.circle")
+                    }
+                    else {
+                        Image(uiImage: profilePic!)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
+                            .frame(maxWidth: 200, maxHeight: 200)
+                            .padding()
                     }
-                })
-                .frame(maxWidth: 200, maxHeight: 200)
-                .padding()
+                }
+                else {
+                    Image(systemName: "person.circle")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: 200, maxHeight: 200)
+                        .padding()
+                }
                 
                 HStack (alignment: .center) {
                     Image(systemName: "circle.fill")
@@ -81,6 +88,16 @@ struct UserProfile: View {
             }
             .frame(maxWidth: .infinity, alignment: .center)
             .padding()
+            .onAppear {
+                if user.image != "" {
+                    getPhoto(path: user.image)
+                    print("Getting profile pic on Appear")
+                }
+            }
+            .onChange(of: user.image) {
+                getPhoto(path: user.image)
+                print("Getting profile pic on user.image change")
+            }
             
             
             
@@ -140,9 +157,16 @@ struct UserProfile: View {
                             Button("Save") {
                                 Tutor.update(user, from: editTutorFormData)
                                 isPresentingEditForm.toggle()
-                                uploadPhoto(imageToUpload: UIImage(data: user.imageData!)!) // Upload new profile picture to Firebase
-                                Task {
-                                    await editProfileLoader.editProfile(editProfileInput: EditTutorInput(tutorEmail: user.email, image: user.image, name: user.name, bio: user.bio ?? "", courses: getCourseStrings(courses: user.courses), price: user.price, availability: castAvailability(availability: user.availability)))
+                                 // Upload new profile picture to Firebase
+                                if user.imageData == nil || user.imageData == Data() {
+                                    Task {
+                                        await editProfileLoader.editProfile(editProfileInput: EditTutorInput(tutorEmail: user.email, image: user.image, name: user.name, bio: user.bio ?? "", courses: getCourseStrings(courses: user.courses), price: user.price, availability: castAvailability(availability: user.availability)))
+                                    }
+                                }
+                                else {
+                                    Task {
+                                        await uploadPhoto(imageToUpload: UIImage(data: user.imageData!)!)
+                                    }
                                 }
                             }
                         }
@@ -150,45 +174,50 @@ struct UserProfile: View {
             }
         }
     }
-}
-
-func uploadPhoto(imageToUpload: UIImage) -> Void {
-    print("Hello dude")
-    let storageRef = Storage.storage().reference()
-    let imageData_ = imageToUpload.jpegData(compressionQuality: 0.8)
     
-    guard imageData_ != nil else {
-        return
-    }
-    let path = "Images/\(UUID().uuidString).jpg"
-    print(path)
-    let fileRef = storageRef.child(path)
-    let uploadTask = fileRef.putData(imageData_!, metadata: nil) {metadata, error in
-        if error == nil && metadata != nil {
-            // handle upload error
-        }
-    }
-}
-
-func getPhoto(path: String, completion: @escaping (UIImage?) -> Void) {
-    let storageRef = Storage.storage().reference()
-    let fileRef = storageRef.child(path)
-
-    fileRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-        if let error = error {
-            print("Error downloading image: \(error)")
-            completion(nil)
-        } else if let data = data, let image = UIImage(data: data) {
-            DispatchQueue.main.async {
-                completion(image)
+    func getPhoto(path: String) {
+        let storageRef = Storage.storage().reference()
+        let fileRef = storageRef.child(path)
+        fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
+            if error == nil && data != nil {
+                let image = UIImage(data: data!)
+                DispatchQueue.main.async {
+                    // what variable gets updated?
+                    profilePic = image
+                }
             }
-        } else {
-            DispatchQueue.main.async {
-                completion(nil)
+            else {
+                print(error)
             }
         }
     }
+    
+    func uploadPhoto(imageToUpload: UIImage) async -> Void {
+        print("Hello dude")
+        let storageRef = Storage.storage().reference()
+        let imageData_ = imageToUpload.jpegData(compressionQuality: 0.8)
+        
+        guard imageData_ != nil else {
+            return
+        }
+        let path = "Images/\(UUID().uuidString).jpg"
+        user.image = path
+        print("User.image: \(user.image)")
+        print("Path: \(path)")
+        let fileRef = storageRef.child(path)
+        let uploadTask = fileRef.putData(imageData_!, metadata: nil) {metadata, error in
+            if error == nil && metadata != nil {
+                getPhoto(path: user.image)
+            }
+        }
+        
+        
+        
+        await editProfileLoader.editProfile(editProfileInput: EditTutorInput(tutorEmail: user.email, image: user.image, name: user.name, bio: user.bio ?? "", courses: getCourseStrings(courses: user.courses), price: user.price, availability: castAvailability(availability: user.availability)))
+    }
 }
+
+
 func getCourselist(courses: [Course]) -> String {
     if courses.count == 0 {
         return "No courses entered"
@@ -199,6 +228,7 @@ func getCourselist(courses: [Course]) -> String {
     }
     return String(courseList.prefix(courseList.count - 2))
 }
+
 
 func getCourseStrings(courses: [Course]) -> [String] {
     if courses.count == 0 {
@@ -251,6 +281,7 @@ struct ProfileSection: View {
 struct UserProfile_Previews: PreviewProvider {
     @State static var loggedIn = true
     @State var cop: Int = 0
+    @State static var profilePic: UIImage? = nil
     
     static var previews: some View {
         NavigationStack {
@@ -259,4 +290,3 @@ struct UserProfile_Previews: PreviewProvider {
         
     }
 }
-

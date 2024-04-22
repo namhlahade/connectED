@@ -18,6 +18,8 @@ struct ProfileForm: View {
     
     @Binding var data: Tutor.FormData
     
+    @State var profilePic: UIImage? = nil
+    
     var body: some View {
         
         Form {
@@ -47,30 +49,12 @@ struct ProfileForm: View {
                         .padding()
                 } else {
                     // Else: user hasn't selected a photo already, display their chosen profile picture (or the default person.circle if they have no profile pic [data.image == ""])
-                    AsyncImage(url: URL(string: data.image), content: { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .overlay(alignment: .bottomTrailing) {
-                                PhotosPicker(selection: $selectedImage,
-                                             matching: .images) {
-                                    Image(systemName: "pencil.circle.fill")
-                                        .symbolRenderingMode(.multicolor)
-                                        .font(.system(size: 30))
-                                        .foregroundColor(.accentColor)
-                                }
-                                             .buttonStyle(.borderless)
-                                             .onChange(of: selectedImage) {
-                                                 if let newItem = selectedImage {
-                                                     loadPhoto(item: newItem)
-                                                 }
-                                             }
-                            }
-                    }, placeholder: {
-                        if data.image != "" {
+                    if data.image != "" {
+                        if profilePic == nil {
                             ProgressView()
-                        } else {
-                            Image(systemName: "person.circle")
+                        }
+                        else {
+                            Image(uiImage: profilePic!)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .overlay(alignment: .bottomTrailing) {
@@ -91,10 +75,40 @@ struct ProfileForm: View {
                                 .frame(maxWidth: 200, maxHeight: 200)
                                 .padding()
                         }
-                    }).frame(maxWidth: 200, maxHeight: 200)
+                    }
+                    else {
+                        Image(systemName: "person.circle")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .overlay(alignment: .bottomTrailing) {
+                                PhotosPicker(selection: $selectedImage,
+                                             matching: .images) {
+                                    Image(systemName: "pencil.circle.fill")
+                                        .symbolRenderingMode(.multicolor)
+                                        .font(.system(size: 30))
+                                        .foregroundColor(.accentColor)
+                                }
+                                             .buttonStyle(.borderless)
+                                             .onChange(of: selectedImage) {
+                                                 if let newItem = selectedImage {
+                                                     loadPhoto(item: newItem)
+                                                 }
+                                             }
+                            }
+                            .frame(maxWidth: 200, maxHeight: 200)
+                            .padding()
+                    }
+             
+                   
                 }
             }
             .frame(maxWidth: .infinity)
+            .onAppear {
+                if data.image != "" {
+                    getPhoto(path: data.image)
+                    print("Getting profile pic on Appear")
+                }
+            }
             
             
             
@@ -281,6 +295,22 @@ struct ProfileForm: View {
         }
     }
     
+    func getPhoto(path: String) {
+        let storageRef = Storage.storage().reference()
+        let fileRef = storageRef.child(path)
+        fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
+            if error == nil && data != nil {
+                let image = UIImage(data: data!)
+                DispatchQueue.main.async {
+                    // what variable gets updated?
+                    profilePic = image
+                }
+            }
+            else {
+                print(error)
+            }
+        }
+    }
 }
 
 
@@ -316,6 +346,9 @@ func stringDateGetter(_ time: Date) -> String {
 struct ProfileForm_Previews: PreviewProvider {
     @State static var loggedIn = true
     @State var count = 0
+    @State static var profilePic: UIImage? = nil
+    /*let data = Binding.constant(Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false).dataForForm)
+     return ProfileForm(data: data)*/
     static var previews: some View {
         NavigationStack {
             //            Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], image: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), status: .online, rating: 3.61, price: 23.99))
@@ -324,78 +357,3 @@ struct ProfileForm_Previews: PreviewProvider {
         
     }
 }
-
-
-
-
-
-
-
-/*
- 
- if let imageData = imageData, let uiImage = UIImage(data: imageData) {
- Image(uiImage: uiImage)
- .resizable()
- .aspectRatio(contentMode: .fit)
- .overlay(alignment: .bottomTrailing) {
- PhotosPicker(selection: $selectedImage,
- matching: .images) {
- Image(systemName: "pencil.circle.fill")
- .symbolRenderingMode(.multicolor)
- .font(.system(size: 30))
- .foregroundColor(.accentColor)
- }
- .buttonStyle(.borderless)
- .onChange(of: selectedImage) {
- if let newItem = selectedImage {
- loadPhoto(item: newItem)
- }
- }
- }
- .frame(maxWidth: 200, maxHeight: 200)
- .padding()
- } else {
- if data.image == Data() {
- Image(systemName: "person.circle")
- .resizable()
- .aspectRatio(contentMode: .fit)
- .overlay(alignment: .bottomTrailing) {
- PhotosPicker(selection: $selectedImage,
- matching: .images) {
- Image(systemName: "pencil.circle.fill")
- .symbolRenderingMode(.multicolor)
- .font(.system(size: 30))
- .foregroundColor(.accentColor)
- }
- .buttonStyle(.borderless)
- .onChange(of: selectedImage) {
- if let newItem = selectedImage {
- loadPhoto(item: newItem)
- }
- }
- }
- } else {
- Image(uiImage: UIImage(data: data.image)!)
- .resizable()
- .aspectRatio(contentMode: .fit)
- .overlay(alignment: .bottomTrailing) {
- PhotosPicker(selection: $selectedImage,
- matching: .images) {
- Image(systemName: "pencil.circle.fill")
- .symbolRenderingMode(.multicolor)
- .font(.system(size: 30))
- .foregroundColor(.accentColor)
- }
- .buttonStyle(.borderless)
- .onChange(of: selectedImage) {
- if let newItem = selectedImage {
- loadPhoto(item: newItem)
- }
- }
- }
- }
- }
- 
- 
- 
- */
