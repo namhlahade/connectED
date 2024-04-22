@@ -22,8 +22,8 @@ struct ProfileView: View {
             case .failed(let error): Text("Error \(error.localizedDescription)")
             case .success(let tutorInformation):
                 if let tutor = tutorInformation.getTutors().filter({ $0.email == email }).first {
-                    UserProfile(user: tutor, loggedOut: $isLoggedOut)
-                    //ParentProfilePic(user: tutor, loggedOut: $isLoggedOut)
+                    //UserProfile(user: tutor, loggedOut: $isLoggedOut)
+                    ParentProfilePic(user: tutor, loggedOut: $isLoggedOut)
                 } else {
                     Text("No tutor found with email: \(email)")
                     
@@ -39,7 +39,7 @@ struct ProfileView: View {
 
 
 
-/*struct ParentProfilePic: View {
+struct ParentProfilePic: View {
     let getProfilePicLoader_ = getProfilePicLoader()
     
     @State var user: Tutor
@@ -62,7 +62,7 @@ struct ProfileView: View {
             .task { await getProfilePicLoader_.getProfilePic(path: user.image) }
         }
     }
-}*/
+}
 
 
 
@@ -114,7 +114,7 @@ struct UserProfile: View {
             }
             .frame(maxWidth: .infinity, alignment: .center)
             .padding()
-            .onAppear {
+            /*.onAppear {
                 print("")
                 print("")
                 print("User.image: \(user.image)")
@@ -124,7 +124,7 @@ struct UserProfile: View {
                 print(profilePic)
                 print("")
                 print("")
-            }
+            }*/
             
             
             
@@ -195,26 +195,6 @@ struct UserProfile: View {
         }
     }
     
-    func getPhoto(path: String) {
-        
-        let storageRef = Storage.storage().reference()
-        let fileRef = storageRef.child(path)
-        
-        fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
-            
-            if error == nil && data != nil {
-                let image = UIImage(data: data!)
-                DispatchQueue.main.async {
-                    // what variable gets updated?
-                    profilePic = image
-                }
-            }
-            else {
-                print(error)
-            }
-        }
-    }
-    
     func uploadPhoto(imageToUpload: UIImage) async -> Void {
         print("Hello dude")
         let storageRef = Storage.storage().reference()
@@ -235,6 +215,46 @@ struct UserProfile: View {
         }
         
         await editProfileLoader.editProfile(editProfileInput: EditTutorInput(tutorEmail: user.email, image: user.image, name: user.name, bio: user.bio ?? "", courses: getCourseStrings(courses: user.courses), price: user.price, availability: castAvailability(availability: user.availability)))
+    }
+}
+
+/*func getPhoto(path: String) {
+    
+    let storageRef = Storage.storage().reference()
+    let fileRef = storageRef.child(path)
+    
+    fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
+        
+        if error == nil && data != nil {
+            let image = UIImage(data: data!)
+            DispatchQueue.main.async {
+                // what variable gets updated?
+                
+            }
+        }
+        else {
+            print(error)
+        }
+    }
+}*/
+
+func getPhoto(path: String) async throws -> UIImage? {
+    let storageRef = Storage.storage().reference()
+    let fileRef = storageRef.child(path)
+    
+    return try await withCheckedThrowingContinuation { continuation in
+        fileRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+            if let error = error {
+                continuation.resume(throwing: error)
+                print(error)
+            } else if let data = data, let image = UIImage(data: data) {
+                continuation.resume(returning: image)
+                print(data)
+                print(image)
+            } else {
+                continuation.resume(returning: nil)
+            }
+        }
     }
 }
 

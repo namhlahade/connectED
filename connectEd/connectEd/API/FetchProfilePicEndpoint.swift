@@ -9,10 +9,16 @@ import Foundation
 import SwiftUI
 
 class FetchProfilePicEndpoint {
+    var session: URLSession
+    
+    init(session: URLSession = .shared) {
+        self.session = session
+    }
     
     func getThePhoto(path: String) async throws -> UIImage? {
-        /*let image: UIImage? = try await getPhoto(path: path)
-        return image*/
-        return nil
+        print("Got to getThePhoto")
+        let image: UIImage? = try await getPhoto(path: path)
+        print("Got the image optional")
+        return image
     }
 }

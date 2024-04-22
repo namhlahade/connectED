@@ -12,7 +12,7 @@ struct ParentStruct_TutorRow: View {
             switch getTutorInfoLoader.state {
             case .idle: Color.clear
             case .loading: ProgressView()
-            case .failed(let error): TutorRow(user: user, tutor: tutor)
+            case .failed(let error): Text("error!")
             case .success(let tutorInfo):
                 TutorRow(user: user, tutor: tutor)
             }
