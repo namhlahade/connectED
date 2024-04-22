@@ -11,7 +11,8 @@ import SwiftUI
 class FetchProfilePicEndpoint {
     
     func getThePhoto(path: String) async throws -> UIImage? {
-        let image: UIImage? = try await getPhoto(path: path)
-        return image
+        /*let image: UIImage? = try await getPhoto(path: path)
+        return image*/
+        return nil
     }
 }

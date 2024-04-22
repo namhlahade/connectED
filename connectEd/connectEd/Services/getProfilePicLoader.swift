@@ -19,7 +19,6 @@ class getProfilePicLoader {
         do {
             print("Got past do")
             let response = try await apiClient.getThePhoto(path: path)
-            print(response)
             self.state = .success(data: response)
         } catch {
             self.state = .failed(error: error)
