@@ -58,7 +58,12 @@ struct ReviewForm: View {
                     presentationMode.wrappedValue.dismiss() 
                     Task {
                         review.email = tutor.email
+                        let totalRatingSoFar = tutor.rating * Double(tutor.reviews.count)
+                        let updatedTotalRating = totalRatingSoFar + review.rating
+                        let updatedReviewCount = tutor.reviews.count + 1
+                        tutor.rating = updatedTotalRating / Double(updatedReviewCount)
                         tutor.reviews.append(review)
+                        
                         await addTutorReviewLoader.addTutorReview(tutorReviewInput: TutorReviewInputStruct(rating: Int(review.rating), clarity: Int(review.clarity), prep: Int(review.prep), review: review.review, tutorEmail: tutor.email))
                     }
                 }) {

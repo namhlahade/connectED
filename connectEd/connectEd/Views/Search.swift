@@ -24,7 +24,7 @@ struct Search: View {
     @State private var searchText: String = ""
     @State private var advancedSearch: Bool = false
     @State var rating: Double = 0.0
-    @State var price: Int = 40
+    @State var price: Int = 70
     @State var availableOnly: Bool = false
     @State var user: Tutor
     @State var tutors: [Tutor]
