@@ -521,7 +521,7 @@ def editProfile():
             tutor.bio = newBio
             tutor.price = price
             if image_data:
-                tutor.image = base64.b64decode(image_data)  # Decode Base64 to binary
+                tutor.image = image_data
         else:
             return jsonify({"error": "Tutor not found"}), 404
 

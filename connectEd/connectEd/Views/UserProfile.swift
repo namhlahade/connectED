@@ -13,8 +13,8 @@ struct ProfileView: View {
     let email: String
     @Environment(FakeAuthenticationService.self) var authenticationService
     let getTutorLoader = GetTutorLoader()
-    @Binding var isLoggedOut: Bool
-    
+
+    @Binding var loggedIn: Bool
     var body: some View {
         VStack {
             switch getTutorLoader.state {
@@ -23,8 +23,7 @@ struct ProfileView: View {
             case .failed(let error): Text("Error \(error.localizedDescription)")
             case .success(let tutorInformation):
                 if let tutor = tutorInformation.getTutors().filter({ $0.email == email }).first {
-                    UserProfile(user: tutor, loggedOut: $isLoggedOut)
-                    //ParentProfilePic(user: tutor, loggedOut: $isLoggedOut)
+                    UserProfile(user: tutor, loggedIn: $loggedIn)
                 } else {
                     Text("No tutor found with email: \(email)")
                     
@@ -46,10 +45,9 @@ struct UserProfile: View {
     @State private var isPresentingEditForm: Bool = false
     @State private var editTutorFormData: Tutor.FormData = Tutor.FormData()
     
-    @Binding var loggedOut: Bool
-    
+    @Binding var loggedIn: Bool
+
     @State var profilePic: UIImage? = nil
-    
     var body: some View {
         
         Form {
@@ -85,8 +83,7 @@ struct UserProfile: View {
                 }
                 
                 HStack (alignment: .center) {
-                    Text("My rating:")
-                    Text(user.rating == 0 ? "--/5.0" : String(format: "%.1f/5.0", user.rating)).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    RatingView(rating: $user.rating).font(.title)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .center)
@@ -127,7 +124,7 @@ struct UserProfile: View {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
                     authenticationService.logout()
-                    loggedOut = true
+                    loggedIn = false
                 }) {
                     Text("Log Out")
                     
@@ -220,6 +217,25 @@ struct UserProfile: View {
     }
 }
 
+func getPhoto(path: String, completion: @escaping (UIImage?) -> Void) {
+    let storageRef = Storage.storage().reference()
+    let fileRef = storageRef.child(path)
+
+    fileRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+        if let error = error {
+            print("Error downloading image: \(error)")
+            completion(nil)
+        } else if let data = data, let image = UIImage(data: data) {
+            DispatchQueue.main.async {
+                completion(image)
+            }
+        } else {
+            DispatchQueue.main.async {
+                completion(nil)
+            }
+        }
+    }
+}
 
 func getCourselist(courses: [Course]) -> String {
     if courses.count == 0 {
@@ -281,14 +297,14 @@ struct ProfileSection: View {
 
 
 struct UserProfile_Previews: PreviewProvider {
-    @State static var isLoggedOut = false
+    @State static var loggedIn = true
     @State var cop: Int = 0
     @State static var profilePic: UIImage? = nil
     
     static var previews: some View {
         NavigationStack {
-            UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, price: 0, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], favorites: [], availability: []), loggedOut: $isLoggedOut)
-        }
+         UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, price: 0, reviews: [Review(email: "njs40@duke.edu", rating: 4.0, clarity: 3.0, prep: 3.0, review: "Sample description for the review."), Review(email: "njs40@duke.edu", rating: 2.0, clarity: 1.0, prep: 2.0, review: "Most unenjoyable tutoring session of my life. Would not recommend anyone use him.")], favorites: [], availability: []), loggedIn: $loggedIn)
+         }
         
     }
 }

@@ -316,10 +316,8 @@ struct ProfileForm: View {
 
 func editTime(selectedHour: Int, isAM: Bool) -> Date {
     if selectedHour != 12 {
-        //print("\(selectedHour + (isAM ? 0 : 12)):00")
         return dateGetter("\(selectedHour + (isAM ? 0 : 12)):00")
     }
-    //print("\(isAM ? 0 : 12):00")
     return dateGetter("\(isAM ? 0 : 12):00")
 }
 
@@ -346,7 +344,7 @@ func stringDateGetter(_ time: Date) -> String {
 }
 
 struct ProfileForm_Previews: PreviewProvider {
-    @State static var isLoggedOut = false
+    @State static var loggedIn = true
     @State var count = 0
     @State static var profilePic: UIImage? = nil
     /*let data = Binding.constant(Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false).dataForForm)
@@ -354,7 +352,7 @@ struct ProfileForm_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             //            Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], image: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), status: .online, rating: 3.61, price: 23.99))
-            UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, price: 0, reviews: [], favorites: [], availability: []), loggedOut: $isLoggedOut)
+            UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, price: 0, reviews: [], favorites: [], availability: []), loggedIn: $loggedIn)
         }
         
     }

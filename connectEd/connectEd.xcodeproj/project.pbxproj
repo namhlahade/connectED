@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		4549BFEF2BC9EF7500C35577 /* EventService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFEE2BC9EF7500C35577 /* EventService.swift */; };
-		4549BFF22BC9EF9200C35577 /* CalendarChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFF12BC9EF9200C35577 /* CalendarChooser.swift */; };
 		4549BFF42BC9EFA600C35577 /* EventEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFF32BC9EFA600C35577 /* EventEditView.swift */; };
 		4549BFF62BC9EFD500C35577 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFF52BC9EFD500C35577 /* Place.swift */; };
 		4549BFF82BC9EFF700C35577 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFF72BC9EFF700C35577 /* Navigator.swift */; };
-		4549BFFA2BC9F00C00C35577 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFF92BC9F00C00C35577 /* Calendar.swift */; };
 		4549BFFC2BC9F0A200C35577 /* DateFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFFB2BC9F0A200C35577 /* DateFormatters.swift */; };
 		4549BFFE2BC9F25E00C35577 /* HexStringToColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4549BFFD2BC9F25E00C35577 /* HexStringToColor.swift */; };
+		45CFCD0D2BD5FF0900155A53 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CFCD0C2BD5FF0900155A53 /* RatingView.swift */; };
+		45CFCD0F2BD60BE700155A53 /* PriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CFCD0E2BD60BE700155A53 /* PriceView.swift */; };
 		45F5332F2BD1FCF60009ED9E /* TutorProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5332E2BD1FCF60009ED9E /* TutorProfile.swift */; };
 		45F533332BD207DE0009ED9E /* korinna-regular-bt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 45F533322BD207DE0009ED9E /* korinna-regular-bt.ttf */; };
 		45F5333D2BD3CE340009ED9E /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F5333C2BD3CE340009ED9E /* AuthenticationService.swift */; };
@@ -35,9 +35,7 @@
 		4C14A3062BD319150051FDA8 /* AddAvailabilityInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A3052BD319150051FDA8 /* AddAvailabilityInput.swift */; };
 		4C14A3082BD3196D0051FDA8 /* AddAvailabilityEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A3072BD3196D0051FDA8 /* AddAvailabilityEndpoint.swift */; };
 		4C14A30A2BD329710051FDA8 /* AddTutorStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A3092BD329710051FDA8 /* AddTutorStruct.swift */; };
-		4C14A3102BD32A210051FDA8 /* GetFavoriteEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A30F2BD32A210051FDA8 /* GetFavoriteEndpoint.swift */; };
 		4C14A3122BD32B400051FDA8 /* FavoritesResponseStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A3112BD32B400051FDA8 /* FavoritesResponseStruct.swift */; };
-		4C14A3142BD32BC40051FDA8 /* GetFavoriteLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A3132BD32BC40051FDA8 /* GetFavoriteLoader.swift */; };
 		4C14A3182BD32F5E0051FDA8 /* AddAvailablityLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A3172BD32F5E0051FDA8 /* AddAvailablityLoader.swift */; };
 		4C14A31A2BD3301D0051FDA8 /* DeleteFavoriteEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A3192BD3301D0051FDA8 /* DeleteFavoriteEndpoint.swift */; };
 		4C14A31C2BD330CB0051FDA8 /* DeleteFavoriteLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A31B2BD330CB0051FDA8 /* DeleteFavoriteLoader.swift */; };
@@ -47,9 +45,6 @@
 		4C14A3242BD334210051FDA8 /* ViewAvailabilityResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A3232BD334210051FDA8 /* ViewAvailabilityResponse.swift */; };
 		4C14A3262BD36B750051FDA8 /* ViewAvailabilityEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A3252BD36B750051FDA8 /* ViewAvailabilityEndpoint.swift */; };
 		4C14A3282BD36D880051FDA8 /* ViewAvailabilityLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A3272BD36D880051FDA8 /* ViewAvailabilityLoader.swift */; };
-		4C14A32A2BD371030051FDA8 /* AddMeetingInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A3292BD371030051FDA8 /* AddMeetingInput.swift */; };
-		4C14A32C2BD371670051FDA8 /* AddMeetingEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A32B2BD371660051FDA8 /* AddMeetingEndpoint.swift */; };
-		4C14A32E2BD371D20051FDA8 /* AddMeetingLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A32D2BD371D20051FDA8 /* AddMeetingLoader.swift */; };
 		4C25DB592BD070C50089496B /* AddAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C25DB582BD070C50089496B /* AddAPIResponse.swift */; };
 		4C25DB5B2BD070E80089496B /* AddTutorEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C25DB5A2BD070E80089496B /* AddTutorEndpoint.swift */; };
 		4C2804222BCDDAEC00312524 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 4C2804212BCDDAEC00312524 /* OpenAI */; };
@@ -89,13 +84,13 @@
 /* Begin PBXFileReference section */
 		453FADB92BCA1C9C00A63F7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		4549BFEE2BC9EF7500C35577 /* EventService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventService.swift; sourceTree = "<group>"; };
-		4549BFF12BC9EF9200C35577 /* CalendarChooser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarChooser.swift; sourceTree = "<group>"; };
 		4549BFF32BC9EFA600C35577 /* EventEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEditView.swift; sourceTree = "<group>"; };
 		4549BFF52BC9EFD500C35577 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		4549BFF72BC9EFF700C35577 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
-		4549BFF92BC9F00C00C35577 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
 		4549BFFB2BC9F0A200C35577 /* DateFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatters.swift; sourceTree = "<group>"; };
 		4549BFFD2BC9F25E00C35577 /* HexStringToColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexStringToColor.swift; sourceTree = "<group>"; };
+		45CFCD0C2BD5FF0900155A53 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
+		45CFCD0E2BD60BE700155A53 /* PriceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceView.swift; sourceTree = "<group>"; };
 		45F5332E2BD1FCF60009ED9E /* TutorProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorProfile.swift; sourceTree = "<group>"; };
 		45F533322BD207DE0009ED9E /* korinna-regular-bt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "korinna-regular-bt.ttf"; sourceTree = "<group>"; };
 		45F5333C2BD3CE340009ED9E /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
@@ -116,9 +111,7 @@
 		4C14A3052BD319150051FDA8 /* AddAvailabilityInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAvailabilityInput.swift; sourceTree = "<group>"; };
 		4C14A3072BD3196D0051FDA8 /* AddAvailabilityEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAvailabilityEndpoint.swift; sourceTree = "<group>"; };
 		4C14A3092BD329710051FDA8 /* AddTutorStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTutorStruct.swift; sourceTree = "<group>"; };
-		4C14A30F2BD32A210051FDA8 /* GetFavoriteEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFavoriteEndpoint.swift; sourceTree = "<group>"; };
 		4C14A3112BD32B400051FDA8 /* FavoritesResponseStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesResponseStruct.swift; sourceTree = "<group>"; };
-		4C14A3132BD32BC40051FDA8 /* GetFavoriteLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFavoriteLoader.swift; sourceTree = "<group>"; };
 		4C14A3172BD32F5E0051FDA8 /* AddAvailablityLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAvailablityLoader.swift; sourceTree = "<group>"; };
 		4C14A3192BD3301D0051FDA8 /* DeleteFavoriteEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFavoriteEndpoint.swift; sourceTree = "<group>"; };
 		4C14A31B2BD330CB0051FDA8 /* DeleteFavoriteLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFavoriteLoader.swift; sourceTree = "<group>"; };
@@ -128,9 +121,6 @@
 		4C14A3232BD334210051FDA8 /* ViewAvailabilityResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAvailabilityResponse.swift; sourceTree = "<group>"; };
 		4C14A3252BD36B750051FDA8 /* ViewAvailabilityEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAvailabilityEndpoint.swift; sourceTree = "<group>"; };
 		4C14A3272BD36D880051FDA8 /* ViewAvailabilityLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAvailabilityLoader.swift; sourceTree = "<group>"; };
-		4C14A3292BD371030051FDA8 /* AddMeetingInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetingInput.swift; sourceTree = "<group>"; };
-		4C14A32B2BD371660051FDA8 /* AddMeetingEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetingEndpoint.swift; sourceTree = "<group>"; };
-		4C14A32D2BD371D20051FDA8 /* AddMeetingLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetingLoader.swift; sourceTree = "<group>"; };
 		4C25DB582BD070C50089496B /* AddAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAPIResponse.swift; sourceTree = "<group>"; };
 		4C25DB5A2BD070E80089496B /* AddTutorEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTutorEndpoint.swift; sourceTree = "<group>"; };
 		4C2804292BCDE84B00312524 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
@@ -198,12 +188,10 @@
 				45F5333C2BD3CE340009ED9E /* AuthenticationService.swift */,
 				4C14A2FB2BD3139B0051FDA8 /* AddFavoriteLoader.swift */,
 				4C14A3032BD317920051FDA8 /* GetTutorReviewLoader.swift */,
-				4C14A3132BD32BC40051FDA8 /* GetFavoriteLoader.swift */,
 				4C14A3172BD32F5E0051FDA8 /* AddAvailablityLoader.swift */,
 				4C14A31B2BD330CB0051FDA8 /* DeleteFavoriteLoader.swift */,
 				4C14A3212BD3328E0051FDA8 /* AddTutorReviewLoader.swift */,
 				4C14A3272BD36D880051FDA8 /* ViewAvailabilityLoader.swift */,
-				4C14A32D2BD371D20051FDA8 /* AddMeetingLoader.swift */,
 				4CA470C22BD47FEC0046FE67 /* EditProfileLoader.swift */,
 				97EAC0C92BD60BD0002936EE /* getProfilePicLoader.swift */,
 			);
@@ -213,7 +201,6 @@
 		4549BFF02BC9EF8500C35577 /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
-				4549BFF12BC9EF9200C35577 /* CalendarChooser.swift */,
 				4549BFF32BC9EFA600C35577 /* EventEditView.swift */,
 			);
 			path = UIKit;
@@ -244,11 +231,9 @@
 				4C14A2F82BD312E00051FDA8 /* AddFavoriteEndpoint.swift */,
 				4C14A2FF2BD315490051FDA8 /* GetTutorReviewsEndpoint.swift */,
 				4C14A3072BD3196D0051FDA8 /* AddAvailabilityEndpoint.swift */,
-				4C14A30F2BD32A210051FDA8 /* GetFavoriteEndpoint.swift */,
 				4C14A3192BD3301D0051FDA8 /* DeleteFavoriteEndpoint.swift */,
 				4C14A31F2BD332470051FDA8 /* AddTutorReviewEndpoint.swift */,
 				4C14A3252BD36B750051FDA8 /* ViewAvailabilityEndpoint.swift */,
-				4C14A32B2BD371660051FDA8 /* AddMeetingEndpoint.swift */,
 				4CA470C02BD47DA80046FE67 /* EditProfileEndpoint.swift */,
 				97EAC0C72BD60AC7002936EE /* FetchProfilePicEndpoint.swift */,
 			);
@@ -285,7 +270,6 @@
 				4C14A3112BD32B400051FDA8 /* FavoritesResponseStruct.swift */,
 				4C14A31D2BD331ED0051FDA8 /* TutorReviewInputStruct.swift */,
 				4C14A3232BD334210051FDA8 /* ViewAvailabilityResponse.swift */,
-				4C14A3292BD371030051FDA8 /* AddMeetingInput.swift */,
 				4CA470BE2BD47D580046FE67 /* EditProfileInput.swift */,
 			);
 			path = Models;
@@ -305,9 +289,10 @@
 				97C6B35A2BBE9D55002C8317 /* ProfileForm.swift */,
 				9744D5842BBEE2C000758135 /* ReviewRow.swift */,
 				4549BFF72BC9EFF700C35577 /* Navigator.swift */,
-				4549BFF92BC9F00C00C35577 /* Calendar.swift */,
 				4CE71C5A2BCA14BA003043AE /* AITutor.swift */,
 				45F5332E2BD1FCF60009ED9E /* TutorProfile.swift */,
+				45CFCD0C2BD5FF0900155A53 /* RatingView.swift */,
+				45CFCD0E2BD60BE700155A53 /* PriceView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -460,6 +445,7 @@
 				4C14A2FC2BD3139B0051FDA8 /* AddFavoriteLoader.swift in Sources */,
 				4C14A3202BD332470051FDA8 /* AddTutorReviewEndpoint.swift in Sources */,
 				4549BFEF2BC9EF7500C35577 /* EventService.swift in Sources */,
+				45CFCD0D2BD5FF0900155A53 /* RatingView.swift in Sources */,
 				4549BFFC2BC9F0A200C35577 /* DateFormatters.swift in Sources */,
 				4C14A30A2BD329710051FDA8 /* AddTutorStruct.swift in Sources */,
 				4C14A2F12BD2ECFB0051FDA8 /* TutorsResponse.swift in Sources */,
@@ -471,29 +457,26 @@
 				97C6B35B2BBE9D55002C8317 /* ProfileForm.swift in Sources */,
 				4C14A3222BD3328E0051FDA8 /* AddTutorReviewLoader.swift in Sources */,
 				4CA470C12BD47DA80046FE67 /* EditProfileEndpoint.swift in Sources */,
+				45CFCD0F2BD60BE700155A53 /* PriceView.swift in Sources */,
 				4C28042C2BCDE86700312524 /* APIError.swift in Sources */,
 				5B097E7C2BC4E20C0074CFB4 /* PreviewContainer.swift in Sources */,
-				4549BFF22BC9EF9200C35577 /* CalendarChooser.swift in Sources */,
 				4C14A2F72BD3129D0051FDA8 /* FavoriteInputStruct.swift in Sources */,
 				4C14A3062BD319150051FDA8 /* AddAvailabilityInput.swift in Sources */,
 				4CE71C5B2BCA14BA003043AE /* AITutor.swift in Sources */,
 				4C14A2F52BD302B10051FDA8 /* GetTutorInfoLoader.swift in Sources */,
 				97385D9D2BBAD96200BB8C8A /* ReviewForm.swift in Sources */,
 				45F5333F2BD3CF1F0009ED9E /* Login.swift in Sources */,
-				4549BFFA2BC9F00C00C35577 /* Calendar.swift in Sources */,
 				97385D932BBAD58300BB8C8A /* Search.swift in Sources */,
 				4C14A3022BD316FA0051FDA8 /* ReviewResponse.swift in Sources */,
 				979390D72BD233790093776F /* Availability.swift in Sources */,
 				4549BFF62BC9EFD500C35577 /* Place.swift in Sources */,
 				4C14A31A2BD3301D0051FDA8 /* DeleteFavoriteEndpoint.swift in Sources */,
-				4C14A32A2BD371030051FDA8 /* AddMeetingInput.swift in Sources */,
 				4C14A3002BD315490051FDA8 /* GetTutorReviewsEndpoint.swift in Sources */,
 				4C14A2EB2BD2DD150051FDA8 /* GetTutorEndpoint.swift in Sources */,
 				4549BFF42BC9EFA600C35577 /* EventEditView.swift in Sources */,
 				97C6B35E2BBE9D6C002C8317 /* TextFieldWithLabel.swift in Sources */,
 				9744D5832BBEDE0D00758135 /* Review.swift in Sources */,
 				4C14A2E92BD2D6510051FDA8 /* AddTutorLoader.swift in Sources */,
-				4C14A3142BD32BC40051FDA8 /* GetFavoriteLoader.swift in Sources */,
 				4CA470C32BD47FEC0046FE67 /* EditProfileLoader.swift in Sources */,
 				4C25DB592BD070C50089496B /* AddAPIResponse.swift in Sources */,
 				4C14A3042BD317920051FDA8 /* GetTutorReviewLoader.swift in Sources */,
@@ -501,16 +484,13 @@
 				4CE71C5D2BCA1739003043AE /* Message.swift in Sources */,
 				97385D952BBAD59200BB8C8A /* Favorites.swift in Sources */,
 				977FA7AA2BB1144A006CF4C2 /* connectEdApp.swift in Sources */,
-				4C14A3102BD32A210051FDA8 /* GetFavoriteEndpoint.swift in Sources */,
 				97402E8B2BCA049700571E2E /* Course.swift in Sources */,
 				97EAC0C82BD60AC7002936EE /* FetchProfilePicEndpoint.swift in Sources */,
 				4CA470BF2BD47D580046FE67 /* EditProfileInput.swift in Sources */,
 				4C14A3242BD334210051FDA8 /* ViewAvailabilityResponse.swift in Sources */,
 				4C14A31C2BD330CB0051FDA8 /* DeleteFavoriteLoader.swift in Sources */,
 				5B097E7A2BBE7F7D0074CFB4 /* TutorRow.swift in Sources */,
-				4C14A32E2BD371D20051FDA8 /* AddMeetingLoader.swift in Sources */,
 				4C14A3122BD32B400051FDA8 /* FavoritesResponseStruct.swift in Sources */,
-				4C14A32C2BD371670051FDA8 /* AddMeetingEndpoint.swift in Sources */,
 				4C14A3262BD36B750051FDA8 /* ViewAvailabilityEndpoint.swift in Sources */,
 				4C14A2F92BD312E00051FDA8 /* AddFavoriteEndpoint.swift in Sources */,
 				4C14A3082BD3196D0051FDA8 /* AddAvailabilityEndpoint.swift in Sources */,

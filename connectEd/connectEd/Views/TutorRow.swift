@@ -96,28 +96,29 @@ struct TutorRow: View {
             
             VStack (alignment: .leading) {
                 HStack {
-                    Text(tutor.name).bold().font(.title2)
+                    Text(tutor.name).font(.title2)
                     Spacer()
                     if user.favorites.contains(tutor.email) {
                         Image(systemName: "star.fill").foregroundStyle(Color.yellow)
                     }
-                }.padding([.bottom], -5)
+                }.padding(.leading, 5)
                 HStack {
-                    Text("Rating: ").bold()
-                    Text(tutor.rating == 0 ? "--/5.0" : String(format: "%.1f/5.0", tutor.rating)).foregroundStyle(Color.gray)
-                }
-                HStack {
-                    Text(String(format: "$%.2f /hr", tutor.price))
-                }
+                    RatingView(rating: $tutor.rating)
+                    PriceView(price: $tutor.price)
+                }.padding(5)
                 
                 HStack {
                     if tutor.courses.isEmpty == false {
-                        Text(getCourselist(courses: tutor.courses))
+                        Text(getCourselist(courses: tutor.courses)).foregroundStyle(Color.blue)
+                            .padding(5).background(.blue.opacity(0.2))            .cornerRadius(10)
+                            .font(.footnote)
                     }
                     else {
-                        Text("No courses")
+                        Text("No courses").foregroundStyle(Color.gray)
+                            .padding(5).background(.gray.opacity(0.2))            .cornerRadius(10)
+                            .font(.footnote)
                     }
-                }
+                }.padding([.bottom, .leading, .trailing], 5)
             }
         }
         

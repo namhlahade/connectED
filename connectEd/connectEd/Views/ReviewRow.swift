@@ -22,7 +22,6 @@ struct ReviewRow: View {
                     Image(systemName: getStarImageName(for: index, review: review))
                         .foregroundColor(starColor)
                         .font(.system(size: 20))
-                    //Spacer()
                 }
             }.padding([.bottom], 5)
             

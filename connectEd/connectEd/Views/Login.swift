@@ -7,6 +7,7 @@ struct LoginScreen: View {
     let addTutorLoader = AddTutorLoader()
     @Environment(FakeAuthenticationService.self) var authenticationService
     @Environment(\.modelContext) private var modelContext
+    @State var loggedIn: Bool
     @State var email: String = ""
     @State private var isEmailValid = false
     @State var validationStatus: Bool = false
@@ -18,82 +19,96 @@ struct LoginScreen: View {
     @State var user: Tutor = Tutor(id: UUID(), name: "", email: "", bio: "", courses: [], image: "", status: .offline, rating: 0.0, price: 0, reviews: [], favorites: [], availability: [])
     let backgroundColor = HexStringToColor(hex: "#3498eb").color
     var body: some View {
-        if authorized {
-            ParentTabContainer(email: $email)
+        if loggedIn {
+            ParentTabContainer(email: $email, loggedIn: $loggedIn)
         }
         else {
             VStack {
-                 ScrollView {
-                     Text("Welcome To ConnectED!")
-                                         .font(.largeTitle)
-                                         .fontWeight(.bold)
-                                         .foregroundColor(backgroundColor)
-                                         .padding(.top, 50)
-                     TextField("Enter Email", text: $email)
-                         .multilineTextAlignment(.center)
-                         .background(Color.clear)
-                         .onChange(of: email) {
-                             if (!isValidEmail(email)) { warningVisisble = true }
-                             else{
-                                 warningVisisble = false
-                             }
-                         }
-                         .overlay(
-                             RoundedRectangle(cornerRadius: 8)
-                                 .stroke(backgroundColor, lineWidth: 1.5)
-                         )                    .textFieldStyle(.roundedBorder)
-                         .frame(height: 50)
-                         .padding(30)
-                     warningVisisble ? Text("Must Enter Valid Email").font(.caption).foregroundColor(Color.red) : Text(" ").font(.caption)
-                     Button("Login") {
-                         authenticationService.login(email: email, modelContext: modelContext)
-                         editTutorFormData = Tutor(name: "", email: email, courses: [], status: .offline, reviews: [], favorites: [], availability: []).dataForForm
-                         isPresentingProfileForm.toggle()
-                     }
-                     .buttonStyle(.bordered)
-                     .disabled(!isValidEmail(email))
-                     Spacer()
-                     }.fontWeight(.bold)
-                     .foregroundColor(backgroundColor)
-                     .padding(30)
-                     .buttonStyle(.bordered).frame(maxWidth: .infinity)
-                     if let errorMessage = authenticationService.errorMessage {
-                         Text(errorMessage)
-                             .font(.headline)
-                             .foregroundStyle(.red).frame(maxWidth: .infinity, alignment: .center)
-                     }
-                 }.background(Color("#3498eb"))
-                     .edgesIgnoringSafeArea(.all)
-                 .navigationTitle("Login")
-                 .padding().sheet(isPresented: $isPresentingProfileForm) {
-                     NavigationStack {
-                         ProfileForm(data: $editTutorFormData)
-                             .toolbar {
-                                 ToolbarItem(placement: .navigationBarLeading) {
-                                     Button("Cancel") {
-                                         isPresentingProfileForm.toggle()
-                                         authenticationService.logout()
-                                     }
-                                     
-                                 }
-                                 ToolbarItem(placement: .principal) {
-                                     Text("Edit Profile").fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                                 }
-                                 ToolbarItem(placement: .navigationBarTrailing) {
-                                     Button("Complete") {
-                                         Tutor.update(user, from: editTutorFormData)
-                                         isPresentingProfileForm.toggle()
-                                         Task{
-                                             await addTutorLoader.addTutorInfo(tutor: AddTutorStruct(name: user.name, email: user.email, bio: user.bio ?? "", price: user.price, image: "", courses: getCourseStrings(courses: user.courses), availability: castAvailability(availability: user.availability)))
-                                             authorized = true
-                                         }
-                                     }
-                                 }
-                             }
-                     }
-                 }
-             }
-
+                ScrollView {
+                    Text("Welcome To ConnectED!")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(backgroundColor)
+                        .padding(.top, 50)
+                    TextField("Enter Email", text: $email)
+                        .multilineTextAlignment(.center)
+                        .background(Color.clear)
+                        .onChange(of: email) {
+                            if (!isValidEmail(email)) { warningVisisble = true }
+                            else{
+                                warningVisisble = false
+                            }
+                        }
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(backgroundColor, lineWidth: 1.5)
+                        )                    .textFieldStyle(.roundedBorder)
+                        .frame(height: 50)
+                        .padding(30)
+                    warningVisisble ? Text("Must Enter Valid Email").font(.caption).foregroundColor(Color.red) : Text(" ").font(.caption)
+                    Button("Continue") {
+                        Task {
+                            do {
+                                
+                                if let user = try authenticationService.fetchUser(email, modelContext: modelContext) {
+                                    loggedIn = true
+                                } else {
+                                    editTutorFormData = Tutor(name: "", email: email, courses: [], status: .offline, reviews: [], favorites: [], availability: []).dataForForm
+                                    isPresentingProfileForm.toggle()
+                                    
+                                }
+                            } catch {
+                                print("Error: \(error)")
+                            }
+                        }
+                    }
+                    .buttonStyle(.bordered)
+                    .disabled(!isValidEmail(email))
+                    Spacer()
+                }.fontWeight(.bold)
+                    .foregroundColor(backgroundColor)
+                    .padding(30)
+                    .buttonStyle(.bordered).frame(maxWidth: .infinity)
+                if let errorMessage = authenticationService.errorMessage {
+                    Text(errorMessage)
+                        .font(.headline)
+                        .foregroundStyle(.red).frame(maxWidth: .infinity, alignment: .center)
+                }
+            }.background(Color("#3498eb"))
+                .edgesIgnoringSafeArea(.all)
+                .padding().sheet(isPresented: $isPresentingProfileForm) {
+                    NavigationStack {
+                        ProfileForm(data: $editTutorFormData)
+                            .toolbar {
+                                ToolbarItem(placement: .navigationBarLeading) {
+                                    Button("Cancel") {
+                                        isPresentingProfileForm.toggle()
+                                    }
+                                    
+                                }
+                                ToolbarItem(placement: .principal) {
+                                    Text("Edit Profile").fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                                }
+                                ToolbarItem(placement: .navigationBarTrailing) {
+                                    Button("Complete") {
+                                        do {
+                                            try authenticationService.login(email: email, modelContext: modelContext)
+                                            Tutor.update(user, from: editTutorFormData)
+                                            isPresentingProfileForm.toggle()
+                                            Task{
+                                                await addTutorLoader.addTutorInfo(tutor: AddTutorStruct(name: user.name, email: user.email, bio: user.bio ?? "", price: user.price, image: "", courses: getCourseStrings(courses: user.courses), availability: castAvailability(availability: user.availability)))
+                                                loggedIn = true
+                                            }
+                                        } catch {
+                                            print("Error: \(error)")
+                                        }
+                                    }
+                                }
+                            }
+                    }
+                }
+        }
+        
     }
     
     func stringDateGetter(_ time: Date) -> String {
