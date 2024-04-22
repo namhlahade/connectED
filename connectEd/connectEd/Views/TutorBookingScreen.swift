@@ -123,6 +123,7 @@ struct TutorBookingScreen: View {
             event.title = "Meeting with \(tutor.name)"
             event.startDate = startDate
             event.endDate = endDate
+            event.location = currentLocation
             return event
         }
     }
