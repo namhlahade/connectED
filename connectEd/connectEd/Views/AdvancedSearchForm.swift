@@ -16,7 +16,7 @@ struct AdvancedSearchForm: View {
             }
             Section(header: Text("Filter by price")) {
                 Picker(selection: $price, label: Text("Price")) {
-                    ForEach(0..<50) {
+                    ForEach(0..<75) {
                         index in Text("\(index)")
                     }
                 }
