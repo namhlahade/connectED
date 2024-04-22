@@ -194,9 +194,10 @@ struct SearchQuery: View {
 }
 
 struct RegionButtons: View {
+    let indices = ["Lily", "Perkins", "Twinnies", "WU"]
     @Binding var position: MapCameraPosition
     @Binding var currentLocation: String
-    @State private var selectedLocationIndex = 0
+    @State private var selectedLocationIndex : Int = 0
     let locations = [LocationCoordinate.lily, LocationCoordinate.perkins, LocationCoordinate.twinnies, LocationCoordinate.wu]
 
     var body: some View {
@@ -212,6 +213,8 @@ struct RegionButtons: View {
                 position = .region(MKCoordinateRegion(center: locations[selectedLocationIndex].coordinate, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)))
                 currentLocation = locations[selectedLocationIndex].name
             }
+        }.onAppear {
+            selectedLocationIndex = indices.firstIndex(of: currentLocation) ?? 0
         }
         .padding()
     }

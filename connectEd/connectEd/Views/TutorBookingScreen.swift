@@ -69,10 +69,18 @@ struct TutorBookingScreen: View {
         .navigationBarTitleDisplayMode(.inline).frame(alignment: .center)
 
         .sheet(isPresented: $isPresentingNavigator){
-            
-            NavigationStack {
-                Navigator(currentLocation: $currentLocation)
-                Text("Current Location: \(currentLocation)")
+            NavigationStack{
+                VStack {
+                
+                    Navigator(currentLocation: $currentLocation)
+                    Text("Current Location: \(currentLocation)")
+                }.toolbar{
+                    ToolbarItem(placement: .navigationBarTrailing){
+                        Button("Close"){
+                            isPresentingNavigator = false
+                        }
+                    }
+                }
             }
         }.frame(maxWidth: .infinity, alignment: .center)
     }
