@@ -27,14 +27,10 @@ struct connectEdApp: App {
             }
         }()
         @State var userEmail = authenticationService.maybeLoginSavedUser(modelContext: sharedModelContainer.mainContext)
+        @State var loggedIn = userEmail != ""
         WindowGroup {
-            if (userEmail != ""){
-                ParentTabContainer(email: $userEmail)
-            } else{
-                LoginScreen()
-                    .onAppear { authenticationService.maybeLoginSavedUser(modelContext: sharedModelContainer.mainContext) }
-            
-            }
+            LoginScreen(loggedIn: loggedIn)
+                .onAppear { authenticationService.maybeLoginSavedUser(modelContext: sharedModelContainer.mainContext) }
         }
         .modelContainer(sharedModelContainer)
         .environment(authenticationService)

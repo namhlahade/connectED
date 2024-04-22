@@ -10,6 +10,7 @@ import SwiftUI
 struct ParentTabContainer: View {
     let getTutorLoader = GetTutorLoader()
     @Binding var email: String
+    @Binding var loggedIn: Bool
     
     var body: some View {
         VStack {
@@ -18,7 +19,7 @@ struct ParentTabContainer: View {
             case .loading: ProgressView()
             case .failed(let error): Text("Error \(error.localizedDescription)")
             case .success(let allTutorInfo):
-                TabContainer(email: $email, tutors: allTutorInfo.getTutors())
+                TabContainer(loggedIn: $loggedIn, email: $email, tutors: allTutorInfo.getTutors())
             }
         }
         .task { await getTutorLoader.getAllTutorInfo() }
@@ -27,15 +28,11 @@ struct ParentTabContainer: View {
 
 
 struct TabContainer: View {
-    @State private var isLoggedOut = false
+    @Binding var loggedIn: Bool
     @Binding var email: String
     @State var tutors: [Tutor]
     
     var body: some View {
-        if isLoggedOut {
-            LoginScreen()
-            //isLoggedOut = false
-        } else{
             TabView {
                 NavigationStack {
                     ParentSearch(user: tutors.filter({ $0.email == email }).first!)
@@ -56,19 +53,19 @@ struct TabContainer: View {
                     Label("Cipher", systemImage: "brain.head.profile")
                 }
                 NavigationStack {
-                    ProfileView(email: email, isLoggedOut: $isLoggedOut)
+                    ProfileView(email: email, loggedIn: $loggedIn)
                 }
                 .tabItem {
                     Label("Profile", systemImage: "person.fill")
                 }
             }
-        }
     }
 }
 
 struct TabContainer_Previews: PreviewProvider {
     @State static var email = "nrunton@gmail.com"
+    @State static var loggedIn = true
     static var previews: some View {
-        TabContainer(email: $email, tutors: Tutor.previewData)
+        TabContainer(loggedIn: $loggedIn, email: $email, tutors: Tutor.previewData)
     }
 }
