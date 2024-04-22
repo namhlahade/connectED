@@ -1,6 +1,6 @@
 import SwiftUI
 import AuthenticationServices
-
+import FirebaseStorage
 
 
 struct LoginScreen: View {
@@ -16,6 +16,7 @@ struct LoginScreen: View {
     @State var editTutorFormData: Tutor.FormData = Tutor.FormData()
     @State var authorized: Bool = false
     @State var warningVisisble: Bool = false
+    @State var profilePic: UIImage? = nil
     @State var user: Tutor = Tutor(id: UUID(), name: "", email: "", bio: "", courses: [], image: "", status: .offline, rating: 0.0, price: 0, reviews: [], favorites: [], availability: [])
     let backgroundColor = HexStringToColor(hex: "#3498eb").color
     var body: some View {
@@ -95,10 +96,22 @@ struct LoginScreen: View {
                                             try authenticationService.login(email: email, modelContext: modelContext)
                                             Tutor.update(user, from: editTutorFormData)
                                             isPresentingProfileForm.toggle()
-                                            Task{
+                                            if user.imageData == nil || user.imageData == Data() {
+                                                Task {
+                                                    await addTutorLoader.addTutorInfo(tutor: AddTutorStruct(name: user.name, email: user.email, bio: user.bio ?? "", price: user.price, image: user.image, courses: getCourseStrings(courses: user.courses), availability: castAvailability(availability: user.availability)))
+                                                    loggedIn = true
+                                                }
+                                            }
+                                            else {
+                                                Task {
+                                                    await uploadPhoto(imageToUpload: UIImage(data: user.imageData!)!)
+                                                    loggedIn = true
+                                                }
+                                            }
+                                            /*Task{
                                                 await addTutorLoader.addTutorInfo(tutor: AddTutorStruct(name: user.name, email: user.email, bio: user.bio ?? "", price: user.price, image: "", courses: getCourseStrings(courses: user.courses), availability: castAvailability(availability: user.availability)))
                                                 loggedIn = true
-                                            }
+                                            }*/
                                         } catch {
                                             print("Error: \(error)")
                                         }
@@ -109,6 +122,28 @@ struct LoginScreen: View {
                 }
         }
         
+    }
+    
+    func uploadPhoto(imageToUpload: UIImage) async -> Void {
+        print("Hello dude")
+        let storageRef = Storage.storage().reference()
+        let imageData_ = imageToUpload.jpegData(compressionQuality: 0.8)
+        
+        guard imageData_ != nil else {
+            return
+        }
+        let path = "Images/\(UUID().uuidString).jpg"
+        user.image = path
+        print("User.image: \(user.image)")
+        print("Path: \(path)")
+        let fileRef = storageRef.child(path)
+        let uploadTask = fileRef.putData(imageData_!, metadata: nil) {metadata, error in
+            if error == nil && metadata != nil {
+                //getPhoto(path: user.image)
+            }
+        }
+        
+        await addTutorLoader.addTutorInfo(tutor: AddTutorStruct(name: user.name, email: user.email, bio: user.bio ?? "", price: user.price, image: user.image, courses: getCourseStrings(courses: user.courses), availability: castAvailability(availability: user.availability)))
     }
     
     func stringDateGetter(_ time: Date) -> String {

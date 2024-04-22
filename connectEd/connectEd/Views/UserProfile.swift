@@ -48,6 +48,7 @@ struct UserProfile: View {
     @Binding var loggedIn: Bool
 
     @State var profilePic: UIImage? = nil
+    
     var body: some View {
         
         Form {
