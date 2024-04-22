@@ -269,6 +269,7 @@
 				9744D5822BBEDE0D00758135 /* Review.swift */,
 				5B097E7B2BC4E20C0074CFB4 /* PreviewContainer.swift */,
 				4549BFF52BC9EFD500C35577 /* Place.swift */,
+				4C14A3292BD371030051FDA8 /* AddMeetingInput.swift */,
 				97402E8A2BCA049700571E2E /* Course.swift */,
 				4CE71C5C2BCA1739003043AE /* Message.swift */,
 				979390D62BD233790093776F /* Availability.swift */,
@@ -283,7 +284,6 @@
 				4C14A3112BD32B400051FDA8 /* FavoritesResponseStruct.swift */,
 				4C14A31D2BD331ED0051FDA8 /* TutorReviewInputStruct.swift */,
 				4C14A3232BD334210051FDA8 /* ViewAvailabilityResponse.swift */,
-				4C14A3292BD371030051FDA8 /* AddMeetingInput.swift */,
 				4CA470BE2BD47D580046FE67 /* EditProfileInput.swift */,
 			);
 			path = Models;
