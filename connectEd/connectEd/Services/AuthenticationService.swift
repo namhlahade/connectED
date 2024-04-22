@@ -42,7 +42,8 @@ class FakeAuthenticationService {
         if let email,
            let user = try? fetchUser(email, modelContext: modelContext) {
             loginUser(user)
-            return user.userEmail
+            logout()
+            return ""//user.userEmail
         }
         return ""
     }

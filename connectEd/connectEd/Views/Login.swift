@@ -46,10 +46,21 @@ struct LoginScreen: View {
                         .frame(height: 50)
                         .padding(30)
                     warningVisisble ? Text("Must Enter Valid Email").font(.caption).foregroundColor(Color.red) : Text(" ").font(.caption)
-                    Button("Enter") {
-                        authenticationService.login(email: email, modelContext: modelContext)
-                        editTutorFormData = Tutor(name: "", email: email, courses: [], status: .offline, reviews: [], favorites: [], availability: []).dataForForm
-                        isPresentingProfileForm.toggle()
+                    Button("Continue") {
+                        Task {
+                            do {
+                                
+                                if let user = try authenticationService.fetchUser(email, modelContext: modelContext) {
+                                    loggedIn = true
+                                } else {
+                                    editTutorFormData = Tutor(name: "", email: email, courses: [], status: .offline, reviews: [], favorites: [], availability: []).dataForForm
+                                    isPresentingProfileForm.toggle()
+                                    
+                                }
+                            } catch {
+                                print("Error: \(error)")
+                            }
+                        }
                     }
                     .buttonStyle(.bordered)
                     .disabled(!isValidEmail(email))
@@ -65,7 +76,6 @@ struct LoginScreen: View {
                 }
             }.background(Color("#3498eb"))
                 .edgesIgnoringSafeArea(.all)
-                .navigationTitle("Sign Up")
                 .padding().sheet(isPresented: $isPresentingProfileForm) {
                     NavigationStack {
                         ProfileForm(data: $editTutorFormData)
@@ -73,8 +83,6 @@ struct LoginScreen: View {
                                 ToolbarItem(placement: .navigationBarLeading) {
                                     Button("Cancel") {
                                         isPresentingProfileForm.toggle()
-                                        authenticationService.logout()
-                                        loggedIn = false
                                     }
                                     
                                 }
@@ -83,11 +91,16 @@ struct LoginScreen: View {
                                 }
                                 ToolbarItem(placement: .navigationBarTrailing) {
                                     Button("Complete") {
-                                        Tutor.update(user, from: editTutorFormData)
-                                        isPresentingProfileForm.toggle()
-                                        Task{
-                                            await addTutorLoader.addTutorInfo(tutor: AddTutorStruct(name: user.name, email: user.email, bio: user.bio ?? "", price: user.price, image: "", courses: getCourseStrings(courses: user.courses), availability: castAvailability(availability: user.availability)))
-                                            loggedIn = true
+                                        do {
+                                            try authenticationService.login(email: email, modelContext: modelContext)
+                                            Tutor.update(user, from: editTutorFormData)
+                                            isPresentingProfileForm.toggle()
+                                            Task{
+                                                await addTutorLoader.addTutorInfo(tutor: AddTutorStruct(name: user.name, email: user.email, bio: user.bio ?? "", price: user.price, image: "", courses: getCourseStrings(courses: user.courses), availability: castAvailability(availability: user.availability)))
+                                                loggedIn = true
+                                            }
+                                        } catch {
+                                            print("Error: \(error)")
                                         }
                                     }
                                 }
