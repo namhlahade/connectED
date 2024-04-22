@@ -10,7 +10,6 @@ struct TutorBookingScreen: View {
     @State private var sessionDuration = 1
     @State var selectedCourse: String = ""
     @State private var price = 0.0
-//    @State private var selectedLocation: CLLocationCoordinate2D?
     @State var searchResults: [MKMapItem] = []
     @State private var visibleRegion: MKCoordinateRegion = .duke
     @State private var selectedOptionIndex = 0
@@ -55,10 +54,6 @@ struct TutorBookingScreen: View {
                     .multilineTextAlignment(.center)
                 }
             }
-            
-//            Map(position: .lily, selection: $selectedMapItem){
-//
-//            }
             Section(header: Text("Meeting Location")) {
                 Button("Current Location: \(currentLocation)") {
                     isPresentingNavigator.toggle()
@@ -98,7 +93,7 @@ struct TutorBookingScreen: View {
                 meetingWeekday! += 2
             }
             
-            var initialStartHour = Int(meetingString[1].split(separator: ":")[0])!
+            let initialStartHour = Int(meetingString[1].split(separator: ":")[0])!
             var startHour: Int
             if initialStartHour != 12 {
                 startHour = initialStartHour + (meetingString[2] == "AM" ? 0 : 12)
@@ -109,7 +104,7 @@ struct TutorBookingScreen: View {
             let startDate = calendar.nextDate(after: now, matching: DateComponents(hour: startHour, minute: Int(meetingString[1].split(separator: ":")[1]), weekday: meetingWeekday), matchingPolicy: .nextTime)
             
             
-            var initialEndHour = Int(meetingString[4].split(separator: ":")[0])!
+            let initialEndHour = Int(meetingString[4].split(separator: ":")[0])!
             var endHour: Int
             if initialEndHour != 12 {
                 endHour = initialEndHour + (meetingString[5] == "AM" ? 0 : 12)
@@ -119,7 +114,7 @@ struct TutorBookingScreen: View {
             }
             let endDate = calendar.nextDate(after: now, matching: DateComponents(hour: endHour, minute: Int(meetingString[4].split(separator: ":")[1]), weekday: meetingWeekday), matchingPolicy: .nextTime)
             
-            var event = EKEvent(eventStore: eventStore)
+            let event = EKEvent(eventStore: eventStore)
             event.title = "Meeting with \(tutor.name)"
             event.startDate = startDate
             event.endDate = endDate

@@ -286,10 +286,8 @@ struct ProfileForm: View {
 
 func editTime(selectedHour: Int, isAM: Bool) -> Date {
     if selectedHour != 12 {
-        //print("\(selectedHour + (isAM ? 0 : 12)):00")
         return dateGetter("\(selectedHour + (isAM ? 0 : 12)):00")
     }
-    //print("\(isAM ? 0 : 12):00")
     return dateGetter("\(isAM ? 0 : 12):00")
 }
 
@@ -318,8 +316,6 @@ func stringDateGetter(_ time: Date) -> String {
 struct ProfileForm_Previews: PreviewProvider {
     @State static var isLoggedOut = false
     @State var count = 0
-    /*let data = Binding.constant(Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, isFavorite: false).dataForForm)
-     return ProfileForm(data: data)*/
     static var previews: some View {
         NavigationStack {
             //            Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], image: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), status: .online, rating: 3.61, price: 23.99))

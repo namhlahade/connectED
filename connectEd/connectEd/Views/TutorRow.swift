@@ -1,26 +1,5 @@
 import SwiftUI
 
-struct ParentStruct_TutorRow: View {
-    
-    var user: Tutor
-    @Bindable var tutor: Tutor
-    
-    
-    let getTutorInfoLoader = GetTutorInfoLoader()
-    var body: some View {
-        VStack {
-            switch getTutorInfoLoader.state {
-            case .idle: Color.clear
-            case .loading: ProgressView()
-            case .failed(let error): TutorRow(user: user, tutor: tutor)
-            case .success(let tutorInfo):
-                TutorRow(user: user, tutor: tutor)
-            }
-        }
-        .task { await getTutorInfoLoader.getTutorInfo(email: EmailStruct(tutorEmail: tutor.email)) }
-    }
-}
-
 struct TutorRow: View {
     var user: Tutor
     @State var tutor: Tutor
@@ -61,16 +40,8 @@ struct TutorRow: View {
                     }
                 }.padding(.leading, 5)
                 HStack {
-//                    RatingView(rating: $tutor.rating)
-//                    Text("Rating: ").bold().foregroundStyle(HexStringToColor(hex: "#333333").color)
-//                    Text(tutor.rating == 0 ? "--/5.0" : String(format: "%.1f/5.0", tutor.rating)).foregroundStyle(HexStringToColor(hex: "#333333").color)
-                }
-                HStack {
                     RatingView(rating: $tutor.rating)
                     PriceView(price: $tutor.price)
-//                    Text(String(format: "$%.2f /hr", tutor.price)).foregroundStyle(Color.purple)
-//                        .padding(5).background(.purple.opacity(0.2))            .cornerRadius(10)
-//                        .font(.footnote)
                 }.padding(5)
                 
                 HStack {

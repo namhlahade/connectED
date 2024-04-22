@@ -27,10 +27,7 @@ struct TutorInfo: Codable {
         var allCourses: [Course] = []
         for course in tutorClasses {
             let courseArr = course.components(separatedBy: " ")
-            print(courseArr[0])
             let subject = Tutor.Subject(rawValue: courseArr[0].lowercased())!
-            print(subject)
-            print(courseArr[1])
             allCourses.append(Course(subject: subject, code: courseArr[1]))
         }
         var allReviews: [Review] = []
@@ -149,14 +146,8 @@ func isPersonAvailable(availability: [Availability]) -> Status {
     }
     
     for availability in availability {
-        /*print(Availability.Day.allCases)
-        print(Availability.Day.allCases[current_weekday - 1])
-        print(availability.day)
-        print(Availability.Day.allCases[current_weekday - 1] == availability.day)*/
-        print("Current day: \(current_weekday) \(Availability.Day.allCases[current_weekday]), Comparison day: \(availability.day)")
         if (Availability.Day.allCases[current_weekday] == availability.day) {
             if (current_time >= availability.times[0] && current_time <= availability.times[1]) {
-                //print("current: \(formatter.string(from: current_time)), \(formatter.string(from: availability.times[0])) - \(formatter.string(from: availability.times[1])) = online")
                 return .online
             }
         }
