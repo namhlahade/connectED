@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PhotosUI
+import FirebaseStorage
 
 
 struct ProfileForm: View {
@@ -270,6 +271,23 @@ struct ProfileForm: View {
                 if let data_ = success_data {
                     // Update the image data to be displayed
                     data.imageData = data_
+                    
+                    let storageRef = Storage.storage().reference()
+                    let imageData_ = UIImage(data: data.imageData!)!.jpegData(compressionQuality: 0.8)
+                    guard imageData_ != nil else {
+                        return
+                    }
+                    
+                    let path = "Images/\(UUID().uuidString).jpg"
+                    print("Image Path: \(path)")
+                    let fileRef = storageRef.child(path)
+                    let uploadTask = fileRef.putData(imageData_!, metadata: nil) {metadata, error in
+                        if error == nil && metadata != nil {
+                            
+                        }
+                    }
+                    
+                    
                 } else {
                     // Handle the case where no image data is found
                     print("Failed to load image data.")
@@ -281,6 +299,25 @@ struct ProfileForm: View {
         }
     }
 }
+
+func uploadPhoto(imageToUpload: UIImage) -> Void {
+    print("Hello dude")
+    let storageRef = Storage.storage().reference()
+    let imageData_ = imageToUpload.jpegData(compressionQuality: 0.8)
+    
+    guard imageData_ != nil else {
+        return
+    }
+    let path = "Images/\(UUID().uuidString).jpg"
+    print(path)
+    let fileRef = storageRef.child(path)
+    let uploadTask = fileRef.putData(imageData_!, metadata: nil) {metadata, error in
+        if error == nil && metadata != nil {
+            
+        }
+    }
+}
+
 
 func editTime(selectedHour: Int, isAM: Bool) -> Date {
     if selectedHour != 12 {
@@ -321,7 +358,7 @@ struct ProfileForm_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             //            Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], image: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), status: .online, rating: 3.61, price: 23.99))
-                        UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, price: 0, reviews: [], favorites: [], availability: []), loggedOut: $isLoggedOut)
+            UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, price: 0, reviews: [], favorites: [], availability: []), loggedOut: $isLoggedOut)
         }
         
     }
