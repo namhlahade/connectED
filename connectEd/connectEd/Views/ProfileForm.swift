@@ -7,13 +7,13 @@
 
 import SwiftUI
 import PhotosUI
+import FirebaseStorage
 
 
 struct ProfileForm: View {
     
     
     @State var selectedImage: PhotosPickerItem?
-    @State private var imageData: Data? = nil
     
     
     @Binding var data: Tutor.FormData
@@ -23,8 +23,9 @@ struct ProfileForm: View {
         Form {
             
             VStack (alignment: .leading) {
-                if let imageData = imageData, let uiImage = UIImage(data: imageData) {
-                    Image(uiImage: uiImage)
+                // if ImageData is not nil/empty (have already selected a photo), then display what is in ImageData
+                if data.imageData != Data() && data.imageData != nil {
+                    Image(uiImage: UIImage(data: data.imageData!)!)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .overlay(alignment: .bottomTrailing) {
@@ -45,6 +46,7 @@ struct ProfileForm: View {
                         .frame(maxWidth: 200, maxHeight: 200)
                         .padding()
                 } else {
+                    // Else: user hasn't selected a photo already, display their chosen profile picture (or the default person.circle if they have no profile pic [data.image == ""])
                     AsyncImage(url: URL(string: data.image), content: { image in
                         image
                             .resizable()
@@ -264,10 +266,10 @@ struct ProfileForm: View {
         // Request the image data
         item.loadTransferable(type: Data.self) { result in
             switch result {
-            case .success(let data):
-                if let data = data {
+            case .success(let success_data):
+                if let data_ = success_data {
                     // Update the image data to be displayed
-                    imageData = data
+                    data.imageData = data_
                 } else {
                     // Handle the case where no image data is found
                     print("Failed to load image data.")
@@ -278,7 +280,9 @@ struct ProfileForm: View {
             }
         }
     }
+    
 }
+
 
 func editTime(selectedHour: Int, isAM: Bool) -> Date {
     if selectedHour != 12 {
@@ -319,7 +323,7 @@ struct ProfileForm_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             //            Profile(user: Tutor(name: "Neel Runton", email: "ndr19@duke.edu", courses: ["ECE110", "ECE230", "ECE280", "ECE270", "ECE532", "ECE539", "ECE575", "ECE572", "ECE350", "ECE331"], image: "https://education-jrp.s3.amazonaws.com/MovieImages/EverythingEverywhereAllAtOnce.jpg"), status: .online, rating: 3.61, price: 23.99))
-                        UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, price: 0, reviews: [], favorites: [], availability: []), loggedOut: $isLoggedOut)
+            UserProfile(user: Tutor(id: UUID(), name: "Neel Runton", email: "ndr19@duke.edu", courses: [], status: .online, price: 0, reviews: [], favorites: [], availability: []), loggedOut: $isLoggedOut)
         }
         
     }

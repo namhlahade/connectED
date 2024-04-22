@@ -62,7 +62,7 @@ struct ReviewForm: View {
                         await addTutorReviewLoader.addTutorReview(tutorReviewInput: TutorReviewInputStruct(rating: Int(review.rating), clarity: Int(review.clarity), prep: Int(review.prep), review: review.review, tutorEmail: tutor.email))
                     }
                 }) {
-                    Text("Submit Review")
+                    Text("Submit")
                 }
                 .frame(maxWidth: .infinity)
                 
