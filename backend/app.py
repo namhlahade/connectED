@@ -74,6 +74,13 @@ class Favorites(db.Model):
     reviewer_email = db.Column(db.Text, db.ForeignKey('users.email'), nullable=False)
 
 
+@app.route('/get_stress/<hrv>', methods=['GET'])
+def get_stress(hrv):
+    print(f"HRV recieved: {hrv}")
+
+    if int(hrv) > 50:
+        return jsonify({"stress": 0})
+    return jsonify({"stress": 1})
 
 
 @app.route('/testing', methods=['GET'])
