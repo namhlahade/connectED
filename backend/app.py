@@ -82,6 +82,11 @@ def get_stress(hrv):
         return jsonify({"stress": 0})
     return jsonify({"stress": 1})
 
+@app.route('/update_boundary/<hrv>/<isStressed>', methods=['GET'])
+def update_boundary(hrv, isStressed):
+    print(f"User with HRV: {hrv} has stress output of {isStressed}")
+    return jsonify({"message": "Datapoint added"})
+
 
 @app.route('/testing', methods=['GET'])
 def testing():
