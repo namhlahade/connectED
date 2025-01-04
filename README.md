@@ -1,6 +1,4 @@
-# CS207 Project - [ConnectED]
-
-### Neel Runton, James Qu, Namh Lahade, Nick Steinly
+ConnectED
 
 ## Description
 
